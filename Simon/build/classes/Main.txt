@@ -1,0 +1,41 @@
+public class Main {
+    static ArrayList<JButton> button = new ArrayList<>();
+    public static void main(String[] args) {
+        MyFrame frame = new MyFrame();
+        openMenu(frame);
+        
+        frame.setVisible(true);
+    }
+    
+    public static void openMenu(MyFrame frame){
+        String[] buttonName = {"Play", "Exit and save"};
+        String[] message = {"Playing", "Saving and exit"};
+        for(int i=0; i<buttonName.length; i++){
+            button.add(new JButton(buttonName[i]));
+            button.get(i).setPreferredSize(new Dimension(200, 50));
+            button.get(i).setBackground(Color.LIGHT_GRAY);
+            button.get(i).setFont(new Font(Font.MONOSPACED, Font.BOLD, 30));
+            button.get(i).setOpaque(true);
+            button.get(i).setFocusable(false);
+            JButton tempButton = button.get(i);
+            String tempMessage = message[i];
+            button.get(i).addActionListener(
+                new ActionListener(){
+                    @Override
+                    public void actionPerformed(ActionEvent event){
+                        if(event.getSource() == tempButton){
+                            JOptionPane.showMessageDialog(null, tempMessage);
+                        }
+                    }
+                }
+            );
+        }
+        
+        MyPanel panel = new MyPanel();
+        panel.add(button.get(0));
+        panel.add(button.get(1));
+        frame.add(panel);
+        System.out.println("Test");
+    }
+    
+}
