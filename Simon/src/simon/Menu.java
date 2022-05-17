@@ -40,7 +40,13 @@ public class Menu {
     
     public MyPanel openMenu(){
         ArrayList<MyButton> button = new ArrayList<>();
-        MyPanel newPanel = new MyPanel();
+        Image image = null;
+        try {
+            image = ImageIO.read(new File("src\\Material\\Image\\Pokemon-Unite-PC-Wallpaper.jpg"));
+        } catch (IOException ex) {
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        MyPanel newPanel = new MyPanel(image, new GridBagLayout());
         TransparantPanel buttonContainer = new TransparantPanel(0, 310, new Color(0, 0, 0, 90));
         buttonContainer.setPreferredSize(new Dimension(400, 120));
         String[] buttonName = {"Play", "Exit and save"};
@@ -84,7 +90,13 @@ public class Menu {
                 new ImageIcon("src\\Material\\Image\\1652700300094.png")
                 .getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)
         );
-        MyPanel newPanel = new MyPanel();
+        Image image = null;
+        try {
+            image = ImageIO.read(new File("src\\Material\\Image\\Pokemon-Unite-PC-Wallpaper.jpg"));
+        } catch (IOException ex) {
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        MyPanel newPanel = new MyPanel(image, new GridBagLayout());
         TransparantPanel buttonContainer = new TransparantPanel(0, 40, new Color(0, 0, 0, 90));
         TransparantPanel description = new TransparantPanel(0, 0, new Color(0, 0, 0, 90));
         
@@ -104,7 +116,7 @@ public class Menu {
                     @Override
                     public void actionPerformed(ActionEvent event){
                         if(event.getSource() == tempButton && tempButton.getText().equals("Dungeon")){
-                            JOptionPane.showMessageDialog(null, tempMessage);
+                            new BattleMenu(frame);
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Switch Pokemon")){
                             JOptionPane.showMessageDialog(null, tempMessage);
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Pokemon Center")){
