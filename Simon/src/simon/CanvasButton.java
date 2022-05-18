@@ -12,19 +12,13 @@ import java.awt.Graphics;
  *
  * @author LVOILA
  */
-public class CanvasButton {
+public class CanvasButton extends CanvasComponent {
     
-    private CanvasMouseListener mouse;
-    private int x,y,width,height;
     private String text;
     private int fontSize;
     
     public CanvasButton(int x,int y,int width,int height,CanvasMouseListener mouse) {
-        this.mouse = mouse;
-        this.x = x;
-        this.y = y;
-        this.height = height;
-        this.width = width;
+        super(x, y, width, height, mouse);
         this.fontSize = 20;
     }
     
@@ -40,6 +34,7 @@ public class CanvasButton {
         return fontToPixel(this.fontSize);
     }
     
+    @Override
     public void draw(Graphics g) {
         if(mouse.getX() >= x && mouse.getY() >= y && mouse.getX() <= (x + width) && mouse.getY() <= (y + height)) {
             if(mouse.isPressed()) {
@@ -54,20 +49,13 @@ public class CanvasButton {
         g.fillRect(x, y, width, height);
         
         
-        g.setFont(new Font("Courier New", Font.PLAIN, this.fontSize));
+        g.setFont(new Font(DEFAULT_FONT, Font.PLAIN, this.fontSize));
         g.setColor(Color.BLACK);
         int midHeight = (this.height - this.getPixelSize())/2;
         int midWidth = (int)(this.width - this.text.length()*this.fontSize/1.5 )/2;
         //System.out.println(midWidth);
         g.drawString("BACK", x + midWidth, y + this.fontSize + midHeight);
     }
+   
     
-    public Boolean released() {
-        if(mouse.getX() >= x && mouse.getY() >= y && mouse.getX() <= (x + width) && mouse.getY() <= (y + height)) {
-            return mouse.isRelease();
-        }
-        else {
-            return false;
-        }
-    }
 }
