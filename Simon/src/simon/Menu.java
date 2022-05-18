@@ -122,7 +122,7 @@ public class Menu {
                                 Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Switch Pokemon")){
-                            JOptionPane.showMessageDialog(null, tempMessage);
+                            new SwitchPokemon(frame);
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Pokemon Center")){
                             JOptionPane.showMessageDialog(null, tempMessage);
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Shop")){

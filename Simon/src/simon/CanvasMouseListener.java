@@ -15,13 +15,14 @@ import java.awt.event.MouseListener;
 public class CanvasMouseListener implements MouseListener{
     
     
-    private Boolean pressed = false;
-    private Boolean release = false;
+    private Boolean pressed, release, entered, exited;
     private Integer x,y;
 
     public CanvasMouseListener() {
         pressed = false;
         release = false;
+        entered = false;
+        exited = true;
         x = -1;
         y = -1;
     }
@@ -35,26 +36,28 @@ public class CanvasMouseListener implements MouseListener{
     @Override
     public void mousePressed(MouseEvent e) {
         this.pressed = true;
-        this.x = e.getX();
-        this.y = e.getY();
+        getPoint(e);
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         this.pressed = false;
         this.release = true;
-        this.x = e.getX();
-        this.y = e.getY();
+        getPoint(e);
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        
+        entered = true;
+        exited = false;
+        getPoint(e);
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        
+        entered = false;
+        exited = true;
+        getPoint(e);
     }
 
     public void disableRelease() {
@@ -69,6 +72,11 @@ public class CanvasMouseListener implements MouseListener{
 
     public Boolean isRelease() {
         return release;
+    }
+    
+    public void getPoint(MouseEvent event){
+        x = event.getX();
+        y = event.getY();
     }
 
     public Integer getX() {
