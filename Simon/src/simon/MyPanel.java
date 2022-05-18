@@ -13,10 +13,10 @@ import javax.imageio.ImageIO;
 
 public class MyPanel extends JPanel{
     Image background;
-    int x = 1000, y = 700;
+    //int x = 1000, y = 700;
     MyPanel(Image background, LayoutManager setLayout){
         this.background = background;
-        this.setPreferredSize(new Dimension(x, y));
+        this.setPreferredSize(new Dimension(MyFrame.DEFAULT_WIDTH, MyFrame.DEFAULT_HEIGHT));
         this.setLayout(setLayout);
     }
 

@@ -116,7 +116,11 @@ public class Menu {
                     @Override
                     public void actionPerformed(ActionEvent event){
                         if(event.getSource() == tempButton && tempButton.getText().equals("Dungeon")){
-                            new BattleMenu(frame);
+                            try {
+                                new BattleMenuAlt(frame,playGame());
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Switch Pokemon")){
                             JOptionPane.showMessageDialog(null, tempMessage);
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Pokemon Center")){

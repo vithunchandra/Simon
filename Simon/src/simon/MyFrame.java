@@ -10,18 +10,26 @@ import javax.swing.*;
 
 public class MyFrame extends JFrame{
     
+    public static int DEFAULT_HEIGHT = 700;
+    public static int DEFAULT_WIDTH = 1000;
     MyFrame(){
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new FlowLayout());
-        this.setSize(new Dimension(1000, 700));
+        this.setSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setTitle("Simon");
     }
     
-    public void changePanel(MyPanel newPanel){
+    public void changePanel(JPanel newPanel){
         this.getContentPane().removeAll();
         this.add(newPanel);
+        this.revalidate();
+        this.repaint();
+    }
+    
+    public void removePanel(){
+        this.getContentPane().removeAll();
         this.revalidate();
         this.repaint();
     }
