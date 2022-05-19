@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package simon;
+package BattleCanvas;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -49,7 +49,7 @@ public class CanvasButton extends CanvasComponent {
         g.fillRect(x, y, width, height);
         
         
-        g.setFont(new Font(DEFAULT_FONT, Font.PLAIN, this.fontSize));
+        g.setFont(super.DEFAULT_FONT);
         g.setColor(Color.BLACK);
         int midHeight = (this.height - this.getPixelSize())/2;
         int midWidth = (int)(this.width - this.text.length()*this.fontSize/1.5 )/2;

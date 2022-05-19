@@ -4,6 +4,11 @@
  */
 package simon;
 
+import BattleCanvas.PokemonBarAlt;
+import BattleCanvas.CanvasMouseListener;
+import BattleCanvas.CanvasButton;
+import BattleCanvas.CanvasTextArea;
+import Util.ImageLoader;
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -37,6 +42,7 @@ public class BattleMenuAlt {
         
         private CanvasButton backButton;
         private PokemonBarAlt pokeBar,pokeBar2;
+        private CanvasTextArea canvasTextArea;
         public BattleCanvas(int fps,MyFrame frame,JPanel panel) {
            this.fps = fps;
            this.running = false;
@@ -50,7 +56,8 @@ public class BattleMenuAlt {
            this.backButton = new CanvasButton(0, 0, 100, 50, mouse);
            backButton.setText("Back");
            this.pokeBar = new PokemonBarAlt(0, 100, 350, 120, mouse);
-           this.pokeBar2 = new PokemonBarAlt(580, 480, 400, 150, mouse);
+           this.pokeBar2 = new PokemonBarAlt(580, 330, 400, 150, mouse);
+           this.canvasTextArea = new CanvasTextArea(200, mouse);
 
            this.frame = frame;
            this.panel = panel;
@@ -69,12 +76,11 @@ public class BattleMenuAlt {
         }
         
         private void draw(Graphics g) throws IOException {
-            String temp = "src\\Material\\Image\\battlemenu.png";
-            BufferedImage image = ImageIO.read(new File(temp));
-            Image img = image;
+            Image img = ImageLoader.loadImage("src\\Material\\Image\\battlemenu.png");
             
             g.drawImage(img, 0, 0,MyFrame.DEFAULT_WIDTH,MyFrame.DEFAULT_HEIGHT, null);
             this.backButton.draw(g);
+            this.canvasTextArea.draw(g);
             this.pokeBar.draw(g);
             this.pokeBar2.draw(g);
             
@@ -100,6 +106,9 @@ public class BattleMenuAlt {
             
             if(backButton.clicked()) {
                 this.stop();
+            }
+            if(canvasTextArea.clicked()) {
+                canvasTextArea.nextText();
             }
             
             if(mouse.isRelease()) {

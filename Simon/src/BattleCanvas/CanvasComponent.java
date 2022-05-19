@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package simon;
+package BattleCanvas;
 
+import java.awt.Font;
 import java.awt.Graphics;
 
 /**
@@ -13,10 +14,12 @@ import java.awt.Graphics;
 public abstract class CanvasComponent {
     protected CanvasMouseListener mouse;
     protected int x,y,width,height;
-    protected final String DEFAULT_FONT;
+    protected final Font DEFAULT_FONT;
+    protected final int default_font_size;
     
     public CanvasComponent(int x,int y,int width,int height,CanvasMouseListener mouse) {
-        this.DEFAULT_FONT = "Courier New";
+        default_font_size = 20;
+        this.DEFAULT_FONT = new Font("Courier New",Font.PLAIN,default_font_size) ;
         this.mouse = mouse;
         this.x = x;
         this.y = y;
@@ -29,6 +32,7 @@ public abstract class CanvasComponent {
     public Boolean clicked() {
         if(mouse.getX() >= x && mouse.getY() >= y && mouse.getX() <= (x + width) && mouse.getY() <= (y + height)) {
             return mouse.isRelease();
+            
         }
         else {
             return false;

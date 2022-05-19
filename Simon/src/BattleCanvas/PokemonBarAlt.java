@@ -2,8 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package simon;
+package BattleCanvas;
 
+import BattleCanvas.CanvasMouseListener;
+import BattleCanvas.CanvasComponent;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -32,7 +34,7 @@ public class PokemonBarAlt extends CanvasComponent{
     
     @Override
     public void draw(Graphics g) {
-        g.setFont(new Font(DEFAULT_FONT, Font.PLAIN, this.fontSize));
+        g.setFont(DEFAULT_FONT);
         g.setColor(Color.white);
         g.fillRect(x, y, width, height);
          
