@@ -17,7 +17,8 @@ import javax.swing.border.*;
 
 public class MyButton extends JButton implements MouseListener{
     
-    MyButton(String name){
+    MyButton(String name, Dimension size){
+        this.setPreferredSize(size);
         this.setText(name);
         this.setFont(new Font(Font.MONOSPACED, Font.BOLD, 30));
         this.setBackground(Color.LIGHT_GRAY);
@@ -26,6 +27,7 @@ public class MyButton extends JButton implements MouseListener{
         this.setOpaque(false);
         this.setFocusable(false);
         this.setBorder(new EmptyBorder(0, 20, 0, 0));
+        this.addMouseListener(this);
     }
 
     @Override

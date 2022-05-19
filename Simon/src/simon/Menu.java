@@ -52,7 +52,7 @@ public class Menu {
         String[] buttonName = {"Play", "Exit and save"};
         String[] message = {"Playing", "Saving and exit"};
         for(int i=0; i<buttonName.length; i++){
-            button.add(new MyButton(buttonName[i]));
+            button.add(new MyButton(buttonName[i], new Dimension(400, 50)));
             button.get(i).setBounds(0, (i * 60), 400, 50);
             JButton tempButton = button.get(i);
             String tempMessage = message[i];
@@ -106,7 +106,7 @@ public class Menu {
         String[] buttonName = {"Dungeon", "Switch Pokemon", "Pokemon Center", "Shop", "Gym", "Top-up poke-coin", "Back"};
         String[] message = {"Entering dungeon...", "Switching...", "Entering pokemon center...", "Entering shop...", "Entering gym...", "Top-uping", "Back..."};
         for(int i=0; i<buttonName.length; i++){
-            button.add(new MyButton(buttonName[i]));
+            button.add(new MyButton(buttonName[i], new Dimension(400, 50)));
             button.get(i).setBounds(0, (i * 60), 400, 50);
             button.get(i).setIcon(icon);
             JButton tempButton = button.get(i);
@@ -122,7 +122,7 @@ public class Menu {
                                 Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Switch Pokemon")){
-                            new SwitchPokemon(frame);
+                            new SwitchPokemon(frame, playGame());
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Pokemon Center")){
                             JOptionPane.showMessageDialog(null, tempMessage);
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Shop")){
