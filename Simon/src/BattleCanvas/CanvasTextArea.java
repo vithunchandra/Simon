@@ -67,7 +67,7 @@ public class CanvasTextArea extends CanvasComponent {
             String daftarKata2[] = daftarKataI.split("\n");
             for (int j = 0;j < daftarKata2.length;j++) {
                 String daftarKataJ = daftarKata2[j];
-                if(nowX + fontPx*(daftarKataJ.length()) >= x + MyFrame.DEFAULT_WIDTH - pr) {
+                if(nowX + fontPx*(daftarKataJ.length()) >= x + width - pr) {
                     nowX = baseX;
                     nowY = nowY + fontSize;
                 }

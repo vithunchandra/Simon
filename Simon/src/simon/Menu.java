@@ -130,7 +130,7 @@ public class Menu {
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Gym")){
                             JOptionPane.showMessageDialog(null, tempMessage);
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Top-up poke-coin")){
-                            JOptionPane.showMessageDialog(null, tempMessage);
+                            new TopUp(frame, playGame());
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Back")){
                             JOptionPane.showMessageDialog(null, tempMessage);
                             frame.changePanel(openMenu());
