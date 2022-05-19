@@ -46,18 +46,60 @@ public class SwitchPokemon {
         
         switchPanel.add(setPartyContainer(), gbc);
         
+        switchPanel.add(showPokemonList(), gbc);
+        
         frame.changePanel(switchPanel);
     }
     
+    public Container showPokemonList(){
+        MyContainer container = new MyContainer(500, 500, new FlowLayout(FlowLayout.CENTER, 10, 10));
+        MyContainer header = new MyContainer(300, 50, new FlowLayout(FlowLayout.CENTER, 50, 10));
+        MyContainer pokemonList = new MyContainer(500, 450, new FlowLayout(FlowLayout.CENTER, 10, 10));
+        
+        container.setBackground(Color.LIGHT_GRAY);
+        pokemonList.setBackground(Color.BLUE);
+        
+        CanvasImage backIcon = new CanvasImage("src\\Material\\Image\\Back_Black.png", 0, 0, 30, 30);
+        CanvasImage forwardIcon = new CanvasImage("src\\Material\\Image\\Forward_Black.png", 0, 0, 30, 30);
+        CanvasText headerText = new CanvasText("Box 1", new Font(Font.SANS_SERIF, Font.BOLD, 25));
+       
+        header.add(backIcon);
+        header.add(headerText);
+        header.add(forwardIcon);
+        
+        container.add(header);
+        for(int i = 0; i<18; i++){
+            TransparantPanel imageContainer = new TransparantPanel(0, 0, new Color(255, 255, 255, 90));
+            imageContainer.setPreferredSize(new Dimension(80, 80));
+//            CanvasImage pokemonImage = new CanvasImage("src\\Material\\Image\\cookie0041_run04.png", 0, 0, 80, 80);
+//            pokemonImage.setBounds(0, 0, 80, 80);
+            JLabel pokemonImage = new JLabel();
+            ImageIcon image = new ImageIcon(new ImageIcon("src\\Material\\Image\\cookie0041_run04.png").getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH));
+            pokemonImage.setIcon(image);
+            pokemonImage.setBounds(0, 0, 80, 80);
+
+            imageContainer.add(pokemonImage);
+            
+            pokemonList.add(imageContainer);
+        }
+        
+        container.add(pokemonList);
+        
+        SetGBC.setGbc(gbc, 0, 0, 0, 0, GridBagConstraints.CENTER);
+        gbc.gridheight = 2;
+        gbc.gridwidth = 2;
+        return container;
+    }
+    
     public Container setPartyContainer(){
-        MyContainer container = new MyContainer(300, 320, new FlowLayout(FlowLayout.CENTER, 10, 10));
+        MyContainer container = new MyContainer(200, 320, new FlowLayout(FlowLayout.CENTER, 10, 10));
         container.setBackground(Color.red);
         
         CanvasText partyText = new CanvasText("Party", new Font(Font.SANS_SERIF, Font.BOLD, 20));
         container.add(partyText);
         
         for(int i=0; i<3; i++){
-            MyContainer pokemon = new MyContainer(300, 80, new GridBagLayout());
+            MyContainer pokemon = new MyContainer(200, 80, new GridBagLayout());
             
             CanvasImage pokemonImage = new CanvasImage(
                     "src\\Material\\Image\\cookie0041_run04.png", 0, 0, 80, 80

@@ -25,8 +25,8 @@ public class CanvasText extends Canvas{
         height = metrics.getHeight();
         width = metrics.stringWidth(text);
         
-        size = new Dimension(width + 5, height + 5);
-        
+        size = new Dimension(width, height);
+    
         this.setPreferredSize(size);
         this.setSize(size);
         this.setBounds(0, 0, width, height);
@@ -37,7 +37,7 @@ public class CanvasText extends Canvas{
         super.paint(g);
         g = (Graphics2D) g;
         g.setFont(font);
-        g.drawString(text, 0, size.height - 4);
+        g.drawString(text, 0, size.height - 8);
     }
 
     public String getText() {

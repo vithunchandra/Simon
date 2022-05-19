@@ -39,7 +39,6 @@ public class TransparantPanel extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        super.paintComponent(g);
         g = (Graphics2D) g;
         g.setColor(this.getBackground());
         g.fillRect(0, 0, this.getWidth() - x, this.getHeight() - y);
