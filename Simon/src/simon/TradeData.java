@@ -48,9 +48,17 @@ public class TradeData implements MouseListener{
         }
         
         for(int i=0; i<pokemonList.size(); i++){
-            if(e.getSource() == pokemonList.get(i)){
+            if(e.getSource() == pokemonList.get(i).getComponent()){
                 if(clickedParty != null){
                     clickedParty.setData(pokemonList.get(i).getData());
+                    for(int j=0; j<clickedParty.getComponent().getComponentCount(); j++){
+                        if(clickedParty.getComponent().getComponent(j) instanceof CanvasImage){
+                            System.out.println("Test");
+                            CanvasImage image = (CanvasImage) clickedParty.getComponent().getComponent(j);
+                            image.setImage(pokemonList.get(i).getData());
+                            image.repaint();
+                        }
+                    }
                 }else{
                     JOptionPane.showMessageDialog(null, "Clicked the pokemon in party first then click pokemon in pokemonList");
                 }
@@ -60,12 +68,12 @@ public class TradeData implements MouseListener{
 
     @Override
     public void mousePressed(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
     }
 
     @Override

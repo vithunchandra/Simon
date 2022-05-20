@@ -80,7 +80,7 @@ public class SwitchPokemon {
 //            CanvasImage pokemonImage = new CanvasImage("src\\Material\\Image\\cookie0041_run04.png", 0, 0, 80, 80);
 //            pokemonImage.setBounds(0, 0, 80, 80);
             JLabel pokemonImage = new JLabel();
-            ImageIcon image = new ImageIcon(new ImageIcon("src\\Material\\Image\\cookie0041_run04.png").getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH));
+            ImageIcon image = new ImageIcon(new ImageIcon("src\\Material\\Image\\leav chara.png").getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH));
             pokemonImage.setIcon(image);
             pokemonImage.setBounds(0, 0, 80, 80);
 
