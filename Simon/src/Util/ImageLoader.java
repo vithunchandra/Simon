@@ -20,9 +20,11 @@ public class ImageLoader {
         BufferedImage image = ImageIO.read(new File(path));
         return image;
     }
-    public static ArrayList<Image> loadImageArrayCrop(int cropWidth,int cropHeight,int numSprite,String path) throws IOException {
+    public static ArrayList<Image> loadImageArrayCropHorizontal(int numSprite,String path) throws IOException {
         ArrayList<Image> imageList = new ArrayList<>();
         BufferedImage image = ImageIO.read(new File(path));
+        int cropWidth = image.getWidth() / numSprite;
+        int cropHeight = image.getHeight();
 
         for(int i = 0;i < numSprite;i++) {
             Image temp = image.getSubimage(i*cropWidth, 0, cropWidth, cropHeight);

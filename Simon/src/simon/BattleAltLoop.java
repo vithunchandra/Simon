@@ -45,8 +45,8 @@ public class BattleAltLoop implements Drawable {
         this.canvasTextArea = new CanvasTextArea(200, mouse);
         
         try {
-            standPokemon1 = ImageLoader.loadImageArrayCrop(512/8, 158, 8,"src\\Material\\Image\\simon1.png");
-            standPokemon2 = ImageLoader.loadImageArrayCrop(512/8, 158, 8,"src\\Material\\Image\\simon1.png");
+            standPokemon1 = ImageLoader.loadImageArrayCropHorizontal(8,"src\\Material\\Image\\simon1.png");
+            standPokemon2 = ImageLoader.loadImageArrayCropHorizontal(8,"src\\Material\\Image\\simon1.png");
         } catch (IOException ex) {
             Logger.getLogger(BattleAltLoop.class.getName()).log(Level.SEVERE, null, ex);
         }
