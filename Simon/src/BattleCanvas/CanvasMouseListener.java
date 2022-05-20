@@ -4,15 +4,23 @@
  */
 package BattleCanvas;
 
+import java.awt.Dimension;
+import java.awt.MouseInfo;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
+import simon.MyFrame;
 
 /**
  *
  * @author LVOILA
  */
-public class CanvasMouseListener implements MouseListener{
+public class CanvasMouseListener extends MouseAdapter implements MouseMotionListener,MouseListener{
     
     
     private Boolean pressed, release, entered, exited;
@@ -36,34 +44,44 @@ public class CanvasMouseListener implements MouseListener{
     @Override
     public void mousePressed(MouseEvent e) {
         this.pressed = true;
-        getPoint(e);
+        //getPoint(e);
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         this.pressed = false;
         this.release = true;
-        getPoint(e);
+        //getPoint(e);
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
         entered = true;
         exited = false;
-        getPoint(e);
+        //getPoint(e);
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
         entered = false;
         exited = true;
-        getPoint(e);
+        //getPoint(e);
+    }
+    
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        //this.getPoint(e);
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        this.getPoint(e);
     }
 
     public void disableRelease() {
         this.release = false;
-        this.x = -1;
-        this.y = -1;
+        //this.x = -1;
+        //this.y = -1;
     }
 
     public Boolean isPressed() {
@@ -74,8 +92,13 @@ public class CanvasMouseListener implements MouseListener{
         return release;
     }
     
-    public Boolean isHovered() {
-        return entered;
+    public Boolean isHovered(int tx,int ty,int width,int height) {
+        if(this.getX() >= tx && this.getY() >= ty && this.getX() <= (tx + width) && this.getY() <= (ty + height)) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
     
     public void getPoint(MouseEvent event){
@@ -90,6 +113,9 @@ public class CanvasMouseListener implements MouseListener{
     public Integer getY() {
         return y;
     }
+
+
+    
     
     
 }

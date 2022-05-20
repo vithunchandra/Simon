@@ -17,9 +17,11 @@ public class CanvasButton extends CanvasComponent {
     private String text;
     private int fontSize;
     
-    public CanvasButton(int x,int y,int width,int height,CanvasMouseListener mouse) {
+    public CanvasButton(String text,int x,int y,int width,int height,CanvasMouseListener mouse) {
         super(x, y, width, height, mouse);
+        this.text = text;
         this.fontSize = 20;
+        
     }
     
     //nanti hapus
@@ -39,7 +41,11 @@ public class CanvasButton extends CanvasComponent {
         if(mouse.getX() >= x && mouse.getY() >= y && mouse.getX() <= (x + width) && mouse.getY() <= (y + height)) {
             if(mouse.isPressed()) {
                 g.setColor(Color.red);
-            } else {
+            }
+            else if(this.hovered()) {
+                g.setColor(Color.green);
+            }
+            else {
                 g.setColor(Color.yellow);
             }   
         }
@@ -54,7 +60,7 @@ public class CanvasButton extends CanvasComponent {
         int midHeight = (this.height - this.getPixelSize())/2;
         int midWidth = (int)(this.width - this.text.length()*this.fontSize/1.5 )/2;
         //System.out.println(midWidth);
-        g.drawString("BACK", x + midWidth, y + this.fontSize + midHeight);
+        g.drawString(text, x + midWidth, y + this.fontSize + midHeight);
     }
    
     

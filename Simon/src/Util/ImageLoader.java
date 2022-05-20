@@ -8,6 +8,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 /**
@@ -19,6 +20,17 @@ public class ImageLoader {
         BufferedImage image = ImageIO.read(new File(path));
         return image;
     }
+    public static ArrayList<Image> loadImageArrayCrop(int cropWidth,int cropHeight,int numSprite,String path) throws IOException {
+        ArrayList<Image> imageList = new ArrayList<>();
+        BufferedImage image = ImageIO.read(new File(path));
+
+        for(int i = 0;i < numSprite;i++) {
+            Image temp = image.getSubimage(i*cropWidth, 0, cropWidth, cropHeight);
+            imageList.add(temp);
+        }
+        return imageList;
+    }
+    
     
 //    public static void loadImage(String path,int width,int height) {
 //        

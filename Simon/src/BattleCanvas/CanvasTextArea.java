@@ -38,6 +38,7 @@ public class CanvasTextArea extends CanvasComponent {
         
         text = textList.pop();
     }
+    
 
     public CanvasTextArea(int x, int y, int width, int height, CanvasMouseListener mouse) {
         super(x, y, width, height, mouse);
@@ -47,6 +48,10 @@ public class CanvasTextArea extends CanvasComponent {
         if(!textList.isEmpty()) {
             text = textList.pop();
         }
+    }
+    
+    public Boolean haveNextDialogue() {
+        return !textList.isEmpty();
     }
 
     @Override
@@ -86,5 +91,11 @@ public class CanvasTextArea extends CanvasComponent {
         
         
     }
+
+    public void setTextList(DoubleLinkList<String> textList) {
+        this.textList = textList;
+    }
+    
+    
     
 }

@@ -41,24 +41,23 @@ public class BattleMenuAlt {
         private CanvasMouseListener mouse;
         
         private CanvasButton backButton;
-        private PokemonBarAlt pokeBar,pokeBar2;
-        private CanvasTextArea canvasTextArea;
+        private BattleAltLoop battleAltLoop;
         public BattleCanvas(int fps,MyFrame frame,JPanel panel) {
            this.fps = fps;
            this.running = false;
            this.setBounds(0, 0, MyFrame.DEFAULT_WIDTH, MyFrame.DEFAULT_HEIGHT);
+           
            this.setFocusable(true);
            this.setVisible(true);
            
            this.mouse = new CanvasMouseListener();
            this.addMouseListener(this.mouse);
+           this.addMouseMotionListener(this.mouse);
            
-           this.backButton = new CanvasButton(0, 0, 100, 50, mouse);
-           backButton.setText("Back");
-           this.pokeBar = new PokemonBarAlt(0, 100, 350, 120, mouse);
-           this.pokeBar2 = new PokemonBarAlt(580, 330, 400, 150, mouse);
-           this.canvasTextArea = new CanvasTextArea(200, mouse);
-
+           this.backButton = new CanvasButton("BACK",0, 0, 100, 50, mouse);
+           
+           this.battleAltLoop = new BattleAltLoop(mouse);
+           
            this.frame = frame;
            this.panel = panel;
         }
@@ -80,9 +79,7 @@ public class BattleMenuAlt {
             
             g.drawImage(img, 0, 0,MyFrame.DEFAULT_WIDTH,MyFrame.DEFAULT_HEIGHT, null);
             this.backButton.draw(g);
-            this.canvasTextArea.draw(g);
-            this.pokeBar.draw(g);
-            this.pokeBar2.draw(g);
+            battleAltLoop.draw(g);
             
         }
 
@@ -102,14 +99,12 @@ public class BattleMenuAlt {
             bs.show();
         }
         
-        private void logicLoop() {
+        private void logicLoop(long diff) {
             
             if(backButton.clicked()) {
                 this.stop();
             }
-            if(canvasTextArea.clicked()) {
-                canvasTextArea.nextText();
-            }
+            battleAltLoop.logicLoop(diff);
             
             if(mouse.isRelease()) {
                 mouse.disableRelease();
@@ -129,7 +124,7 @@ public class BattleMenuAlt {
 
                 timeAccumulator += diff;
                 
-                logicLoop();
+                logicLoop(diff);
 
                 if( (timeAccumulator / changeFrameTime) >= 1) {
                     try {

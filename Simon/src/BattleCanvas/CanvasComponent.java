@@ -11,7 +11,7 @@ import java.awt.Graphics;
  *
  * @author LVOILA
  */
-public abstract class CanvasComponent {
+public abstract class CanvasComponent implements Drawable {
     protected CanvasMouseListener mouse;
     protected int x,y,width,height;
     protected final Font DEFAULT_FONT;
@@ -27,8 +27,6 @@ public abstract class CanvasComponent {
         this.width = width;
     }
     
-    public abstract void draw(Graphics g);
-    
     public Boolean clicked() {
         if(mouse.getX() >= x && mouse.getY() >= y && mouse.getX() <= (x + width) && mouse.getY() <= (y + height)) {
             return mouse.isRelease();
@@ -37,5 +35,9 @@ public abstract class CanvasComponent {
         else {
             return false;
         }
+    }
+    
+    public Boolean hovered() {
+        return mouse.isHovered(x, y, width, height);
     }
 }
