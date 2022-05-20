@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import Util.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -24,6 +25,9 @@ public class SwitchPokemon {
     GridBagConstraints gbc;
     MyFrame frame;
     MyPanel oldPanel;
+    ArrayList<ComponentData<Image, MyContainer>> party = new ArrayList<>();
+    ArrayList<ComponentData<Image, TransparantPanel>> pokeList = new ArrayList<>();
+    TradeData data;
     
     SwitchPokemon(MyFrame frame, MyPanel oldPanel){
         this.frame = frame;
@@ -47,6 +51,8 @@ public class SwitchPokemon {
         switchPanel.add(setPartyContainer(), gbc);
         
         switchPanel.add(showPokemonList(), gbc);
+        
+        data = new TradeData(party, pokeList);
         
         frame.changePanel(switchPanel);
     }
@@ -81,6 +87,8 @@ public class SwitchPokemon {
             imageContainer.add(pokemonImage);
             
             pokemonList.add(imageContainer);
+            
+            pokeList.add(new ComponentData(image.getImage(), imageContainer));
         }
         
         container.add(pokemonList);
@@ -100,6 +108,7 @@ public class SwitchPokemon {
         
         for(int i=0; i<3; i++){
             MyContainer pokemon = new MyContainer(200, 80, new GridBagLayout());
+            pokemon.setBackground(Color.LIGHT_GRAY);
             
             CanvasImage pokemonImage = new CanvasImage(
                     "src\\Material\\Image\\cookie0041_run04.png", 0, 0, 80, 80
@@ -119,6 +128,8 @@ public class SwitchPokemon {
             pokemon.add(pokemonLevel, gbc);
             
             container.add(pokemon);
+            
+            party.add(new ComponentData(pokemonImage.getImage(), pokemon));
         }
         
         gbc = SetGBC.setGbc(gbc, 0, 1, 0, 0, GridBagConstraints.NORTHWEST);
