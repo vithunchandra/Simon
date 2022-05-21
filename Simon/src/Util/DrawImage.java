@@ -4,6 +4,7 @@
  */
 package Util;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -12,18 +13,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
-/**
- *
- * @author asus
- */
-public class CanvasImage extends Canvas{
+public class DrawImage extends JComponent{
     private Image image;
     private String fileName;
-    public CanvasImage(String fileName, int x, int y, int width, int height){
-        this.setBounds(x, y, width, height);
-        this.setPreferredSize(new Dimension(width, height));
+    public DrawImage(String fileName, Dimension size){
+        this.setSize(size);
+        this.setPreferredSize(size);
+        this.fileName = fileName;
         takeImage(fileName);
-
+    }
+    
+    public DrawImage(String fileName, Dimension size, int x, int y){
+        this.setBounds(x, y, size.width, size.height);
+        this.fileName = fileName;
+        takeImage(fileName);
     }
 
     @Override
@@ -34,12 +37,10 @@ public class CanvasImage extends Canvas{
     }
 
     public void takeImage(String fileName){
-        this.fileName = fileName;
         try {
-            image = ImageIO.read(new File(this.fileName));
-            image = image.getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH);
+            image = ImageLoader.loadImage(fileName).getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH);
         } catch (IOException ex) {
-            Logger.getLogger(CanvasImage.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DrawImage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

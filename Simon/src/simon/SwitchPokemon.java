@@ -4,6 +4,7 @@
  */
 package simon;
 
+import Util.TransparantPanel;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
@@ -25,7 +26,7 @@ public class SwitchPokemon {
     GridBagConstraints gbc;
     MyFrame frame;
     MyPanel oldPanel;
-    ArrayList<ComponentData<Image, MyContainer>> party = new ArrayList<>();
+    ArrayList<ComponentData<Image, ActionComponent>> party = new ArrayList<>();
     ArrayList<ComponentData<Image, TransparantPanel>> pokeList = new ArrayList<>();
     TradeData data;
     
@@ -58,37 +59,44 @@ public class SwitchPokemon {
     }
     
     public Container showPokemonList(){
-        MyContainer container = new MyContainer(500, 500, new FlowLayout(FlowLayout.CENTER, 10, 10));
-        MyContainer header = new MyContainer(300, 50, new FlowLayout(FlowLayout.CENTER, 50, 10));
-        MyContainer pokemonList = new MyContainer(500, 450, new FlowLayout(FlowLayout.CENTER, 10, 10));
+        Image containerBackground = null;
+        try {
+            containerBackground = ImageLoader.loadImage("src\\Material\\Image\\dialogue.png");
+        } catch (IOException ex) {
+            Logger.getLogger(SwitchPokemon.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        ActionComponent container = new ActionComponent(new Dimension(500, 500), new FlowLayout(FlowLayout.CENTER, 10, 10), null);
+        ActionComponent header = new ActionComponent(new Dimension(300, 50), new FlowLayout(FlowLayout.CENTER, 50, 10), null);
+        ActionComponent pokemonList = new ActionComponent(new Dimension(500, 450), new FlowLayout(FlowLayout.CENTER, 10, 10), containerBackground);
         
         container.setBackground(Color.LIGHT_GRAY);
         pokemonList.setBackground(Color.BLUE);
         
-        CanvasImage backIcon = new CanvasImage("src\\Material\\Image\\Back_Black.png", 0, 0, 30, 30);
-        CanvasImage forwardIcon = new CanvasImage("src\\Material\\Image\\Forward_Black.png", 0, 0, 30, 30);
-        CanvasText headerText = new CanvasText("Box 1", new Font(Font.SANS_SERIF, Font.BOLD, 25));
+        DrawImage backIcon = new DrawImage("src\\Material\\Image\\Back_Black.png", new Dimension(30, 30));
+        DrawImage forwardIcon = new DrawImage("src\\Material\\Image\\Forward_Black.png", new Dimension(30, 30));
+        DrawText headerText = new DrawText("Box 1", new Font(Font.SANS_SERIF, Font.BOLD, 25));
        
         header.add(backIcon);
         header.add(headerText);
         header.add(forwardIcon);
         
         container.add(header);
+        
+        SetBorder border = new SetBorder(Color.GREEN);
+        
         for(int i = 0; i<18; i++){
             TransparantPanel imageContainer = new TransparantPanel(0, 0, new Color(255, 255, 255, 90));
             imageContainer.setPreferredSize(new Dimension(80, 80));
-//            CanvasImage pokemonImage = new CanvasImage("src\\Material\\Image\\cookie0041_run04.png", 0, 0, 80, 80);
-//            pokemonImage.setBounds(0, 0, 80, 80);
-            JLabel pokemonImage = new JLabel();
-            ImageIcon image = new ImageIcon(new ImageIcon("src\\Material\\Image\\leav chara.png").getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH));
-            pokemonImage.setIcon(image);
-            pokemonImage.setBounds(0, 0, 80, 80);
+            DrawImage pokemonImage = new DrawImage("src\\Material\\Image\\leav chara.png", new Dimension(80, 80), 0, 0);
 
             imageContainer.add(pokemonImage);
             
             pokemonList.add(imageContainer);
             
-            pokeList.add(new ComponentData(image.getImage(), imageContainer));
+            pokeList.add(new ComponentData(pokemonImage.getImage(), imageContainer));
+            
+            imageContainer.setBorder(border.niceFrame());
         }
         
         container.add(pokemonList);
@@ -100,21 +108,28 @@ public class SwitchPokemon {
     }
     
     public Container setPartyContainer(){
-        MyContainer container = new MyContainer(200, 320, new FlowLayout(FlowLayout.CENTER, 10, 10));
+        Image containerBackground = null;
+        try {
+            containerBackground = ImageLoader.loadImage("src\\Material\\Image\\dialogue.png");
+        } catch (IOException ex) {
+            Logger.getLogger(SwitchPokemon.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        ActionComponent container = new ActionComponent(new Dimension(200, 350), new FlowLayout(FlowLayout.CENTER, 10, 10), null);
         container.setBackground(Color.red);
         
-        CanvasText partyText = new CanvasText("Party", new Font(Font.SANS_SERIF, Font.BOLD, 20));
+        DrawText partyText = new DrawText("Party", new Font(Font.SANS_SERIF, Font.BOLD, 20));
         container.add(partyText);
         
         for(int i=0; i<3; i++){
-            MyContainer pokemon = new MyContainer(200, 80, new GridBagLayout());
+            ActionComponent pokemon = new ActionComponent(new Dimension(200, 90), new GridBagLayout(), containerBackground);
             pokemon.setBackground(Color.LIGHT_GRAY);
             
-            CanvasImage pokemonImage = new CanvasImage(
-                    "src\\Material\\Image\\cookie0041_run04.png", 0, 0, 80, 80
+            DrawImage pokemonImage = new DrawImage(
+                    "src\\Material\\Image\\cookie0041_run04.png", new Dimension(80, 80)
             );
-            CanvasText pokemonName = new CanvasText("Chandelure", new Font(Font.SANS_SERIF, Font.BOLD, 20));
-            CanvasText pokemonLevel = new CanvasText("Lvl : 10", new Font(Font.SANS_SERIF, Font.BOLD, 25));
+            DrawText pokemonName = new DrawText("Chandelure", new Font(Font.SANS_SERIF, Font.BOLD, 20));
+            DrawText pokemonLevel = new DrawText("Lvl : 10", new Font(Font.SANS_SERIF, Font.BOLD, 25));
             
             gbc = SetGBC.setGbc(gbc, 0, 0, 0, 0, GridBagConstraints.WEST);
             gbc.gridheight = 2;

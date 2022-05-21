@@ -4,18 +4,16 @@
  */
 package Util;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
-/**
- *
- * @author asus
- */
-public class CanvasText extends Canvas{
+public class DrawText extends JComponent{
     private String text;
     private Font font;
     private Dimension size;
     
-    public CanvasText(String text, Font font){
+    public DrawText(String text, Font font){
         this.text = text;
         this.font = font;
         Canvas c = new Canvas();
@@ -30,6 +28,7 @@ public class CanvasText extends Canvas{
         this.setPreferredSize(size);
         this.setSize(size);
         this.setBounds(0, 0, width, height);
+        this.setOpaque(false);
     }
 
     @Override

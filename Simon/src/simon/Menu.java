@@ -4,6 +4,7 @@
  */
 package simon;
 
+import Util.TransparantPanel;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -14,7 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.border.*;
-
+import Util.TransparantPanel;
 
 public class Menu {
     GridBagConstraints gbc;

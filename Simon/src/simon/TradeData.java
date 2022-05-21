@@ -4,18 +4,20 @@
  */
 package simon;
 
+import Util.TransparantPanel;
 import java.awt.event.*;
 import java.util.ArrayList;
 import Util.*;
 import java.awt.*;
 import javax.swing.JOptionPane;
+import javax.swing.border.*;
 
 public class TradeData implements MouseListener{
-    ArrayList<ComponentData<Image, MyContainer>> party;
+    ArrayList<ComponentData<Image, ActionComponent>> party;
     ArrayList<ComponentData<Image, TransparantPanel>> pokemonList;
-    ComponentData<Image, MyContainer> clickedParty = null;
+    ComponentData<Image, ActionComponent> clickedParty = null;
     
-    public TradeData(ArrayList<ComponentData<Image, MyContainer>> comp1, ArrayList<ComponentData<Image, TransparantPanel>> comp2){
+    public TradeData(ArrayList<ComponentData<Image, ActionComponent>> comp1, ArrayList<ComponentData<Image, TransparantPanel>> comp2){
         this.party = comp1;
         this.pokemonList = comp2;
         
@@ -28,7 +30,7 @@ public class TradeData implements MouseListener{
         }
     }
     
-    public void unclicked(MyContainer object){
+    public void unclicked(ActionComponent object){
         for(int i=0; i<party.size(); i++){
             if(party.get(i).getComponent() != object){
                 party.get(i).getComponent().setBorder(null);
@@ -42,6 +44,7 @@ public class TradeData implements MouseListener{
             if(e.getSource() == party.get(i).getComponent()){
                 clickedParty = party.get(i);
                 SetBorder border = new SetBorder(Color.GREEN);
+                Border temp = border.outlineBorder();
                 party.get(i).getComponent().setBorder(border.outlineBorder());
                 unclicked(party.get(i).getComponent());
             }
@@ -52,9 +55,9 @@ public class TradeData implements MouseListener{
                 if(clickedParty != null){
                     clickedParty.setData(pokemonList.get(i).getData());
                     for(int j=0; j<clickedParty.getComponent().getComponentCount(); j++){
-                        if(clickedParty.getComponent().getComponent(j) instanceof CanvasImage){
+                        if(clickedParty.getComponent().getComponent(j) instanceof DrawImage){
                             System.out.println("Test");
-                            CanvasImage image = (CanvasImage) clickedParty.getComponent().getComponent(j);
+                            DrawImage image = (DrawImage) clickedParty.getComponent().getComponent(j);
                             image.setImage(pokemonList.get(i).getData());
                             image.repaint();
                         }
@@ -80,12 +83,16 @@ public class TradeData implements MouseListener{
     public void mouseEntered(MouseEvent e) {
         for(int i=0; i<party.size(); i++){
             if(e.getSource() == party.get(i).getComponent()){
+                SetBorder border = new SetBorder(Color.GREEN);
+                party.get(i).getComponent().setBorder(border.niceFrame());
                 party.get(i).getComponent().setBackground(Color.GREEN);
             }
         }
         
         for(int i=0; i<pokemonList.size(); i++){
             if(e.getSource() == pokemonList.get(i).getComponent()){
+                SetBorder border = new SetBorder(Color.GREEN);
+                pokemonList.get(i).getComponent().setBorder(border.niceFrame());
                 pokemonList.get(i).getComponent().setBackground(new Color(0, 255, 0, 90));
             }
         }
@@ -95,7 +102,13 @@ public class TradeData implements MouseListener{
     public void mouseExited(MouseEvent e) {
         for(int i=0; i<party.size(); i++){
             if(e.getSource() == party.get(i).getComponent()){
-                party.get(i).getComponent().setBackground(Color.LIGHT_GRAY);
+                if(clickedParty != null){
+                    if(clickedParty.getComponent() != party.get(i).getComponent()){
+                        party.get(i).getComponent().setBorder(null);
+                    }
+                }else{
+                    party.get(i).getComponent().setBorder(null);
+                }
             }
         }
         
