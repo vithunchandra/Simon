@@ -4,6 +4,7 @@
  */
 package simon;
 
+import Util.MyFrame;
 import BattleCanvas.CanvasButton;
 import BattleCanvas.CanvasMouseListener;
 import BattleCanvas.CanvasTextArea;

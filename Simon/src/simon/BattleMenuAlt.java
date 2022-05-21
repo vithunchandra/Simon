@@ -4,6 +4,7 @@
  */
 package simon;
 
+import Util.MyFrame;
 import BattleCanvas.PokemonBarAlt;
 import BattleCanvas.CanvasMouseListener;
 import BattleCanvas.CanvasButton;

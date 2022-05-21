@@ -4,8 +4,11 @@
  */
 package simon;
 
+import Util.MyFrame;
+import Util.MyPanel;
 import java.awt.*;
 import javax.swing.*;
+import Util.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;

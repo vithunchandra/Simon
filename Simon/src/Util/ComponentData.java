@@ -11,8 +11,8 @@ import javax.swing.*;
  * @author asus
  */
 public class ComponentData<Data, Comp extends JComponent> {
-    Data data;
-    Comp component;
+    private Data data;
+    private Comp component;
 
     public ComponentData(Data data, Comp component) {
         this.data = data;

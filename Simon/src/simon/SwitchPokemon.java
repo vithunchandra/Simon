@@ -4,6 +4,8 @@
  */
 package simon;
 
+import Util.MyFrame;
+import Util.MyPanel;
 import Util.TransparantPanel;
 import java.awt.*;
 import java.awt.event.*;

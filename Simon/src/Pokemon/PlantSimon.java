@@ -6,7 +6,7 @@ package Pokemon;
 
 import java.awt.Graphics;
 import java.io.IOException;
-import simon.MyFrame;
+import Util.MyFrame;
 
 /**
  *

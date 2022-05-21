@@ -4,6 +4,8 @@
  */
 package simon;
 
+import Util.MyFrame;
+import Util.MyPanel;
 import Util.TransparantPanel;
 import Util.ImageLoader;
 import java.awt.Dimension;

@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 
 public class ActionButton extends ActionComponent{
     private boolean clicked, pressed, release, entered, exited;
-    Image defaultState, pressedState;
+    private Image defaultState, pressedState;
 
     public ActionButton(Dimension size, LayoutManager layout, Image imageBackground) {
         super(size, layout, imageBackground);
@@ -38,9 +38,26 @@ public class ActionButton extends ActionComponent{
     }
     
     public void checkClicked(int x, int y){
-        if(x >= 0 && x < this.getWidth() && y > 0 && y < this.getHeight()){
+        if(x >= 0 && x < this.getWidth() && y > 0 && y < this.getHeight() && pressed){
             clicked = true;
         }
+        pressed = false;
+    }
+
+    public Image getDefaultState() {
+        return defaultState;
+    }
+
+    public void setDefaultState(Image defaultState) {
+        this.defaultState = defaultState;
+    }
+
+    public Image getPressedState() {
+        return pressedState;
+    }
+
+    public void setPressedState(Image pressedState) {
+        this.pressedState = pressedState;
     }
 
     public boolean isClicked() {
