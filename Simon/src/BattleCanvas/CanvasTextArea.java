@@ -4,10 +4,16 @@
  */
 package BattleCanvas;
 
+import Pokemon.ImagePath;
 import Util.DoubleLinkList;
+import Util.ImageLoader;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import simon.MyFrame;
 
 /**
@@ -22,8 +28,11 @@ public class CanvasTextArea extends CanvasComponent {
     private int pl,pt,pr;
     private int fontPx;
     
-    public CanvasTextArea(int height, CanvasMouseListener mouse) {
+    private Image dialogueBox;
+    
+    public CanvasTextArea(int height, CanvasMouseListener mouse) throws IOException {
         super(0, MyFrame.DEFAULT_HEIGHT - height, MyFrame.DEFAULT_WIDTH , height, mouse);
+
         this.fontSize = default_font_size + 4;
         this.fontPx = default_font_size - 5;
         
@@ -33,10 +42,23 @@ public class CanvasTextArea extends CanvasComponent {
         this.pr = MyFrame.DEFAULT_WIDTH/3;
         
         this.textList = new DoubleLinkList<>();
-        textList.add("Pages\nyou view in this window won't appear in the browser history and they won't leave other traces, like cookies, on the computer after you close all open Guest windows. Any files you download will be preserved, however.");
-        textList.add("Page 2\nPOKEMON");
+        this.dialogueBox = ImageLoader.loadImage(ImagePath.BATTLE_DIALOGUE);
         
         text = textList.pop();
+    }
+    
+    public CanvasTextArea(int height, CanvasMouseListener mouse,DoubleLinkList textList) throws IOException {
+        super(0, MyFrame.DEFAULT_HEIGHT - height, MyFrame.DEFAULT_WIDTH , height, mouse);
+        this.fontSize = default_font_size + 4;
+        this.fontPx = default_font_size - 5;
+        
+        this.dialogueBox = ImageLoader.loadImage(ImagePath.BATTLE_DIALOGUE);
+        this.pl = 20;
+        this.pt = 10;
+        this.pr = MyFrame.DEFAULT_WIDTH/3;
+        
+        this.textList = textList;
+        this.text = this.textList.pop();
     }
     
 
@@ -58,12 +80,12 @@ public class CanvasTextArea extends CanvasComponent {
     public void draw(Graphics g) {
         g.setFont(DEFAULT_FONT);
         g.setColor(Color.white);
-        g.fillRect(x, y, width, height);
-        
-        
+        g.drawImage(dialogueBox, x, y, width, height,null);
+
+
         g.setColor(Color.black);
-        g.fillRect(x + width - pr, y, width, height);
-        
+        //g.fillRect(x + width - pr, y, width, height);
+
         int baseX = x + pl;
         int nowX = x + pl;
         int nowY = y + fontSize + pt;
@@ -80,13 +102,13 @@ public class CanvasTextArea extends CanvasComponent {
                 nowX = nowX + 2;
                 g.drawString(daftarKataJ, nowX, nowY);
                 nowX = nowX + fontPx*(daftarKataJ.length()) ;
-                
+
                 if(daftarKata2.length > 1 && j != daftarKata2.length - 1) {
                     nowX = baseX;
                     nowY = nowY + fontSize;
                 }
             }
-            
+
         }
         
         

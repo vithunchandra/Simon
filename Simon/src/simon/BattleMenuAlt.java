@@ -8,6 +8,7 @@ import BattleCanvas.PokemonBarAlt;
 import BattleCanvas.CanvasMouseListener;
 import BattleCanvas.CanvasButton;
 import BattleCanvas.CanvasTextArea;
+import Pokemon.ImagePath;
 import Util.ImageLoader;
 import java.awt.Canvas;
 import java.awt.Dimension;
@@ -39,10 +40,10 @@ public class BattleMenuAlt {
         private MyFrame frame;
         private JPanel panel;
         private CanvasMouseListener mouse;
+        private Image bgImg;
         
-        private CanvasButton backButton;
         private BattleAltLoop battleAltLoop;
-        public BattleCanvas(int fps,MyFrame frame,JPanel panel) {
+        public BattleCanvas(int fps,MyFrame frame,JPanel panel) throws IOException {
            this.fps = fps;
            this.running = false;
            this.setBounds(0, 0, MyFrame.DEFAULT_WIDTH, MyFrame.DEFAULT_HEIGHT);
@@ -54,9 +55,9 @@ public class BattleMenuAlt {
            this.addMouseListener(this.mouse);
            this.addMouseMotionListener(this.mouse);
            
-           this.backButton = new CanvasButton("BACK",0, 0, 100, 50, mouse);
-           
+           this.bgImg= ImageLoader.loadImage(ImagePath.BATTLE_BG1);
            this.battleAltLoop = new BattleAltLoop(mouse);
+           
            
            this.frame = frame;
            this.panel = panel;
@@ -75,10 +76,7 @@ public class BattleMenuAlt {
         }
         
         private void draw(Graphics g) throws IOException {
-            Image img = ImageLoader.loadImage("src\\Material\\Image\\battlemenu.png");
-            
-            g.drawImage(img, 0, 0,MyFrame.DEFAULT_WIDTH,MyFrame.DEFAULT_HEIGHT, null);
-            this.backButton.draw(g);
+            g.drawImage(this.bgImg, 0, 0,MyFrame.DEFAULT_WIDTH,MyFrame.DEFAULT_HEIGHT, null);
             battleAltLoop.draw(g);
             
         }
@@ -101,10 +99,10 @@ public class BattleMenuAlt {
         
         private void logicLoop(long diff) {
             
-            if(backButton.clicked()) {
+            battleAltLoop.logicLoop(diff);
+            if(!battleAltLoop.isBattling()) {
                 this.stop();
             }
-            battleAltLoop.logicLoop(diff);
             
             if(mouse.isRelease()) {
                 mouse.disableRelease();
@@ -153,7 +151,12 @@ public class BattleMenuAlt {
     public BattleMenuAlt(MyFrame frame,JPanel panel) throws InterruptedException {
         this.frame = frame;
         
-        BattleCanvas battleCanvas = new BattleCanvas(60,frame,panel);
+        BattleCanvas battleCanvas = null;
+        try {
+            battleCanvas = new BattleCanvas(60,frame,panel);
+        } catch (IOException ex) {
+            Logger.getLogger(BattleMenuAlt.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         frame.removePanel();
         frame.add(battleCanvas);

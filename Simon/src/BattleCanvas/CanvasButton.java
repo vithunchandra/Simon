@@ -4,9 +4,15 @@
  */
 package BattleCanvas;
 
+import Pokemon.ImagePath;
+import Util.ImageLoader;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -16,11 +22,20 @@ public class CanvasButton extends CanvasComponent {
     
     private String text;
     private int fontSize;
+    private boolean rendered;
+    private Image btn,btnPress;
     
     public CanvasButton(String text,int x,int y,int width,int height,CanvasMouseListener mouse) {
         super(x, y, width, height, mouse);
-        this.text = text;
-        this.fontSize = 20;
+        try {
+            this.text = text;
+            this.fontSize = 20;
+            
+            btn = ImageLoader.loadImage(ImagePath.BTN1);
+            btnPress = ImageLoader.loadImage(ImagePath.BTN1_PRESS);
+        } catch (IOException ex) {
+            Logger.getLogger(CanvasButton.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
     
@@ -38,21 +53,21 @@ public class CanvasButton extends CanvasComponent {
     
     @Override
     public void draw(Graphics g) {
+        rendered = true;
         if(mouse.getX() >= x && mouse.getY() >= y && mouse.getX() <= (x + width) && mouse.getY() <= (y + height)) {
             if(mouse.isPressed()) {
-                g.setColor(Color.red);
+                g.drawImage(this.btnPress,x, y, width, height,null);
             }
-            else if(this.hovered()) {
-                g.setColor(Color.green);
-            }
+//            else if(this.hovered()) {
+//                g.setColor(Color.green);
+//            }
             else {
-                g.setColor(Color.yellow);
+                g.drawImage(this.btn,x, y, width, height,null);
             }   
         }
         else {
-            g.setColor(Color.yellow);
+            g.drawImage(this.btn,x, y, width, height,null);
         }
-        g.fillRect(x, y, width, height);
         
         
         g.setFont(super.DEFAULT_FONT);
@@ -62,6 +77,12 @@ public class CanvasButton extends CanvasComponent {
         //System.out.println(midWidth);
         g.drawString(text, x + midWidth, y + this.fontSize + midHeight);
     }
+
+    public boolean isRendered() {
+        return rendered;
+    }
    
-    
+    public void setRenderedToFalse() {
+        this.rendered = false;
+    }
 }

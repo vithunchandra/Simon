@@ -6,9 +6,16 @@ package BattleCanvas;
 
 import BattleCanvas.CanvasMouseListener;
 import BattleCanvas.CanvasComponent;
+import Pokemon.ImagePath;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import Pokemon.Pokemon;
+import Util.ImageLoader;
+import java.awt.Image;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -20,14 +27,20 @@ public class PokemonBarAlt extends CanvasComponent{
     
     private String pokemonName;
     private int lvl,health,maxHealth;
-    public PokemonBarAlt(int x, int y, int width, int height, CanvasMouseListener mouse) {
+    private Image boxImg;
+    public PokemonBarAlt(Pokemon pokemon,int x, int y, int width, int height, CanvasMouseListener mouse) {
         super(x, y, width, height, mouse);
         fontSize = 20;
-        pokemonName = "<POKENAME>";
-        lvl = -1;
-        health = 5;
-        maxHealth = 10;
+        pokemonName = pokemon.getNama();
+        lvl = pokemon.getLvl();
+        health = pokemon.getHp();
+        maxHealth = pokemon.getMaxHp();
         
+        try {
+            boxImg = ImageLoader.loadImage(ImagePath.INFO_BOX);
+        } catch (IOException ex) {
+            Logger.getLogger(PokemonBarAlt.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     
@@ -36,7 +49,7 @@ public class PokemonBarAlt extends CanvasComponent{
     public void draw(Graphics g) {
         g.setFont(DEFAULT_FONT);
         g.setColor(Color.white);
-        g.fillRect(x, y, width, height);
+        g.drawImage(boxImg,x, y, width, height,null);
          
         g.setColor(Color.black);
         g.drawString(pokemonName, x + width/15, y + this.fontSize + height/10);

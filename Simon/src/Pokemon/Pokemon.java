@@ -4,6 +4,7 @@
  */
 package Pokemon;
 
+import BattleCanvas.Drawable;
 import Util.ImageLoader;
 import javax.swing.*;
 import java.util.*;
@@ -12,11 +13,21 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public abstract class Pokemon {
-    private String nama, pokemonCode;
-    private int hp, maxHp, damage;
-    private Image defaultFrontImage, defaultBackImage;
-    private ArrayList<Image> frontSpriteImage, backSpriteImage;
+
+//Setter nya tak ilangin beberapa(rasae ga perlu) ben ga menuh2 i
+//nanti waktu extends kalo ada abstract nya biarin kosong aja.
+public abstract class Pokemon implements Drawable{
+    public static  int MAX_LEVEL = 30;
+    
+    protected String nama, pokemonCode;
+    protected int lvl,hp, maxHp, damage;
+    protected Image defaultFrontImage, defaultBackImage;
+    protected ArrayList<Image> frontSpriteImage, backSpriteImage;
+    protected long timeAcc1,changeEveryMilis;
+    protected int standCt;
+    protected boolean renderFront;
+    protected int x,y,width,height;
+   
 
     public Pokemon(String nama, String pokemonCode, int hp, int maxHp, int damage) {
         this.nama = nama;
@@ -33,6 +44,30 @@ public abstract class Pokemon {
         } catch (IOException ex) {
             Logger.getLogger(Pokemon.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public Pokemon(String nama, int maxHp, int damage,String path,int numSprite,int x,int y,int width ,int height) throws IOException {
+        this.nama = nama;
+        this.hp = maxHp;
+        this.maxHp = maxHp;
+        this.damage = damage;
+        
+        this.frontSpriteImage = ImageLoader.loadImageArrayCropHorizontal(numSprite, path);
+        this.backSpriteImage = ImageLoader.loadImageArrayCropHorizontal(numSprite, path);
+        this.defaultFrontImage = this.frontSpriteImage.get(0);
+        this.defaultBackImage = this.backSpriteImage.get(0);
+        
+        int animTime = 5000;
+        this.timeAcc1 = 0;
+        this.changeEveryMilis = animTime/numSprite;
+        this.standCt = 0;
+        this.renderFront = true;
+        this.lvl = 1;
+        
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
     }
     
     //Clone
@@ -53,6 +88,21 @@ public abstract class Pokemon {
         }
     }
 
+    public abstract void logicLoop(long timediff);
+    
+    protected void defaultGraphicLoop(long timediff) {
+        if(this.renderFront) {
+            this.timeAcc1 += timediff; 
+            if(timeAcc1 >= changeEveryMilis) {
+                timeAcc1 = 0;
+                standCt = standCt + 1;
+                if(standCt == frontSpriteImage.size()) {
+                    standCt = 0;
+                }
+            }
+        }
+    }
+    
     public String getNama() {
         return nama;
     }
@@ -89,40 +139,35 @@ public abstract class Pokemon {
         return frontSpriteImage;
     }
 
-    public void setImageSprite(ArrayList<Image> imageSprite) {
-        this.frontSpriteImage = imageSprite;
-    }
-
     public Image getDefaultFrontImage() {
         return defaultFrontImage;
     }
 
-    public void setDefaultFrontImage(Image defaultFrontImage) {
-        this.defaultFrontImage = defaultFrontImage;
-    }
 
     public Image getDefaultBackImage() {
         return defaultBackImage;
     }
 
-    public void setDefaultBackImage(Image defaultBackImage) {
-        this.defaultBackImage = defaultBackImage;
-    }
 
     public ArrayList<Image> getFrontSpriteImage() {
         return frontSpriteImage;
-    }
-
-    public void setFrontSpriteImage(ArrayList<Image> frontSpriteImage) {
-        this.frontSpriteImage = frontSpriteImage;
     }
 
     public ArrayList<Image> getBackSpriteImage() {
         return backSpriteImage;
     }
 
-    public void setBackSpriteImage(ArrayList<Image> backSpriteImage) {
-        this.backSpriteImage = backSpriteImage;
+    public int getLvl() {
+        return lvl;
+    }
+    public void levelUp() {
+        this.lvl += 1;
+        if(lvl > MAX_LEVEL) {
+            lvl = MAX_LEVEL;
+        }
+    }
+    public void setLvl(int lvl) {
+        this.lvl = lvl;
     }
     
 }

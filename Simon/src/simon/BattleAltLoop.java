@@ -9,6 +9,8 @@ import BattleCanvas.CanvasMouseListener;
 import BattleCanvas.CanvasTextArea;
 import BattleCanvas.Drawable;
 import BattleCanvas.PokemonBarAlt;
+import Pokemon.ImagePath;
+import Pokemon.PlantSimon;
 import Util.ImageLoader;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -16,6 +18,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import Pokemon.Pokemon;
+import Util.DoubleLinkList;
+import javax.swing.JPanel;
 
 /**
  *
@@ -27,39 +32,54 @@ public class BattleAltLoop implements Drawable {
     private PokemonBarAlt pokeBar,pokeBar2;
     private CanvasTextArea canvasTextArea;
     private CanvasMouseListener mouse;
-    private ArrayList<Image> standPokemon1,standPokemon2;
-    int standCt = 0;
-    long timeAcc1 = 0;
-    long changeEveryMilis = 750;
+    private Pokemon playerPokemon,enemyPokemon;
     
-    public BattleAltLoop(CanvasMouseListener mouse) {
+    private DoubleLinkList<String> dialogueNow;
+    private MyFrame frame;
+    private JPanel panel;
+    
+    private boolean battling;
+    
+    public BattleAltLoop(CanvasMouseListener mouse) throws IOException {
         this.mouse = mouse;
+        this.frame = frame;
+        this.panel = panel;
         //x,y,width,height
-        this.useItemBtn = new CanvasButton("Use Item", MyFrame.DEFAULT_WIDTH - 310, MyFrame.DEFAULT_HEIGHT - 180, 125, 40, mouse);
-        this.useSkillBtn = new CanvasButton("Use Skill", MyFrame.DEFAULT_WIDTH - 160, MyFrame.DEFAULT_HEIGHT - 180, 125, 40, mouse);
-        this.changePokemonBtn = new CanvasButton("Switch", MyFrame.DEFAULT_WIDTH - 310, MyFrame.DEFAULT_HEIGHT - 120, 125, 40, mouse);
-        this.runBtn = new CanvasButton("RUN", MyFrame.DEFAULT_WIDTH - 160, MyFrame.DEFAULT_HEIGHT - 120, 125, 40, mouse);
+        this.useItemBtn = new CanvasButton("Use Item", MyFrame.DEFAULT_WIDTH - 310, MyFrame.DEFAULT_HEIGHT - 180, 140, 50, mouse);
+        this.useSkillBtn = new CanvasButton("Use Skill", MyFrame.DEFAULT_WIDTH - 160, MyFrame.DEFAULT_HEIGHT - 180, 140, 50, mouse);
+        this.changePokemonBtn = new CanvasButton("Switch", MyFrame.DEFAULT_WIDTH - 310, MyFrame.DEFAULT_HEIGHT - 120, 140, 50, mouse);
+        this.runBtn = new CanvasButton("RUN", MyFrame.DEFAULT_WIDTH - 160, MyFrame.DEFAULT_HEIGHT - 120, 140, 50, mouse);
         
-        this.pokeBar = new PokemonBarAlt(0, 100, 350, 120, mouse);
-        this.pokeBar2 = new PokemonBarAlt(580, 330, 400, 150, mouse);
-        this.canvasTextArea = new CanvasTextArea(200, mouse);
+        this.enemyPokemon = new PlantSimon("Simon Enemy",100, 10, MyFrame.DEFAULT_WIDTH/2 + 120, 0,150,300);
+        this.playerPokemon = new PlantSimon("Simon player",100, 10, MyFrame.DEFAULT_WIDTH/2 + 120, 0,150,300);
+        playerPokemon.levelUp();
         
-        try {
-            standPokemon1 = ImageLoader.loadImageArrayCropHorizontal(8,"src\\Material\\Image\\simon1.png");
-            standPokemon2 = ImageLoader.loadImageArrayCropHorizontal(8,"src\\Material\\Image\\simon1.png");
-        } catch (IOException ex) {
-            Logger.getLogger(BattleAltLoop.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.pokeBar = new PokemonBarAlt(this.enemyPokemon,0, 100, 350, 120, mouse);
+        this.pokeBar2 = new PokemonBarAlt(this.playerPokemon,580, 330, 400, 150, mouse);
+        
+        this.dialogueNow = new DoubleLinkList<>();
+        this.dialogueNow.add("You encounter " + this.enemyPokemon.getNama() + "!");
+        this.dialogueNow.add("What you want to do next?");
+        this.canvasTextArea = new CanvasTextArea(200, mouse,dialogueNow);
+        
+        this.battling = true;
+        
         
     }
 
     @Override
     public void draw(Graphics g) {
+        this.useItemBtn.setRenderedToFalse();
+        this.useSkillBtn.setRenderedToFalse();
+        this.changePokemonBtn.setRenderedToFalse();
+        this.runBtn.setRenderedToFalse();
+
+
         this.canvasTextArea.draw(g);
         this.pokeBar.draw(g);
         this.pokeBar2.draw(g);
         
-        g.drawImage(standPokemon1.get(standCt), MyFrame.DEFAULT_WIDTH/2 + 120, 0,150,300, null);
+        this.enemyPokemon.draw(g);
         
         if(!canvasTextArea.haveNextDialogue()) {
             this.useItemBtn.draw(g);
@@ -80,13 +100,16 @@ public class BattleAltLoop implements Drawable {
             canvasTextArea.nextText();
         }
         
-        this.timeAcc1 += diff;
-        if(timeAcc1 >= changeEveryMilis) {
-            timeAcc1 = 0;
-            standCt = standCt + 1;
-            if(standCt == standPokemon1.size()) {
-                standCt = 0;
-            }
+        if(this.runBtn.clicked() && this.runBtn.isRendered()) {
+            this.battling = false;
         }
+        
+        this.enemyPokemon.logicLoop(diff);
     }
+
+    public boolean isBattling() {
+        return battling;
+    }
+    
+    
 }
