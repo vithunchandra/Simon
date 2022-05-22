@@ -9,61 +9,56 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-public abstract class Button implements MouseListener{
-    private ArrayList<ActionButton> button;
+public abstract class Button extends MouseAdapter{
+    private ArrayList<ActionButton> buttons;
     
 
-    public Button(ArrayList<ActionButton> button) {
-        this.button = button;
+    public Button(ArrayList<ActionButton> buttons) {
+        this.buttons = buttons;
+        for(int i=0; i<buttons.size(); i++){
+            buttons.get(i).addMouseListener(this);
+        }
     }
     
     public Button(){
-        button = new ArrayList<>();
+        buttons = new ArrayList<>();
     }
     
     @Override
-    public void mouseClicked(MouseEvent e) {
-        
-    }
-
-    @Override
     public void mousePressed(MouseEvent e) {
-        for(int i=0; i<button.size(); i++){
-            button.get(i).setPressed(true);
-            if(!button.get(i).isClicked()){
-                button.get(i).setPressed(true);
-                button.get(i).setImageBackground(button.get(i).getPressedState());
+        super.mousePressed(e);
+        for(int i=0; i<buttons.size(); i++){
+            buttons.get(i).setPressed(true);
+            if(!buttons.get(i).isClicked()){
+                buttons.get(i).setPressed(true);
+                buttons.get(i).setImageBackground(buttons.get(i).getPressedState());
             }
         }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        for(int i=0; i<button.size(); i++){
-            button.get(i).checkClicked(e.getX(), e.getY());
-            if(button.get(i).isClicked()){
+        super.mouseReleased(e);
+        for(int i=0; i<buttons.size(); i++){
+            buttons.get(i).checkClicked(e.getX(), e.getY());
+            if(buttons.get(i).isClicked()){
                 mouseClicked(e);
             }else{
-                button.get(i).setImageBackground(button.get(i).getDefaultState());
+                buttons.get(i).setImageBackground(buttons.get(i).getDefaultState());
             }
         }
     }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-        
+    
+    public void AddButton(ActionButton button){
+        this.buttons.add(button);
+        button.addMouseListener(this);
     }
 
     public ArrayList<ActionButton> getButton() {
-        return button;
+        return buttons;
     }
 
-    public void setButton(ArrayList<ActionButton> button) {
-        this.button = button;
+    public void setButton(ArrayList<ActionButton> buttons) {
+        this.buttons = buttons;
     }
 }
