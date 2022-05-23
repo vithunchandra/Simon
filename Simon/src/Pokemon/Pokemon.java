@@ -53,7 +53,7 @@ public abstract class Pokemon implements Drawable{
         this.damage = damage;
         
         this.frontSpriteImage = ImageLoader.loadImageArrayCropHorizontal(numSprite, path);
-        this.backSpriteImage = ImageLoader.loadImageArrayCropHorizontal(numSprite, path);
+        this.backSpriteImage = ImageLoader.loadImageArrayCropHorizontal(numSprite, path.split("[.]")[0] + "_back." + path.split("[.]")[1]);
         this.defaultFrontImage = this.frontSpriteImage.get(0);
         this.defaultBackImage = this.backSpriteImage.get(0);
         
@@ -102,7 +102,23 @@ public abstract class Pokemon implements Drawable{
             }
         }
     }
+
+    @Override
+    public void draw(Graphics g) {
+        if(this.renderFront) {
+            g.drawImage(frontSpriteImage.get(standCt), x, y,width,height, null);
+        }
+        else {
+            g.drawImage(backSpriteImage.get(standCt), x, y,width,height, null);
+        }
+    }
+
+    public void setRenderFront(boolean renderFront) {
+        this.renderFront = renderFront;
+    }
     
+    
+   
     public String getNama() {
         return nama;
     }
@@ -168,6 +184,13 @@ public abstract class Pokemon implements Drawable{
     }
     public void setLvl(int lvl) {
         this.lvl = lvl;
+    }
+    
+    public void setBound(int x,int y,int width,int height) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
     }
     
 }

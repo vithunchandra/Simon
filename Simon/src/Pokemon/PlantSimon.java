@@ -14,13 +14,13 @@ import Util.MyFrame;
  */
 public class PlantSimon extends Pokemon{
 
-    public PlantSimon(String nama,int maxHp, int damage,int x,int y,int width,int height) throws IOException {
-        super(nama, maxHp, damage, ImagePath.SIMON_FRONT_PATH, 8,x,y,width,height);
+    public PlantSimon(int maxHp, int damage,int x,int y,int width,int height) throws IOException {
+        super("Plant Simon", maxHp, damage, ImagePath.SIMON_FRONT_PATH, 4,x,y,width,height);
     }
-    @Override
-    public void draw(Graphics g) {
-        g.drawImage(frontSpriteImage.get(standCt), x, y,width,height, null);
+    public PlantSimon(int maxHp, int damage) throws IOException {
+        super("Plant Simon", maxHp, damage, ImagePath.SIMON_FRONT_PATH, 4,-1,-1,-1,-1);
     }
+    
 
     @Override
     public void logicLoop(long timediff) {

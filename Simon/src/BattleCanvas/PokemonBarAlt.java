@@ -43,7 +43,12 @@ public class PokemonBarAlt extends CanvasComponent{
         }
     }
     
-    
+    public void setPokemon(Pokemon pokemon) {
+        pokemonName = pokemon.getNama();
+        lvl = pokemon.getLvl();
+        health = pokemon.getHp();
+        maxHealth = pokemon.getMaxHp();
+    }
     
     @Override
     public void draw(Graphics g) {

@@ -71,7 +71,7 @@ public class CanvasButton extends CanvasComponent {
         
         
         g.setFont(super.DEFAULT_FONT);
-        g.setColor(Color.BLACK);
+        g.setColor(Color.WHITE);
         int midHeight = (this.height - this.getPixelSize())/2;
         int midWidth = (int)(this.width - this.text.length()*this.fontSize/1.5 )/2;
         //System.out.println(midWidth);

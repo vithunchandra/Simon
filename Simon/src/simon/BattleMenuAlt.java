@@ -41,7 +41,7 @@ public class BattleMenuAlt {
         private MyFrame frame;
         private JPanel panel;
         private CanvasMouseListener mouse;
-        private Image bgImg;
+        
         
         private BattleAltLoop battleAltLoop;
         public BattleCanvas(int fps,MyFrame frame,JPanel panel) throws IOException {
@@ -56,7 +56,6 @@ public class BattleMenuAlt {
            this.addMouseListener(this.mouse);
            this.addMouseMotionListener(this.mouse);
            
-           this.bgImg= ImageLoader.loadImage(ImagePath.BATTLE_BG1);
            this.battleAltLoop = new BattleAltLoop(mouse);
            
            
@@ -77,7 +76,6 @@ public class BattleMenuAlt {
         }
         
         private void draw(Graphics g) throws IOException {
-            g.drawImage(this.bgImg, 0, 0,MyFrame.DEFAULT_WIDTH,MyFrame.DEFAULT_HEIGHT, null);
             battleAltLoop.draw(g);
             
         }

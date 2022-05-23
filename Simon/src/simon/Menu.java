@@ -4,6 +4,7 @@
  */
 package simon;
 
+import Pokemon.Pokemon;
 import Util.MyFrame;
 import Util.MyPanel;
 import Util.TransparantPanel;
@@ -18,13 +19,18 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.border.*;
 import Util.TransparantPanel;
+import Pokemon.PlantSimon;
 
 public class Menu {
     GridBagConstraints gbc;
     JLabel title;
     ImageIcon imageTitle;
     private MyFrame frame;
-    Menu(){
+    
+    //add pokemon party
+    
+    Menu() {
+        Player.loadInfo();
         frame = new MyFrame();
         gbc = new GridBagConstraints();
         title = new JLabel();
@@ -39,6 +45,9 @@ public class Menu {
         frame.changePanel(openMenu());
         
         frame.setVisible(true);
+        
+        
+        
     }
     
     public MyPanel openMenu(){
