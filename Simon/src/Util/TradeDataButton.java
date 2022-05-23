@@ -42,9 +42,13 @@ public class TradeDataButton extends ButtonAction{
                 }
             }
             
+            firstData.setClickedComponent(null);
+            secondData.setClickedComponent(null);
+            
             firstComponent.setBorder(null);
             secondComponent.setBorder(null);
         }
+        button.setClicked(false);
     }
     
 }

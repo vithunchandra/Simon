@@ -7,7 +7,7 @@ package Util.Button;
 import java.awt.event.*;
 
 public abstract class ButtonAction extends MouseAdapter{
-    ActionButton button;
+    public ActionButton button;
 
     public ButtonAction(ActionButton button) {
         this.button = button;
@@ -22,6 +22,7 @@ public abstract class ButtonAction extends MouseAdapter{
         if(button == e.getSource()){
             button.setPressed(true);
             button.setImageBackground(button.getPressedState());
+            button.repaint();
         }
     }
 
@@ -33,8 +34,10 @@ public abstract class ButtonAction extends MouseAdapter{
             if(button.isClicked()){
                 clicked();
                 button.setImageBackground(button.getDefaultState());
+                button.repaint();
             }else{
                 button.setImageBackground(button.getDefaultState());
+                button.repaint();
             }
         }
     }

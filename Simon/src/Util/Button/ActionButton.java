@@ -42,7 +42,7 @@ public class ActionButton extends ActionComponent{
     }
     
     public void checkClicked(int x, int y){
-        if(x >= 0 && x < this.getWidth() && y > 0 && y < this.getHeight() && pressed){
+        if(x >= 0 && x < this.getWidth() && y > 0 && y <= this.getHeight() && pressed){
             clicked = true;
         }
         pressed = false;

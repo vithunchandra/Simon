@@ -24,7 +24,7 @@ public class ClickedDataComponent <Data> extends MouseAdapter{
         super.mouseReleased(e);
         ActionComponent container = search(e);
         if(container != null){
-            if(e.getX() >= 0 && e.getX() <= container.getWidth() && e.getY() > 0 && e.getY() < container.getHeight()){
+            if(e.getX() >= 0 && e.getX() <= container.getWidth() && e.getY() > 0 && e.getY() <= container.getHeight()){
                 clickedComponent = search(container);
                 unclicked();
             }else{
