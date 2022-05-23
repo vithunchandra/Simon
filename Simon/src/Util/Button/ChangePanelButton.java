@@ -2,15 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Util;
+package Util.Button;
 
+import Util.Component.ComponentData;
+import Util.MyFrame;
+import Util.Container.MyPanel;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.LayoutManager;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-public class ChangePanelButton extends Button{
+public class ChangePanelButton extends Buttons{
     MyFrame frame;
     ArrayList<ComponentData<MyPanel, ActionButton>> componentData;
 

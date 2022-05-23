@@ -6,8 +6,8 @@ package simon;
 
 import Pokemon.Pokemon;
 import Util.MyFrame;
-import Util.MyPanel;
-import Util.TransparantPanel;
+import Util.Container.MyPanel;
+import Util.Container.TransparantPanel;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -18,7 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.border.*;
-import Util.TransparantPanel;
+import Util.Container.TransparantPanel;
 import Pokemon.PlantSimon;
 
 public class Menu {

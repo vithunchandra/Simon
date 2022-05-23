@@ -5,8 +5,8 @@
 package simon;
 
 import Util.MyFrame;
-import Util.MyPanel;
-import Util.TransparantPanel;
+import Util.Container.MyPanel;
+import Util.Container.TransparantPanel;
 import Util.ImageLoader;
 import java.awt.Dimension;
 import java.awt.Image;

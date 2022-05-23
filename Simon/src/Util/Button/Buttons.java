@@ -2,25 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Util;
+package Util.Button;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-public abstract class Button extends MouseAdapter{
+public abstract class Buttons extends MouseAdapter{
     private ArrayList<ActionButton> buttons;
     
 
-    public Button(ArrayList<ActionButton> buttons) {
+    public Buttons(ArrayList<ActionButton> buttons) {
         this.buttons = buttons;
         for(int i=0; i<buttons.size(); i++){
             buttons.get(i).addMouseListener(this);
         }
     }
     
-    public Button(){
+    public Buttons(){
         buttons = new ArrayList<>();
     }
     

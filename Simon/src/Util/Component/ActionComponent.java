@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Util;
+package Util.Component;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +13,7 @@ public class ActionComponent extends JComponent{
     
     public ActionComponent(Dimension size, LayoutManager layout, Image imageBackground){
         this.setPreferredSize(size);
+        this.setSize(size);
         this.setLayout(layout);
         this.setBackground(Color.LIGHT_GRAY);
         if(imageBackground != null){
@@ -22,6 +23,7 @@ public class ActionComponent extends JComponent{
     
     public ActionComponent(Dimension size, int x, int y, LayoutManager layout, Image imageBackground){
         this.setBounds(x, y, size.width, size.height);
+        this.setSize(size);
         this.setLayout(layout);
         this.setBackground(Color.LIGHT_GRAY);
         if(imageBackground != null){
@@ -47,7 +49,8 @@ public class ActionComponent extends JComponent{
 
     public void setImageBackground(Image imageBackground) {
         if(imageBackground != null){
-            this.imageBackground = imageBackground.getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH);
+            Dimension size = this.getSize();
+            this.imageBackground = imageBackground.getScaledInstance(size.width, size.height, Image.SCALE_SMOOTH);
         }
     }
 }

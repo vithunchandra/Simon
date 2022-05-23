@@ -5,7 +5,7 @@
 package simon;
 
 import Util.MyFrame;
-import Util.MyPanel;
+import Util.Container.MyPanel;
 import java.awt.*;
 import javax.swing.*;
 import Util.*;

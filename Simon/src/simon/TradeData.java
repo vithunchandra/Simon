@@ -4,7 +4,9 @@
  */
 package simon;
 
-import Util.TransparantPanel;
+import Util.Component.ComponentData;
+import Util.Component.ActionComponent;
+import Util.Container.TransparantPanel;
 import java.awt.event.*;
 import java.util.ArrayList;
 import Util.*;

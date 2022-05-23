@@ -4,9 +4,10 @@
  */
 package simon;
 
+import Util.Component.*;
 import Util.MyFrame;
-import Util.MyPanel;
-import Util.TransparantPanel;
+import Util.Container.MyPanel;
+import Util.Container.TransparantPanel;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
@@ -15,6 +16,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import Util.*;
+import Util.Button.*;
 import java.util.ArrayList;
 
 /**
@@ -28,9 +30,11 @@ public class SwitchPokemon {
     GridBagConstraints gbc;
     MyFrame frame;
     MyPanel oldPanel;
-    ArrayList<ComponentData<Image, ActionComponent>> party = new ArrayList<>();
-    ArrayList<ComponentData<Image, TransparantPanel>> pokeList = new ArrayList<>();
-    TradeData data;
+    ActionButton confirmButton;
+    ClickedDataComponent<Image> party;
+    ClickedDataComponent<Image> pokeList;
+    TradeDataButton trade;
+    
     
     SwitchPokemon(MyFrame frame, MyPanel oldPanel){
         this.frame = frame;
@@ -48,6 +52,9 @@ public class SwitchPokemon {
         switchPanel = new MyPanel(background, new GridBagLayout());
         switchPanel.setPreferredSize(new Dimension(MyFrame.DEFAULT_WIDTH, MyFrame.DEFAULT_HEIGHT));
         
+        party = new ClickedDataComponent();
+        pokeList = new ClickedDataComponent();
+        
         gbc = SetGBC.setGbc(gbc, 0, 0, 0, 0, GridBagConstraints.NORTHWEST);
         switchPanel.add(setBackButton(), gbc);
         
@@ -55,7 +62,7 @@ public class SwitchPokemon {
         
         switchPanel.add(showPokemonList(), gbc);
         
-        data = new TradeData(party, pokeList);
+        trade = new TradeDataButton(party, pokeList, confirmButton);
         
         frame.changePanel(switchPanel);
     }
@@ -68,9 +75,9 @@ public class SwitchPokemon {
             Logger.getLogger(SwitchPokemon.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        ActionComponent container = new ActionComponent(new Dimension(500, 500), new FlowLayout(FlowLayout.CENTER, 10, 10), null);
+        ActionComponent container = new ActionComponent(new Dimension(500, 540), new FlowLayout(FlowLayout.CENTER, 10, 10), null);
         ActionComponent header = new ActionComponent(new Dimension(300, 50), new FlowLayout(FlowLayout.CENTER, 50, 10), null);
-        ActionComponent pokemonList = new ActionComponent(new Dimension(500, 450), new FlowLayout(FlowLayout.CENTER, 10, 10), containerBackground);
+        ActionComponent pokemonList = new ActionComponent(new Dimension(500, 400), new FlowLayout(FlowLayout.CENTER, 10, 10), containerBackground);
         
         container.setBackground(Color.LIGHT_GRAY);
         pokemonList.setBackground(Color.BLUE);
@@ -88,20 +95,45 @@ public class SwitchPokemon {
         SetBorder border = new SetBorder(Color.GREEN);
         
         for(int i = 0; i<18; i++){
-            TransparantPanel imageContainer = new TransparantPanel(0, 0, new Color(255, 255, 255, 90));
-            imageContainer.setPreferredSize(new Dimension(80, 80));
+            ActionComponent imageContainer = new ActionComponent(new Dimension(80, 80), null, null);
+            imageContainer.setBackground(new Color(255, 255, 255, 90));
             DrawImage pokemonImage = new DrawImage("src\\Material\\Image\\leav chara.png", new Dimension(80, 80), 0, 0);
 
             imageContainer.add(pokemonImage);
             
             pokemonList.add(imageContainer);
             
-            pokeList.add(new ComponentData(pokemonImage.getImage(), imageContainer));
+            pokeList.addComponent(new ComponentData<Image, ActionComponent>(pokemonImage.getImage(), imageContainer));
             
             imageContainer.setBorder(border.niceFrame());
         }
         
         container.add(pokemonList);
+        
+        DrawText confirmText, infoText;
+        DrawImage confirmImage, infoImage;
+        ActionButton confirm, info;
+        
+        confirmText = new DrawText("Change", new Font(Font.MONOSPACED, Font.BOLD, 30));
+        infoText = new DrawText("Info", new Font(Font.MONOSPACED, Font.BOLD, 30));
+ 
+        
+        confirmImage = new DrawImage("src\\Material\\Image\\Change.png", new Dimension(confirmText.getHeight(), confirmText.getHeight()));
+        infoImage = new DrawImage("src\\Material\\Image\\Info.png", new Dimension(infoText.getHeight(), infoText.getHeight()));
+        
+        confirm = new ActionButton(new Dimension(confirmText.getWidth() + confirmImage.getWidth() + 30, confirmText.getHeight() + 15), new FlowLayout(), null);
+        info = new ActionButton(new Dimension(infoText.getWidth() + infoImage.getWidth() + 30, infoText.getHeight() + 15), new FlowLayout(), null);
+        
+        confirm.add(confirmImage);
+        confirm.add(confirmText);
+        
+        info.add(infoImage);
+        info.add(infoText);
+        
+        container.add(confirm);
+        container.add(info);
+        
+        confirmButton = confirm;
         
         SetGBC.setGbc(gbc, 0, 0, 0, 0, GridBagConstraints.CENTER);
         gbc.gridheight = 2;
@@ -146,7 +178,7 @@ public class SwitchPokemon {
             
             container.add(pokemon);
             
-            party.add(new ComponentData(pokemonImage.getImage(), pokemon));
+            party.addComponent(new ComponentData<Image, ActionComponent>(pokemonImage.getImage(), pokemon));
         }
         
         gbc = SetGBC.setGbc(gbc, 0, 1, 0, 0, GridBagConstraints.NORTHWEST);
