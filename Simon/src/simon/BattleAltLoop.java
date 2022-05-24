@@ -9,7 +9,9 @@ import BattleCanvas.CanvasButton;
 import BattleCanvas.CanvasMouseListener;
 import BattleCanvas.CanvasTextArea;
 import BattleCanvas.Drawable;
+import BattleCanvas.ItemCanvas;
 import BattleCanvas.PokemonBarAlt;
+import BattleCanvas.SwitchCanvas;
 import Pokemon.ImagePath;
 import Pokemon.PlantSimon;
 import Util.ImageLoader;
@@ -46,10 +48,15 @@ public class BattleAltLoop implements Drawable {
     private String nowState;
     
     //switch component
-    int idxChange1,idxChange2;
-    private CanvasButton switchBtn1,switchBtn2;
-    private PokemonBarAlt switchBar1,switchBar2;
-    private CanvasButton backButton;
+    private SwitchCanvas switchCanvas;
+    
+    //Item component
+    private ItemCanvas itemCanvas;
+    
+    //pokeball anim
+    private int pokeAnimX,pokeAnimY;
+    private Double pokeAnimT;
+    private boolean drawEnemy;
     
     public BattleAltLoop(CanvasMouseListener mouse) throws IOException {
         this.mouse = mouse;
@@ -82,16 +89,14 @@ public class BattleAltLoop implements Drawable {
         this.nowState = "battle";
         
         //switch component
-        this.idxChange1 = -1;
-        this.idxChange2 = -1;
-        
-        
-        //125, 400, 100, 100
-        backButton = new CanvasButton("Back", 0, 0, 100, 50, mouse);
-        switchBtn1 = new CanvasButton("Switch!", 175, 475, 150, 50, mouse);
-        switchBtn2 = new CanvasButton("Switch!", 625, 475, 150, 50, mouse);
-        
-        
+        this.switchCanvas = new SwitchCanvas(mouse, this);
+        //item component
+        this.itemCanvas = new ItemCanvas(mouse, this);
+        //pokeball anim
+        this.pokeAnimX = 50;
+        this.pokeAnimY = 500;
+        this.pokeAnimT = -15.;
+        this.drawEnemy = true;
     }
 
     @Override
@@ -102,17 +107,54 @@ public class BattleAltLoop implements Drawable {
             this.useSkillBtn.setRenderedToFalse();
             this.changePokemonBtn.setRenderedToFalse();
             this.runBtn.setRenderedToFalse();
-
-            this.enemyPokemon.get(enemyPokemonIdx).draw(g);
+            
+            if(itemCanvas.isUsingPokeBall()) {
+                
+                g.fillRect(pokeAnimX, pokeAnimY, 50, 50);
+                pokeAnimY = pokeAnimY - 15 + (int)((pokeAnimT*pokeAnimT)/6);
+                pokeAnimX = pokeAnimX + 5;
+                pokeAnimT = pokeAnimT + 0.25;
+                
+                if(pokeAnimT >= 15.5) {
+                    itemCanvas.setUsingPokeBall(false);
+                    
+                    
+                    this.pokeAnimX = 50;
+                    this.pokeAnimY = 500;
+                    this.pokeAnimT = -15.;
+                    
+                    boolean catched = true;
+                    
+                    if(catched) {
+                        this.dialogueNow.add("Congrats!\nYou catch the pokemon!");
+                        this.canvasTextArea.nextText();
+                        Player.pokemonInBox.add(this.enemyPokemon.get(enemyPokemonIdx));
+                        this.drawEnemy = false;
+                    }
+                    else {
+                        this.dialogueNow.add("You failed to catch the pokemon!");
+                        this.canvasTextArea.nextText();
+                    }
+                }
+                
+                
+            }
+            
+            if(this.drawEnemy) {
+                this.enemyPokemon.get(enemyPokemonIdx).draw(g);
+            }
+            else {
+                g.fillRect(650, 200, 50, 50);
+            }
             this.playerPokemon.get(playerPokemonIdx).draw(g);
 
             this.canvasTextArea.draw(g);
             this.pokeBar.draw(g);
             this.pokeBar2.draw(g);
-
-
-
-            if(!canvasTextArea.haveNextDialogue()) {
+            
+            
+            if(!canvasTextArea.haveNextDialogue() && !itemCanvas.isUsingPokeBall() && !this.canvasTextArea.getTextNow().equals("Congrats!\nYou catch the pokemon!")) {
+                
                 this.useItemBtn.draw(g);
                 this.useSkillBtn.draw(g);
                 this.changePokemonBtn.draw(g);
@@ -120,25 +162,10 @@ public class BattleAltLoop implements Drawable {
             }
         }
         else if(this.nowState.equals("switch")) {
-            this.switchBtn1.setRenderedToFalse();
-            this.switchBtn2.setRenderedToFalse();
-            this.backButton.setRenderedToFalse();
-            
-            g.drawImage(this.bgImg, 0, 0,MyFrame.DEFAULT_WIDTH,MyFrame.DEFAULT_HEIGHT, null);
-            
-            g.fillRect(50, 75, 400, 500);
-            g.fillRect(500, 75, 400, 500);
-            
-            this.playerPokemon.get(this.idxChange1).draw(g);
-            this.playerPokemon.get(this.idxChange2).draw(g);
-            
-            this.backButton.draw(g);
-            
-            this.switchBtn1.draw(g);
-            this.switchBtn2.draw(g);
-            
-            this.switchBar1.draw(g);
-            this.switchBar2.draw(g);
+            this.switchCanvas.draw(g);
+        }
+        else if(this.nowState.equals("item")) {
+            this.itemCanvas.draw(g);
         }
     }
     
@@ -152,31 +179,23 @@ public class BattleAltLoop implements Drawable {
             if(canvasTextArea.clicked()) {
                 canvasTextArea.nextText();
             }
+            if(this.canvasTextArea.getTextNow().equals("Congrats!\nYou catch the pokemon!")) {
+                if(canvasTextArea.clicked()) {
+                    this.battling = false;
+                }
+            }
 
             if(this.runBtn.clicked() && this.runBtn.isRendered()) {
                 this.battling = false;
             }
 
             if(this.changePokemonBtn.clicked() && this.changePokemonBtn.isRendered()) {
-                int whichBox = 0;
-                for(int i = 0;i < playerPokemon.size();i++) {
-                    if(i != this.playerPokemonIdx) {
-                        if(whichBox == 0) {
-                            this.idxChange1 = i;
-                        }
-                        else if(whichBox == 1) {
-                            this.idxChange2 = i;
-                        }
-                        
-                        whichBox++;
-                    }
-                }
-                
-                this.playerPokemon.get(this.idxChange1).setRenderFront(true);
-                this.playerPokemon.get(this.idxChange2).setRenderFront(true);
-                switchBar1 = new PokemonBarAlt(this.playerPokemon.get(this.idxChange1), 115, 370, 260, 100, mouse);
-                switchBar2 = new PokemonBarAlt(this.playerPokemon.get(this.idxChange2), 570, 370, 260, 100, mouse);
+                this.switchCanvas.reInit();
                 this.nowState = "switch";
+            }
+            
+            if(this.useItemBtn.clicked() && this.useSkillBtn.isRendered()) {
+                this.nowState = "item";
             }
 
             this.enemyPokemon.get(enemyPokemonIdx).logicLoop(diff);
@@ -186,30 +205,41 @@ public class BattleAltLoop implements Drawable {
             this.playerPokemon.get(playerPokemonIdx).logicLoop(diff);
         }
         else if(this.nowState.equals("switch")) {
-            this.playerPokemon.get(this.idxChange1).setBound(125, 60, 225, 300);
-            this.playerPokemon.get(this.idxChange2).setBound(600, 60, 225, 300);
+            this.switchCanvas.logicLoop(diff);
+        }
+        else if(this.nowState.equals("item")) {
+            this.itemCanvas.logicLoop(diff);
             
-            this.playerPokemon.get(this.idxChange1).logicLoop(diff);
-            this.playerPokemon.get(this.idxChange2).logicLoop(diff);
-            
-            if(this.switchBtn1.clicked() && this.switchBtn1.isRendered()) {
-                this.playerPokemonIdx = this.idxChange1;
-                this.pokeBar2.setPokemon(this.playerPokemon.get(this.playerPokemonIdx));
-                this.nowState = "battle";
-            }
-            if(this.switchBtn2.clicked() && this.switchBtn2.isRendered()) {
-                this.playerPokemonIdx = this.idxChange2;
-                this.pokeBar2.setPokemon(this.playerPokemon.get(this.playerPokemonIdx));
-                this.nowState = "battle";
-            }
-            if(this.backButton.clicked() && this.backButton.isRendered()) {
-                this.nowState = "battle";
-            }
         }
     }
 
     public boolean isBattling() {
         return battling;
+    }
+
+    public void setNowState(String nowState) {
+        this.nowState = nowState;
+    }
+
+    public PokemonBarAlt getPokeBar2() {
+        return pokeBar2;
+    }
+
+    public int getPlayerPokemonIdx() {
+        return playerPokemonIdx;
+    }
+
+
+    public void setPlayerPokemonIdx(int playerPokemonIdx) {
+        this.playerPokemonIdx = playerPokemonIdx;
+    }
+
+    public DoubleLinkList<String> getDialogueNow() {
+        return dialogueNow;
+    }
+
+    public CanvasTextArea getCanvasTextArea() {
+        return canvasTextArea;
     }
     
     

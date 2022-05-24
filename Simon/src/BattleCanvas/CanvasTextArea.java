@@ -117,6 +117,10 @@ public class CanvasTextArea extends CanvasComponent {
     public void setTextList(DoubleLinkList<String> textList) {
         this.textList = textList;
     }
+
+    public String getTextNow() {
+        return text;
+    }
     
     
     

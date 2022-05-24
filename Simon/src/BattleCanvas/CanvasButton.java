@@ -85,4 +85,10 @@ public class CanvasButton extends CanvasComponent {
     public void setRenderedToFalse() {
         this.rendered = false;
     }
+
+    public String getText() {
+        return text;
+    }
+    
+    
 }

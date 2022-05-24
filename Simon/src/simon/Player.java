@@ -17,8 +17,10 @@ import java.util.logging.Logger;
  */
 public class Player {
     public static ArrayList<Pokemon> pokemonInParty;
+    public static ArrayList<Pokemon> pokemonInBox;
     public static void loadInfo() {
         pokemonInParty = new ArrayList<>();
+        pokemonInBox =  new ArrayList<>();
         try {
             pokemonInParty.add(new PlantSimon(100, 1));
             pokemonInParty.add(new PlantSimon(200, 5));
