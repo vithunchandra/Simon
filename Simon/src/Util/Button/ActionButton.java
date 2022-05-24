@@ -26,7 +26,9 @@ public class ActionButton extends ActionComponent{
         } catch (IOException ex) {
             Logger.getLogger(ActionButton.class.getName()).log(Level.SEVERE, null, ex);
         }
-        super.setImageBackground(defaultState);
+        if(super.getImageBackground() == null){
+            super.setImageBackground(defaultState);
+        }
     }
 
     public ActionButton(Dimension size, int x, int y, LayoutManager layout, Image imageBackground) {
@@ -38,7 +40,9 @@ public class ActionButton extends ActionComponent{
         } catch (IOException ex) {
             Logger.getLogger(ActionButton.class.getName()).log(Level.SEVERE, null, ex);
         }
-        super.setImageBackground(defaultState);
+        if(super.getImageBackground() == null){
+            super.setImageBackground(defaultState);
+        }
     }
     
     public void checkClicked(int x, int y){

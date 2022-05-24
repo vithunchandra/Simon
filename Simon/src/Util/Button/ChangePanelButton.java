@@ -7,40 +7,44 @@ package Util.Button;
 import Util.Component.ComponentData;
 import Util.MyFrame;
 import Util.Container.MyPanel;
+import Util.Component.*;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.LayoutManager;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-public class ChangePanelButton extends Buttons{
+public class ChangePanelButton extends ButtonAction{
     MyFrame frame;
-    ArrayList<ComponentData<MyPanel, ActionButton>> componentData;
+    MyPanel newPanel;
+    MyPanel oldPanel;
 
-    public ChangePanelButton(MyFrame frame, ArrayList<ComponentData<MyPanel, ActionButton>> componentData, ArrayList<ActionButton> button) {
+    public ChangePanelButton(MyFrame frame, MyPanel newPanel, ActionButton button) {
         super(button);
         this.frame = frame;
-        this.componentData = componentData;
+        for(int i=0; i<frame.getContentPane().getComponentCount(); i++){
+            if(frame.getContentPane().getComponent(i) instanceof MyPanel){
+                oldPanel = (MyPanel) frame.getContentPane().getComponent(i);
+                break;
+            }
+        }
+        this.newPanel = newPanel;
     }
     
-    public ChangePanelButton(MyFrame frame){
-        super();
+    public ChangePanelButton(MyFrame frame, ActionButton button){
+        super(button);
         this.frame = frame;
-        componentData = new ArrayList<>();
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        super.mouseClicked(e);
-        for(int i=0; i<componentData.size(); i++){
-            if(componentData.get(i).getComponent() == e.getSource()){
-                frame.changePanel(componentData.get(i).getData());
+        for(int i=0; i<frame.getContentPane().getComponentCount(); i++){
+            if(frame.getContentPane().getComponent(i) instanceof MyPanel){
+                oldPanel = (MyPanel) frame.getContentPane().getComponent(i);
+                break;
             }
         }
     }
-    
-    public void addComponentData(ComponentData<MyPanel, ActionButton> component){
-        this.getButton().add(component.getComponent());
-        componentData.add(component);
+
+    @Override
+    public void clicked() {
+        frame.changePanel(oldPanel);
     }
+
 }

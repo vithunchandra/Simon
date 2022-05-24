@@ -28,6 +28,12 @@ public class DrawImage extends JComponent{
         this.fileName = fileName;
         takeImage(fileName);
     }
+    
+    public DrawImage(Image image, Dimension size){
+        this.setSize(size);
+        this.setPreferredSize(size);
+        this.image = image;
+    }
 
     @Override
     public void paint(Graphics g) {

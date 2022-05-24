@@ -30,11 +30,11 @@ public class SwitchPokemon {
     GridBagConstraints gbc;
     MyFrame frame;
     MyPanel oldPanel;
-    ActionButton confirmButton;
+    ActionButton confirmButton, infoButton;
     ClickedDataComponent<Image> party;
     ClickedDataComponent<Image> pokeList;
     TradeDataButton trade;
-    
+    ChangeInfoPokemonPanel infoPanel; 
     
     SwitchPokemon(MyFrame frame, MyPanel oldPanel){
         this.frame = frame;
@@ -63,6 +63,8 @@ public class SwitchPokemon {
         switchPanel.add(showPokemonList(), gbc);
         
         trade = new TradeDataButton(party, pokeList, confirmButton);
+        
+        infoPanel = new ChangeInfoPokemonPanel(pokeList, frame, infoButton);
         
         frame.changePanel(switchPanel);
     }
@@ -134,6 +136,7 @@ public class SwitchPokemon {
         container.add(info);
         
         confirmButton = confirm;
+        infoButton = info;
         
         SetGBC.setGbc(gbc, 0, 0, 0, 0, GridBagConstraints.CENTER);
         gbc.gridheight = 2;
