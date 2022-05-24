@@ -36,7 +36,7 @@ public class DrawText extends JComponent{
         super.paint(g);
         g = (Graphics2D) g;
         g.setFont(font);
-        g.drawString(text, 0, size.height - 8);
+        g.drawString(text, 0, size.height - 10);
     }
 
     public String getText() {

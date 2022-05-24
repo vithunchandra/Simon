@@ -118,7 +118,6 @@ public class SwitchPokemon {
         
         confirmText = new DrawText("Change", new Font(Font.MONOSPACED, Font.BOLD, 30));
         infoText = new DrawText("Info", new Font(Font.MONOSPACED, Font.BOLD, 30));
- 
         
         confirmImage = new DrawImage("src\\Material\\Image\\Change.png", new Dimension(confirmText.getHeight(), confirmText.getHeight()));
         infoImage = new DrawImage("src\\Material\\Image\\Info.png", new Dimension(infoText.getHeight(), infoText.getHeight()));
@@ -138,7 +137,7 @@ public class SwitchPokemon {
         confirmButton = confirm;
         infoButton = info;
         
-        SetGBC.setGbc(gbc, 0, 0, 0, 0, GridBagConstraints.CENTER);
+        gbc = SetGBC.setGbc(gbc, 0, 0, 0, 0, GridBagConstraints.CENTER);
         gbc.gridheight = 2;
         gbc.gridwidth = 2;
         return container;
