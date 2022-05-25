@@ -4,7 +4,6 @@
  */
 package simon;
 
-import DummyClass.PokemonDummy;
 import Util.Component.*;
 import Util.MyFrame;
 import Util.Container.MyPanel;
@@ -21,13 +20,14 @@ import Util.Button.*;
 import java.util.ArrayList;
 import Util.*;
 import Util.Container.*;
+import Pokemon.*;
 
 public class PokemonInfo {
-    PokemonDummy pokemon;
+    Pokemon pokemon;
     MyPanel oldPanel;
     MyFrame frame;
 
-    public PokemonInfo(PokemonDummy pokemon, MyFrame frame, MyPanel oldPanel) {
+    public PokemonInfo(Pokemon pokemon, MyFrame frame, MyPanel oldPanel) {
         this.pokemon = pokemon;
         this.oldPanel = oldPanel;
         this.frame = frame;
@@ -47,14 +47,14 @@ public class PokemonInfo {
         MyPanel infoPanel = new MyPanel(infoBackground, new GridBagLayout());
         
         ArrayList<String> text = new ArrayList<>();
-        text.add("Pokemon Name : " + pokemon.getName());
-        text.add("Level : " + pokemon.getLevel());
+        text.add("Pokemon Name : " + pokemon.getNama());
+        text.add("Level : " + pokemon.getLvl());
         text.add("Max Hp : " + pokemon.getMaxHp());
-        text.add("Attack : " + pokemon.getAttack());
-        text.add("Defense : " + pokemon.getDefense());
-        text.add("Element : " + pokemon.getElement());
+        text.add("Attack : " + pokemon.getDamage());
+        text.add("Total Skill : " + pokemon.getNumberOfSkill());
+        text.add("Element : Grass");
         
-        DrawImage pokemonImage = new DrawImage(pokemon.getDummyImage().getScaledInstance(400, 500, Image.SCALE_SMOOTH), new Dimension(500, 500));
+        DrawImage pokemonImage = new DrawImage(pokemon.getDefaultFrontImage().getScaledInstance(400, 500, Image.SCALE_SMOOTH), new Dimension(500, 500));
         DrawTextArray pokemonStat = new DrawTextArray(text, new Font(Font.MONOSPACED, Font.BOLD, 25));
         
         Image containerBackground = null;

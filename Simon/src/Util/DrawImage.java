@@ -34,6 +34,11 @@ public class DrawImage extends JComponent{
         this.setPreferredSize(size);
         this.image = image;
     }
+    
+    public DrawImage(Image image, Dimension size, int x, int y){
+        this.setBounds(x, y, size.width, size.height);
+        this.image = image;
+    }
 
     @Override
     public void paint(Graphics g) {

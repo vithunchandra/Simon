@@ -7,12 +7,13 @@ package Util;
 import Util.Button.*;
 import java.awt.*;
 import Util.Component.*;
+import Pokemon.*;
 
 public class TradeDataButton extends ButtonAction{
-    ClickedDataComponent<Image> firstData;
-    ClickedDataComponent<Image> secondData;
+    ClickedDataComponent<Pokemon> firstData;
+    ClickedDataComponent<Pokemon> secondData;
 
-    public TradeDataButton(ClickedDataComponent<Image> firstData, ClickedDataComponent<Image> secondData, ActionButton button) {
+    public TradeDataButton(ClickedDataComponent<Pokemon> firstData, ClickedDataComponent<Pokemon> secondData, ActionButton button) {
         super(button);
         this.firstData = firstData;
         this.secondData = secondData;
@@ -21,34 +22,36 @@ public class TradeDataButton extends ButtonAction{
     @Override
     public void clicked() {
         if(firstData.getClickedComponent() != null && secondData.getClickedComponent() != null){
-            Image temp = firstData.getClickedComponent().getData();
+            Pokemon temp = firstData.getClickedComponent().getData();
             firstData.getClickedComponent().setData(secondData.getClickedComponent().getData());
             secondData.getClickedComponent().setData(temp);
             
-            ActionComponent firstComponent = firstData.getClickedComponent().getComponent();
-            ActionComponent secondComponent = secondData.getClickedComponent().getComponent();
-            
-            for(int i=0; i<firstComponent.getComponentCount(); i++){
-                if(firstComponent.getComponent(i) instanceof DrawImage){
-                    DrawImage image = (DrawImage) firstComponent.getComponent(i);
-                    image.setImage(firstData.getClickedComponent().getData());
-                }
-            }
-            
-            for(int i=0; i<secondComponent.getComponentCount(); i++){
-                if(secondComponent.getComponent(i) instanceof DrawImage){
-                    DrawImage image = (DrawImage) secondComponent.getComponent(i);
-                    image.setImage(secondData.getClickedComponent().getData());
-                }
-            }
+            reasset(firstData);
+            reasset(secondData);
             
             firstData.setClickedComponent(null);
             secondData.setClickedComponent(null);
-            
-            firstComponent.setBorder(null);
-            secondComponent.setBorder(null);
         }
         button.setClicked(false);
+    }
+    
+    public void reasset(ClickedDataComponent<Pokemon> data){
+        ActionComponent comp = data.getClickedComponent().getComponent();
+        Pokemon pokemon = data.getClickedComponent().getData();
+        for(int i=0; i<comp.getComponentCount(); i++){
+            if(comp.getComponent(i) instanceof DrawImage){
+                DrawImage image = (DrawImage) comp.getComponent(i);
+                image.setImage(pokemon.getDefaultFrontImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH));
+            }else if(comp.getComponent(i) instanceof DrawText){
+                DrawText text = (DrawText) comp.getComponent(i);
+                if(text.getName().equals("pokemonName")){
+                    text.setText(pokemon.getNama());
+                }else if(text.getName().equals("pokemonLevel")){
+                    text.setText("Lvl : " + pokemon.getLvl());
+                }
+            }
+        }
+        comp.setBorder(null);
     }
     
 }

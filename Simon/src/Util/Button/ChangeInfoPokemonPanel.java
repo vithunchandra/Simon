@@ -9,10 +9,11 @@ import java.awt.*;
 import Util.Component.*;
 import DummyClass.*;
 import simon.*;
+import Pokemon.*;
 
 public class ChangeInfoPokemonPanel extends ChangePanelButton{
-    ClickedDataComponent<Image> clickedData;
-    public ChangeInfoPokemonPanel(ClickedDataComponent<Image> clickedData, MyFrame frame, ActionButton button) {
+    ClickedDataComponent<Pokemon> clickedData;
+    public ChangeInfoPokemonPanel(ClickedDataComponent<Pokemon> clickedData, MyFrame frame, ActionButton button) {
         super(frame, button);
         this.clickedData = clickedData;
     }
@@ -20,7 +21,7 @@ public class ChangeInfoPokemonPanel extends ChangePanelButton{
     @Override
     public void clicked() {
         if(clickedData.getClickedComponent() != null){
-            PokemonInfo pokemonInfo = new PokemonInfo(new PokemonDummy(clickedData.getClickedComponent().getData(), 100, 8, 20, 14, "Test", "Fire"), frame, this.oldPanel);
+            PokemonInfo pokemonInfo = new PokemonInfo(clickedData.getClickedComponent().getData(), frame, this.oldPanel);
             this.newPanel = pokemonInfo.infoPanel();
             frame.changePanel(newPanel);
         }

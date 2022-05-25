@@ -45,6 +45,15 @@ public class DrawText extends JComponent{
 
     public void setText(String text) {
         this.text = text;
+        Canvas c = new Canvas();
+        FontMetrics metrics = c.getFontMetrics(font);
+        int height = metrics.getHeight();
+        int width = metrics.stringWidth(text);
+        size = new Dimension(width, height);
+    
+        this.setPreferredSize(size);
+        this.setSize(size);
+        this.setBounds(0, 0, width, height);
     }
 
     public Font getFont() {

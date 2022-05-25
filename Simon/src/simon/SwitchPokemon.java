@@ -18,6 +18,7 @@ import javax.swing.*;
 import Util.*;
 import Util.Button.*;
 import java.util.ArrayList;
+import Pokemon.*;
 
 /**
  *
@@ -31,8 +32,8 @@ public class SwitchPokemon {
     MyFrame frame;
     MyPanel oldPanel;
     ActionButton confirmButton, infoButton;
-    ClickedDataComponent<Image> party;
-    ClickedDataComponent<Image> pokeList;
+    ClickedDataComponent<Pokemon> party;
+    ClickedDataComponent<Pokemon> pokeList;
     TradeDataButton trade;
     ChangeInfoPokemonPanel infoPanel; 
     
@@ -99,13 +100,15 @@ public class SwitchPokemon {
         for(int i = 0; i<18; i++){
             ActionComponent imageContainer = new ActionComponent(new Dimension(80, 80), null, null);
             imageContainer.setBackground(new Color(255, 255, 255, 90));
-            DrawImage pokemonImage = new DrawImage("src\\Material\\Image\\leav chara.png", new Dimension(80, 80), 0, 0);
+            
+            Pokemon pokemonData = Player.pokemonInParty.get((i % Player.pokemonInParty.size()));
+            DrawImage pokemonImage = new DrawImage(pokemonData.getDefaultFrontImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH), new Dimension(80, 80), 0, 0);
 
             imageContainer.add(pokemonImage);
             
             pokemonList.add(imageContainer);
             
-            pokeList.addComponent(new ComponentData<Image, ActionComponent>(pokemonImage.getImage(), imageContainer));
+            pokeList.addComponent(new ComponentData<Pokemon, ActionComponent>(pokemonData, imageContainer));
             
             imageContainer.setBorder(border.niceFrame());
         }
@@ -146,32 +149,37 @@ public class SwitchPokemon {
     public Container setPartyContainer(){
         Image containerBackground = null;
         try {
-            containerBackground = ImageLoader.loadImage("src\\Material\\Image\\dialogue.png");
+            containerBackground = ImageLoader.loadImage("src\\Material\\Image\\pokemonBorder.png");
         } catch (IOException ex) {
             Logger.getLogger(SwitchPokemon.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        ActionComponent container = new ActionComponent(new Dimension(200, 350), new FlowLayout(FlowLayout.CENTER, 10, 10), null);
+        ActionComponent container = new ActionComponent(new Dimension(210, 350), new FlowLayout(FlowLayout.CENTER, 10, 10), null);
         container.setBackground(Color.red);
         
         DrawText partyText = new DrawText("Party", new Font(Font.SANS_SERIF, Font.BOLD, 20));
         container.add(partyText);
         
         for(int i=0; i<3; i++){
-            ActionComponent pokemon = new ActionComponent(new Dimension(200, 90), new GridBagLayout(), containerBackground);
+            Pokemon pokemonData = Player.pokemonInParty.get(i);
+            
+            ActionComponent pokemon = new ActionComponent(new Dimension(210, 90), new GridBagLayout(), null);
             pokemon.setBackground(Color.LIGHT_GRAY);
             
             DrawImage pokemonImage = new DrawImage(
-                    "src\\Material\\Image\\cookie0041_run04.png", new Dimension(80, 80)
+                    pokemonData.getDefaultFrontImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH), new Dimension(80, 80)
             );
-            DrawText pokemonName = new DrawText("Chandelure", new Font(Font.SANS_SERIF, Font.BOLD, 20));
-            DrawText pokemonLevel = new DrawText("Lvl : 10", new Font(Font.SANS_SERIF, Font.BOLD, 25));
+            DrawText pokemonName = new DrawText(pokemonData.getNama(), new Font(Font.SANS_SERIF, Font.BOLD, 20));
+            pokemonName.setName("pokemonName");
+            
+            DrawText pokemonLevel = new DrawText("Lvl : " + pokemonData.getLvl(), new Font(Font.SANS_SERIF, Font.BOLD, 25));
+            pokemonLevel.setName("pokemonLevel");
             
             gbc = SetGBC.setGbc(gbc, 0, 0, 0, 0, GridBagConstraints.WEST);
             gbc.gridheight = 2;
             pokemon.add(pokemonImage, gbc);
             
-            gbc = SetGBC.setGbc(gbc, 1, 0, 0, 0, GridBagConstraints.EAST);
+            gbc = SetGBC.setGbc(gbc, 1, 0, 0, 0, GridBagConstraints.SOUTHEAST);
             gbc.gridheight = 1;
             pokemon.add(pokemonName, gbc);
             
@@ -180,7 +188,7 @@ public class SwitchPokemon {
             
             container.add(pokemon);
             
-            party.addComponent(new ComponentData<Image, ActionComponent>(pokemonImage.getImage(), pokemon));
+            party.addComponent(new ComponentData<Pokemon, ActionComponent>(pokemonData, pokemon));
         }
         
         gbc = SetGBC.setGbc(gbc, 0, 1, 0, 0, GridBagConstraints.NORTHWEST);
