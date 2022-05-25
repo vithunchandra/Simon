@@ -25,16 +25,12 @@ public class PokemonBarAlt extends CanvasComponent{
     
     private int fontSize;
     
-    private String pokemonName;
-    private int lvl,health,maxHealth;
+    private Pokemon pokemon;
     private Image boxImg;
     public PokemonBarAlt(Pokemon pokemon,int x, int y, int width, int height, CanvasMouseListener mouse) {
         super(x, y, width, height, mouse);
         fontSize = 20;
-        pokemonName = pokemon.getNama();
-        lvl = pokemon.getLvl();
-        health = pokemon.getHp();
-        maxHealth = pokemon.getMaxHp();
+        this.pokemon = pokemon;
         
         try {
             boxImg = ImageLoader.loadImage(ImagePath.INFO_BOX);
@@ -44,10 +40,7 @@ public class PokemonBarAlt extends CanvasComponent{
     }
     
     public void setPokemon(Pokemon pokemon) {
-        pokemonName = pokemon.getNama();
-        lvl = pokemon.getLvl();
-        health = pokemon.getHp();
-        maxHealth = pokemon.getMaxHp();
+        this.pokemon = pokemon;
     }
     
     @Override
@@ -57,14 +50,14 @@ public class PokemonBarAlt extends CanvasComponent{
         g.drawImage(boxImg,x, y, width, height,null);
          
         g.setColor(Color.black);
-        g.drawString(pokemonName, x + width/15, y + this.fontSize + height/10);
-        g.drawString("Lv:" + lvl, x + width*11/15, y + this.fontSize + height/10);
+        g.drawString(pokemon.getNama(), x + width/15, y + this.fontSize + height/10);
+        g.drawString("Lv:" + pokemon.getLvl(), x + width*11/15, y + this.fontSize + height/10);
         
         
         g.fillRect(x + width/8 - 10, y + height/2 -10 , width*4/5 + 20,height/6 + 20 );
         
         
-        double percentage = ((double)width*2/3)*((double)health/(double)maxHealth);
+        double percentage = ((double)width*2/3)*((double)pokemon.getHp()/(double)pokemon.getMaxHp());
         
 
         g.setColor(Color.gray);

@@ -5,6 +5,7 @@
 package Pokemon;
 
 import BattleCanvas.Drawable;
+import Pokemon.Skill.Skill;
 import Util.ImageLoader;
 import javax.swing.*;
 import java.util.*;
@@ -19,17 +20,30 @@ import java.util.logging.Logger;
 public abstract class Pokemon implements Drawable{
     public static  int MAX_LEVEL = 30;
     
+    //battle and information
     protected String nama, pokemonCode;
     protected int lvl,hp, maxHp, damage;
+    protected int exp,expNeededToLevelUp;
+    protected ArrayList<Skill> skillList;
+    
+    //image
     protected Image defaultFrontImage, defaultBackImage;
     protected ArrayList<Image> frontSpriteImage, backSpriteImage;
+    
+    //patrick variable for rendering
+    protected int x,y,width,height,animTime,standCt;
     protected long timeAcc1,changeEveryMilis;
-    protected int standCt;
-    protected boolean renderFront;
-    protected int x,y,width,height;
-    protected int exp,expNeededToLevelUp;
-   
-
+    protected boolean renderFront = true;
+    
+    private void renderInit(int numSprite) {
+        x = -1;y = -1;width = -1;height = -1; 
+        animTime = 5000;
+        timeAcc1 = 0; 
+        changeEveryMilis = animTime/numSprite;
+        standCt = 0;
+        renderFront = true;
+    }
+    
     public Pokemon(String nama, String pokemonCode, int hp, int maxHp, int damage) {
         this.nama = nama;
         this.pokemonCode = pokemonCode;
@@ -47,7 +61,7 @@ public abstract class Pokemon implements Drawable{
         }
     }
     
-    public Pokemon(String nama, int maxHp, int damage,String path,int numSprite,int x,int y,int width ,int height) throws IOException {
+    public Pokemon(String nama, int maxHp, int damage,String path,int numSprite) throws IOException {
         this.nama = nama;
         this.hp = maxHp;
         this.maxHp = maxHp;
@@ -58,17 +72,10 @@ public abstract class Pokemon implements Drawable{
         this.defaultFrontImage = this.frontSpriteImage.get(0);
         this.defaultBackImage = this.backSpriteImage.get(0);
         
-        int animTime = 5000;
-        this.timeAcc1 = 0;
-        this.changeEveryMilis = animTime/numSprite;
-        this.standCt = 0;
-        this.renderFront = true;
-        this.lvl = 1;
+        this.skillList = new ArrayList<>(Arrays.asList(null,null,null,null));
         
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
+        renderInit(numSprite);
+       
     }
     
     //Clone
@@ -193,5 +200,18 @@ public abstract class Pokemon implements Drawable{
 
     public ArrayList<Image> getBackSpriteImage() {
         return backSpriteImage;
+    }
+    
+    public Skill getSkill(int idxSkill) {
+        return skillList.get(idxSkill);
+    }
+    public int getNumberOfSkill() {
+        int countNotNull = 0;
+        for(int i = 0;i < skillList.size();i++) {
+            if(skillList.get(i) != null) {
+                countNotNull = countNotNull + 1;
+            }
+        }
+        return countNotNull;
     }
 }

@@ -22,9 +22,9 @@ public class Player {
         pokemonInParty = new ArrayList<>();
         pokemonInBox =  new ArrayList<>();
         try {
-            pokemonInParty.add(new PlantSimon(100, 1));
+            pokemonInParty.add(new PlantSimon(100, 1) );
             pokemonInParty.add(new PlantSimon(200, 5));
-            pokemonInParty.add(new PlantSimon(300, 10));
+            pokemonInParty.add(new PlantSimon(300, 30));
             
             pokemonInParty.get(1).levelUp();
             pokemonInParty.get(1).levelUp();

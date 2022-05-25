@@ -23,7 +23,7 @@ import simon.Player;
  * @author LVOILA
  */
 public class InBattleCanvas implements Drawable{
-    
+    private BattleAltLoop battleAltLoop;
     private CanvasButton useSkillBtn,changePokemonBtn,useItemBtn,runBtn;
     private PokemonBarAlt pokeBar,pokeBar2;
     private CanvasTextArea canvasTextArea;
@@ -34,12 +34,16 @@ public class InBattleCanvas implements Drawable{
     private Image bgImg;
     private DoubleLinkList<String> dialogueNow;
     
+    private Boolean usingSkill;
+    private ArrayList<CanvasButton> skillButton;
+    private String defaultText;
+    
     //pokeball animation
     private int pokeAnimX,pokeAnimY;
     private Double pokeAnimT;
     private boolean drawEnemy;
     
-    BattleAltLoop battleAltLoop;
+    
     
     public InBattleCanvas(BattleAltLoop battleAltLoop,CanvasMouseListener mouse) throws IOException {
         this.mouse = mouse;
@@ -54,7 +58,8 @@ public class InBattleCanvas implements Drawable{
         this.enemyPokemonIdx = 0;
         
         this.enemyPokemon = new ArrayList<>();
-        this.enemyPokemon.add(new PlantSimon(100, 10, MyFrame.DEFAULT_WIDTH/2 + 120, 0,150,300));
+        this.enemyPokemon.add(new PlantSimon(100, 10)) ;
+        this.enemyPokemon.get(0).setBound(MyFrame.DEFAULT_WIDTH/2 + 120, 0, 150, 300);
         this.playerPokemon = Player.pokemonInParty;
  
         
@@ -62,10 +67,22 @@ public class InBattleCanvas implements Drawable{
         this.pokeBar2 = new PokemonBarAlt(this.playerPokemon.get(playerPokemonIdx),580, 330, 400, 150, mouse);
         
         this.dialogueNow = new DoubleLinkList<>();
+        this.defaultText = "What you want to do next?";
         this.dialogueNow.add("You encounter " + this.enemyPokemon.get(enemyPokemonIdx).getNama() + "!");
-        this.dialogueNow.add("What you want to do next?");
+        this.dialogueNow.add(defaultText);
         this.canvasTextArea = new CanvasTextArea(200, mouse,dialogueNow);
         this.bgImg= ImageLoader.loadImage(ImagePath.BATTLE_BG1);
+        
+        this.usingSkill = false;
+        this.skillButton = new ArrayList<>();
+        this.skillButton.add(new CanvasButton(null, 140, 515, 300, 60, mouse)) ;
+        this.skillButton.add(new CanvasButton(null, 140, 590, 300, 60, mouse)) ;
+        this.skillButton.add(new CanvasButton(null, 500, 515, 300, 60, mouse)) ;
+        this.skillButton.add(new CanvasButton(null, 500, 590, 300, 60, mouse)) ;
+        for(int i = 0;i < playerPokemon.get(playerPokemonIdx).getNumberOfSkill();i++) {
+            this.skillButton.get(i).setText(playerPokemon.get(playerPokemonIdx).getSkill(i).getSkillName() );
+        }
+        
         
         this.pokeAnimX = 50;
         this.pokeAnimY = 500;
@@ -101,6 +118,7 @@ public class InBattleCanvas implements Drawable{
 
                 if(catched) {
                     this.dialogueNow.add("Congrats!\nYou catch the pokemon!");
+                    this.dialogueNow.add("end");
                     this.canvasTextArea.nextText();
                     Player.pokemonInBox.add(this.enemyPokemon.get(enemyPokemonIdx));
                     this.drawEnemy = false;
@@ -113,7 +131,7 @@ public class InBattleCanvas implements Drawable{
 
 
         }
-
+        
         if(this.drawEnemy) {
             this.enemyPokemon.get(enemyPokemonIdx).draw(g);
         }
@@ -121,35 +139,74 @@ public class InBattleCanvas implements Drawable{
             g.fillRect(650, 200, 50, 50);
         }
         this.playerPokemon.get(playerPokemonIdx).draw(g);
-
+        
         this.canvasTextArea.draw(g);
         this.pokeBar.draw(g);
         this.pokeBar2.draw(g);
 
         Boolean btnShowCon = !canvasTextArea.haveNextDialogue();
         btnShowCon = btnShowCon && !battleAltLoop.getItemCanvas().isUsingPokeBall();
-        btnShowCon = btnShowCon && !this.canvasTextArea.getTextNow().equals("Congrats!\nYou catch the pokemon!");
+        btnShowCon = btnShowCon && !this.usingSkill;
         if(btnShowCon) {
             this.useItemBtn.draw(g);
             this.useSkillBtn.draw(g);
             this.changePokemonBtn.draw(g);
             this.runBtn.draw(g);
         }
+        if(usingSkill) {
+            for(CanvasButton btn : skillButton) {
+                if(btn.getText() != null) {
+                    btn.draw(g);
+                }
+            }
+        }
     }
     
     
-    public void logicLoop(long diff) {
-        //graphicLogic(diff);
+    private boolean checkEnemyBeaten() {
+        boolean enemyBeaten = true;
+        for(int i = 0;i < enemyPokemon.size();i++) {
+            if(enemyPokemon.get(i).getHp() > 0 ){
+                enemyBeaten = false;
+            }
+        }
+        if(enemyBeaten) {
+            this.dialogueNow.add("You beat the enemy!");
+            this.dialogueNow.add("end");
+        }
+        return enemyBeaten;
+    }
+    
+    public void gameLogic() {
+        if(this.usingSkill) {
+            for(int i = 0;i < skillButton.size();i++) {
+                CanvasButton btn = skillButton.get(i);
+                if(btn.clicked() && btn.isRendered() && btn.getText() != null) {
+                    Pokemon player = playerPokemon.get(playerPokemonIdx);
+                    Pokemon enemy = enemyPokemon.get(enemyPokemonIdx);
+
+                    String desc = player.getSkill(i).use(player, enemy);
+                    this.dialogueNow.add(desc);
+                    
+                    if(!checkEnemyBeaten()) { 
+                        this.dialogueNow.add(defaultText);
+                    }
+                    this.usingSkill = false;
+                   
+                    
+                }
+            }
+        }
+        
     }
     
     public void graphicLogic(long diff) {
         if(canvasTextArea.clicked()) {
             canvasTextArea.nextText();
         }
-        if(this.canvasTextArea.getTextNow().equals("Congrats!\nYou catch the pokemon!")) {
-            if(canvasTextArea.clicked()) {
-                battleAltLoop.setBattling(false) ;
-            }
+   
+        if(this.canvasTextArea.getTextNow().equals("end")) {
+            battleAltLoop.setBattling(false) ;
         }
 
         if(this.runBtn.clicked() && this.runBtn.isRendered()) {
@@ -166,7 +223,9 @@ public class InBattleCanvas implements Drawable{
         }
         
         if(this.useSkillBtn.clicked() && this.useSkillBtn.isRendered()) {
-            System.out.println("Use Skill");
+            this.dialogueNow.add("");
+            this.canvasTextArea.nextText();
+            this.usingSkill = true;
         }
 
         this.enemyPokemon.get(enemyPokemonIdx).logicLoop(diff);

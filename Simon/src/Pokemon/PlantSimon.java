@@ -4,6 +4,7 @@
  */
 package Pokemon;
 
+import Pokemon.Skill.Tackle;
 import java.awt.Graphics;
 import java.io.IOException;
 import Util.MyFrame;
@@ -14,11 +15,9 @@ import Util.MyFrame;
  */
 public class PlantSimon extends Pokemon{
 
-    public PlantSimon(int maxHp, int damage,int x,int y,int width,int height) throws IOException {
-        super("Plant Simon", maxHp, damage, ImagePath.SIMON_FRONT_PATH, 4,x,y,width,height);
-    }
     public PlantSimon(int maxHp, int damage) throws IOException {
-        super("Plant Simon", maxHp, damage, ImagePath.SIMON_FRONT_PATH, 4,-1,-1,-1,-1);
+        super("Plant Simon", maxHp, damage, ImagePath.SIMON_FRONT_PATH, 4);
+        this.skillList.set(0, new Tackle());
     }
     
 

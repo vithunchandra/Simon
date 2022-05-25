@@ -18,15 +18,20 @@ public class ItemCanvas implements Drawable{
     private boolean usingPokeBall;
     
     private ArrayList<CanvasButton> buttonList;
+    private CanvasButton backButton;
     
     public ItemCanvas(CanvasMouseListener mouse,BattleAltLoop battleAltLoop) {
         this.battleAltLoop = battleAltLoop;
         this.mouse = mouse;
         
+        
         this.buttonList = new ArrayList<>();
-        this.buttonList.add(new CanvasButton("Poke Ball", 50, 25, 300, 75, mouse));
-        this.buttonList.add(new CanvasButton("Great Ball", 50, 125, 300, 75, mouse));
-        this.buttonList.add(new CanvasButton("Ultra Ball", 50, 225, 300, 75, mouse));
+        this.buttonList.add(new CanvasButton("Poke Ball", 50, 75, 300, 75, mouse));
+        this.buttonList.add(new CanvasButton("Great Ball", 50, 175, 300, 75, mouse));
+        this.buttonList.add(new CanvasButton("Ultra Ball", 50, 275, 300, 75, mouse));
+        
+        this.backButton = new CanvasButton("Back", 0, 0, 100, 50, mouse);
+        
     }
     
 
@@ -35,6 +40,7 @@ public class ItemCanvas implements Drawable{
         for(int i = 0;i < buttonList.size();i++) {
             buttonList.get(i).draw(g);
         }
+        backButton.draw(g);
     }
     
     public void logicLoop(long diff) { 
@@ -45,6 +51,9 @@ public class ItemCanvas implements Drawable{
                 battleAltLoop.getInBattleCanvas().getCanvasTextArea().nextText();
                 battleAltLoop.setNowState("battle");
             }
+        }
+        if(backButton.clicked() && backButton.isRendered()) {
+            battleAltLoop.setNowState("battle");
         }
     }
 

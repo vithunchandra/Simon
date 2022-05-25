@@ -12,6 +12,14 @@ import Pokemon.Pokemon;
  */
 
 public abstract class Skill {
+    protected String skillName;
+    public Skill(String skillName) {
+        this.skillName = skillName;
+    }
+    
     public abstract String use(Pokemon player,Pokemon enemy);
     public abstract String getDescription();
+    public String getSkillName() {
+        return this.skillName;
+    }
 }

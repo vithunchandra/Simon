@@ -14,6 +14,8 @@ public class Tackle extends Skill{
     public Double atkPercentage;
 
     public Tackle() {
+        super("Tackle");
+        atkPercentage = 1.1;
     }
 
     @Override

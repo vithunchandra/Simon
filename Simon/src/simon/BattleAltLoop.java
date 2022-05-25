@@ -58,7 +58,14 @@ public class BattleAltLoop implements Drawable {
     
     
     public void logicLoop(long diff) {
+        gameLogic();
         graphicLogic(diff);
+    }
+     
+    private void gameLogic() {
+        if(this.nowState.equals("battle")) {
+            this.inBattleCanvas.gameLogic();
+        }
     }
     
     private void graphicLogic(long diff) {
