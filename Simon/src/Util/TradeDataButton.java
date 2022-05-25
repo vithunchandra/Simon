@@ -8,6 +8,7 @@ import Util.Button.*;
 import java.awt.*;
 import Util.Component.*;
 import Pokemon.*;
+import simon.*;
 
 public class TradeDataButton extends ButtonAction{
     ClickedDataComponent<Pokemon> firstData;
@@ -25,6 +26,21 @@ public class TradeDataButton extends ButtonAction{
             Pokemon temp = firstData.getClickedComponent().getData();
             firstData.getClickedComponent().setData(secondData.getClickedComponent().getData());
             secondData.getClickedComponent().setData(temp);
+            
+//            Pokemon temp;
+//            
+//            int firstIndex = -1;
+//            for(int i=0; i<Player.pokemonInParty.size(); i++){
+//                if(Player.pokemonInParty.get(i) == firstData.getClickedComponent().getData()){
+//                    firstIndex = i;
+//                }
+//            }
+//            
+//            temp = firstData.getClickedComponent().getData();
+//            Player.pokemonInParty.set(firstIndex, secondData.getClickedComponent().getData());
+//            secondData.getClickedComponent().setData(temp);
+//            
+//            firstData.getClickedComponent().setData(secondData.getClickedComponent().getData());
             
             reasset(firstData);
             reasset(secondData);

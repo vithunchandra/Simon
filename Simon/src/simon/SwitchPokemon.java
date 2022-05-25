@@ -19,13 +19,13 @@ import Util.*;
 import Util.Button.*;
 import java.util.ArrayList;
 import Pokemon.*;
+import simon.*;
 
 /**
  *
  * @author asus
  */
 public class SwitchPokemon {
-    String imageSource = "src\\Material\\Image\\messageImage_1652930975720.jpeg";
     Image background;
     MyPanel switchPanel;
     GridBagConstraints gbc;
@@ -41,7 +41,7 @@ public class SwitchPokemon {
         this.frame = frame;
         this.oldPanel = oldPanel;
         try {
-            background = ImageIO.read(new File(imageSource));
+            background = ImageLoader.loadImage("src\\Material\\Image\\SwitchPokemon.png").getScaledInstance(MyFrame.DEFAULT_WIDTH, MyFrame.DEFAULT_HEIGHT, Image.SCALE_SMOOTH);
         } catch (IOException ex) {
             Logger.getLogger(SwitchPokemon.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -206,6 +206,9 @@ public class SwitchPokemon {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if(e.getSource() == backButton){
+                        for(int i=0; i<Player.pokemonInParty.size(); i++){
+                            Player.pokemonInParty.set(i, party.getComponent().get(i).getData());
+                        }
                         frame.changePanel(oldPanel);
                     }
                 }

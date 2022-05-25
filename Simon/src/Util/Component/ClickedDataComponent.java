@@ -44,7 +44,7 @@ public class ClickedDataComponent <Data> extends MouseAdapter{
         super.mousePressed(e);
         ActionComponent container = search(e);
         if(container != null){
-            SetBorder border = new SetBorder(Color.YELLOW);
+            SetBorder border = new SetBorder(Color.BLUE);
             container.setBorder(null);
             container.setBorder(border.outlineBorder());
         }

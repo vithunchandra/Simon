@@ -16,8 +16,8 @@ public class SetBorder {
         normal = BorderFactory.createLineBorder(color);
         raisedEtched = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
         loweredEtched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
-        raisedBevel = BorderFactory.createRaisedBevelBorder();
-        loweredBevel = BorderFactory.createLoweredBevelBorder();
+        raisedBevel = BorderFactory.createBevelBorder(BevelBorder.RAISED, color, Color.BLACK);
+        loweredBevel = BorderFactory.createBevelBorder(BevelBorder.LOWERED, color, Color.BLACK);
         empty = BorderFactory.createEmptyBorder();
     }
     

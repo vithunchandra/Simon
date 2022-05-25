@@ -30,7 +30,7 @@ public class Menu {
     //add pokemon party
     
     Menu() {
-        Player.loadInfo();
+        
         frame = new MyFrame();
         gbc = new GridBagConstraints();
         title = new JLabel();
