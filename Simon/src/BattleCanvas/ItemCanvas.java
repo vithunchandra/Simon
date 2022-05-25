@@ -41,8 +41,8 @@ public class ItemCanvas implements Drawable{
         for(int i = 0;i < 3;i++) {
             if(buttonList.get(i).clicked() && buttonList.get(i).isRendered()) {
                 this.usingPokeBall = true;
-                battleAltLoop.getDialogueNow().add("You Use " + buttonList.get(i).getText() +"!");
-                battleAltLoop.getCanvasTextArea().nextText();
+                battleAltLoop.getInBattleCanvas().getDialogueNow().add("You Use " + buttonList.get(i).getText() +"!");
+                battleAltLoop.getInBattleCanvas().getCanvasTextArea().nextText();
                 battleAltLoop.setNowState("battle");
             }
         }

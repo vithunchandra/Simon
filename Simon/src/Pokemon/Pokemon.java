@@ -27,6 +27,7 @@ public abstract class Pokemon implements Drawable{
     protected int standCt;
     protected boolean renderFront;
     protected int x,y,width,height;
+    protected int exp,expNeededToLevelUp;
    
 
     public Pokemon(String nama, String pokemonCode, int hp, int maxHp, int damage) {
@@ -123,34 +124,55 @@ public abstract class Pokemon implements Drawable{
         return nama;
     }
 
-    public void setNama(String nama) {
-        this.nama = nama;
-    }
-
     public int getHp() {
         return hp;
     }
 
-    public void setHp(int hp) {
-        this.hp = hp;
+    public void damaged(int hp) {
+        this.hp -= hp;
+        if(this.hp < 0) {
+            this.hp = 0;
+        }
+    }
+    public void healed(int hp) {
+        this.hp += hp;
+        if(this.hp > this.maxHp) {
+            this.hp = maxHp;
+        }
     }
 
+
+    public int getLvl() {
+        return lvl;
+    }
+    public void levelUp() {
+        this.lvl += 1;
+        if(lvl > MAX_LEVEL) {
+            lvl = MAX_LEVEL;
+        }
+        else {
+            
+        }
+    }
+    public void setLvl(int lvl) {
+        this.lvl = lvl;
+    }
+    
+    public void setBound(int x,int y,int width,int height) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+    }
+    
     public int getMaxHp() {
         return maxHp;
-    }
-
-    public void setMaxHp(int maxHp) {
-        this.maxHp = maxHp;
     }
 
     public int getDamage() {
         return damage;
     }
-
-    public void setDamage(int damage) {
-        this.damage = damage;
-    }
-
+    
     public ArrayList<Image> getImageSprite() {
         return frontSpriteImage;
     }
@@ -172,25 +194,4 @@ public abstract class Pokemon implements Drawable{
     public ArrayList<Image> getBackSpriteImage() {
         return backSpriteImage;
     }
-
-    public int getLvl() {
-        return lvl;
-    }
-    public void levelUp() {
-        this.lvl += 1;
-        if(lvl > MAX_LEVEL) {
-            lvl = MAX_LEVEL;
-        }
-    }
-    public void setLvl(int lvl) {
-        this.lvl = lvl;
-    }
-    
-    public void setBound(int x,int y,int width,int height) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-    }
-    
 }

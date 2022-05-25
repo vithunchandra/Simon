@@ -53,7 +53,7 @@ public class SwitchCanvas implements Drawable {
     public void reInit() {
         int whichBox = 0;
         for(int i = 0;i < playerPokemon.size();i++) {
-            if(i != battleAltLoop.getPlayerPokemonIdx()) {
+            if(i != battleAltLoop.getInBattleCanvas().getPlayerPokemonIdx()) {
                 if(whichBox == 0) {
                     this.idxChange1 = i;
                 }
@@ -104,13 +104,13 @@ public class SwitchCanvas implements Drawable {
         this.playerPokemon.get(this.idxChange2).logicLoop(diff);
 
         if(this.switchBtn1.clicked() && this.switchBtn1.isRendered()) {
-            battleAltLoop.setPlayerPokemonIdx(this.idxChange1);  
-            battleAltLoop.getPokeBar2().setPokemon(this.playerPokemon.get(battleAltLoop.getPlayerPokemonIdx()));
+            battleAltLoop.getInBattleCanvas().setPlayerPokemonIdx(this.idxChange1);  
+            battleAltLoop.getInBattleCanvas().getPokeBar2().setPokemon(this.playerPokemon.get(battleAltLoop.getInBattleCanvas().getPlayerPokemonIdx()));
             battleAltLoop.setNowState("battle");
         }
         if(this.switchBtn2.clicked() && this.switchBtn2.isRendered()) {
-            battleAltLoop.setPlayerPokemonIdx(this.idxChange2);  
-            battleAltLoop.getPokeBar2().setPokemon(this.playerPokemon.get(battleAltLoop.getPlayerPokemonIdx()));
+            battleAltLoop.getInBattleCanvas().setPlayerPokemonIdx(this.idxChange2);  
+            battleAltLoop.getInBattleCanvas().getPokeBar2().setPokemon(this.playerPokemon.get(battleAltLoop.getInBattleCanvas().getPlayerPokemonIdx()));
             battleAltLoop.setNowState("battle");
         }
         if(this.backButton.clicked() && this.backButton.isRendered()) {
