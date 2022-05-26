@@ -7,7 +7,7 @@ package Util.Button;
 import Util.MyFrame;
 import java.awt.*;
 import Util.Component.*;
-import DummyClass.*;
+//import DummyClass.*;
 import simon.*;
 import Pokemon.*;
 

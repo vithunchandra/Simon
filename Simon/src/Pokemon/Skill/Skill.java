@@ -5,6 +5,7 @@
 package Pokemon.Skill;
 
 import Pokemon.Pokemon;
+import java.util.Objects;
 
 /**
  *
@@ -17,9 +18,32 @@ public abstract class Skill {
         this.skillName = skillName;
     }
     
-    public abstract String use(Pokemon player,Pokemon enemy);
+    public abstract String use(Pokemon player,Pokemon enemy,boolean usedByPlayer);
     public abstract String getDescription();
     public String getSkillName() {
         return this.skillName;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Skill other = (Skill) obj;
+        return Objects.equals(this.skillName, other.skillName);
+    }
+    
+    
 }

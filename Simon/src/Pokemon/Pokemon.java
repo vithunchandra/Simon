@@ -205,6 +205,16 @@ public abstract class Pokemon implements Drawable{
     public Skill getSkill(int idxSkill) {
         return skillList.get(idxSkill);
     }
+    public void addSkill(Skill skill) {
+        int numSkillNow = this.getNumberOfSkill();
+        if(numSkillNow < 4) {
+            this.skillList.set(numSkillNow, skill);
+        }
+        
+    }
+    public void replaceSkill(int idx,Skill skill) {
+        this.skillList.set(idx, skill);
+    }
     public int getNumberOfSkill() {
         int countNotNull = 0;
         for(int i = 0;i < skillList.size();i++) {
@@ -213,5 +223,9 @@ public abstract class Pokemon implements Drawable{
             }
         }
         return countNotNull;
+    }
+    
+    public boolean isDead() {
+        return this.hp <= 0;
     }
 }

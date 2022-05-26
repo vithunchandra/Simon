@@ -14,6 +14,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.JPanel;
 import simon.BattleAltLoop;
 import simon.Player;
@@ -30,6 +31,7 @@ public class InBattleCanvas implements Drawable{
     private CanvasMouseListener mouse;
     private ArrayList<Pokemon> playerPokemon,enemyPokemon;
     private int playerPokemonIdx,enemyPokemonIdx;
+    private Random rand;
     
     private Image bgImg;
     private DoubleLinkList<String> dialogueNow;
@@ -48,6 +50,7 @@ public class InBattleCanvas implements Drawable{
     public InBattleCanvas(BattleAltLoop battleAltLoop,CanvasMouseListener mouse) throws IOException {
         this.mouse = mouse;
         this.battleAltLoop = battleAltLoop;
+        this.rand = new Random();
         //x,y,width,height
         this.useItemBtn = new CanvasButton("Use Item", MyFrame.DEFAULT_WIDTH - 310, MyFrame.DEFAULT_HEIGHT - 180, 140, 50, mouse);
         this.useSkillBtn = new CanvasButton("Use Skill", MyFrame.DEFAULT_WIDTH - 160, MyFrame.DEFAULT_HEIGHT - 180, 140, 50, mouse);
@@ -177,6 +180,36 @@ public class InBattleCanvas implements Drawable{
         return enemyBeaten;
     }
     
+    private boolean checkPlayerBeaten() {
+        boolean playerBeaten = true;
+        for(int i = 0;i < playerPokemon.size();i++) {
+            if(playerPokemon.get(i).getHp() > 0 ){
+                playerBeaten = false;
+            }
+        }
+        if(playerBeaten) {
+            this.dialogueNow.add("You lose!");
+            this.dialogueNow.add("end");
+        }
+        return playerBeaten;
+    }
+    
+    public void enemyTurn() {
+        Pokemon enemy = enemyPokemon.get(enemyPokemonIdx);
+        Pokemon player = playerPokemon.get(playerPokemonIdx);
+        
+        int enemyRandAct = rand.nextInt(enemyPokemon.get(enemyPokemonIdx).getNumberOfSkill());
+        String skillDesc = enemy.getSkill(enemyRandAct).use(enemy, player,false);
+        this.dialogueNow.add(skillDesc);
+        
+        if(player.isDead()) {
+            if(!checkPlayerBeaten()) {
+                battleAltLoop.getSwitchCanvas().reInit();
+                battleAltLoop.setNowState("switch"); 
+            }
+        }
+    }
+    
     public void gameLogic() {
         if(this.usingSkill) {
             for(int i = 0;i < skillButton.size();i++) {
@@ -185,10 +218,12 @@ public class InBattleCanvas implements Drawable{
                     Pokemon player = playerPokemon.get(playerPokemonIdx);
                     Pokemon enemy = enemyPokemon.get(enemyPokemonIdx);
 
-                    String desc = player.getSkill(i).use(player, enemy);
+                    String desc = player.getSkill(i).use(player, enemy,true);
                     this.dialogueNow.add(desc);
+
                     
                     if(!checkEnemyBeaten()) { 
+                        enemyTurn();
                         this.dialogueNow.add(defaultText);
                     }
                     this.usingSkill = false;
@@ -214,8 +249,9 @@ public class InBattleCanvas implements Drawable{
         }
 
         if(this.changePokemonBtn.clicked() && this.changePokemonBtn.isRendered()) {
-            this.battleAltLoop.getSwitchCanvas().reInit();
+            battleAltLoop.getSwitchCanvas().reInit();
             battleAltLoop.setNowState("switch"); 
+            
         }
 
         if(this.useItemBtn.clicked() && this.useItemBtn.isRendered()) {
@@ -255,4 +291,12 @@ public class InBattleCanvas implements Drawable{
     public CanvasTextArea getCanvasTextArea() {
         return canvasTextArea;
     }
+
+    public ArrayList<CanvasButton> getSkillButton() {
+        return skillButton;
+    }
+
+   
+    
+    
 }
