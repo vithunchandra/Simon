@@ -44,23 +44,6 @@ public abstract class Pokemon implements Drawable{
         renderFront = true;
     }
     
-    public Pokemon(String nama, String pokemonCode, int hp, int maxHp, int damage) {
-        this.nama = nama;
-        this.pokemonCode = pokemonCode;
-        this.hp = hp;
-        this.maxHp = maxHp;
-        this.damage = damage;
-        PokemonAssets assets = ImagePath.getAssets(pokemonCode);
-        try {
-            this.defaultFrontImage = ImageLoader.loadImage(assets.getDefaultFrontImage());
-            this.defaultBackImage = ImageLoader.loadImage(assets.getDefaultBackImage());
-            this.frontSpriteImage = ImageLoader.loadImageArrayCropHorizontal(8, assets.getFrontSpriteImage());
-            this.backSpriteImage = ImageLoader.loadImageArrayCropHorizontal(8, assets.getDefaultBackImage());
-        } catch (IOException ex) {
-            Logger.getLogger(Pokemon.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
     public Pokemon(String nama, int maxHp, int damage,String path,int numSprite) throws IOException {
         this.nama = nama;
         this.hp = maxHp;

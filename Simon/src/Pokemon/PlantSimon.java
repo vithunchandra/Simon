@@ -19,7 +19,6 @@ public class PlantSimon extends Pokemon{
         super("Plant Simon", maxHp, damage, ImagePath.SIMON_FRONT_PATH, 4);
         this.skillList.set(0, new Tackle());
     }
-    
 
     @Override
     public void logicLoop(long timediff) {

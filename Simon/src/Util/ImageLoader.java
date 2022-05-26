@@ -8,8 +8,11 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -33,6 +36,11 @@ public class ImageLoader {
         return imageList;
     }
     
+//    public static Image loadGif(String path) throws MalformedURLException, IOException{
+//        Image gif = new ImageIcon(path).getImage();
+//        return gif;
+//    }
+//    
     
 //    public static void loadImage(String path,int width,int height) {
 //        
