@@ -10,29 +10,30 @@ import Pokemon.Pokemon;
  *
  * @author LVOILA
  */
-public class Tackle extends Skill{
-    public Double atkPercentage;
+public class BodySlam extends Skill {
 
-    public Tackle() {
-        super("Tackle");
-        atkPercentage = 1.1;
+    public BodySlam() {
+        super("Body Slam");
     }
 
     @Override
     public String use(Pokemon player, Pokemon enemy,boolean usedByPlayer) {
-        int damage = (int) (player.getDamage()*atkPercentage);
+        int recoil = player.getMaxHp() / 15;
+        int damage = player.getDamage()*18/10;
+        player.damaged(recoil);
         enemy.damaged(damage);
-        
         if(usedByPlayer) {
-            return "enemy damaged by " + damage;
+            return "Enemy damaged by " + damage + "\nPlayer damaged because of recoil by " + recoil ;
         } else {
-            return "player damaged by " + damage;
+            return "Player damaged by " + damage + "\nenemy damaged because of recoil by " + recoil;
         }
     }
 
     @Override
     public String getDescription() {
-        return "This is tackle";
+        return "This is body slam";
     }
+    
+    
     
 }

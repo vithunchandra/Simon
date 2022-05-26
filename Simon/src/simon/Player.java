@@ -6,6 +6,7 @@ package simon;
 
 import Pokemon.PlantSimon;
 import Pokemon.Pokemon;
+import Pokemon.Skill.BodySlam;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -24,17 +25,18 @@ public class Player {
         try {
             pokemonInParty.add(new PlantSimon(100, 1) );
             pokemonInParty.add(new PlantSimon(200, 5));
-            pokemonInParty.add(new PlantSimon(300, 30));
+//            pokemonInParty.add(new PlantSimon(300, 30));
             
             pokemonInParty.get(1).levelUp();
             pokemonInParty.get(1).levelUp();
             pokemonInParty.get(1).levelUp();
             
-            pokemonInParty.get(2).levelUp();
-            pokemonInParty.get(2).levelUp();
-            pokemonInParty.get(2).levelUp();
-            pokemonInParty.get(2).levelUp();
-            pokemonInParty.get(2).levelUp();
+//            pokemonInParty.get(2).addSkill(new BodySlam());
+//            pokemonInParty.get(2).levelUp();
+//            pokemonInParty.get(2).levelUp();
+//            pokemonInParty.get(2).levelUp();
+//            pokemonInParty.get(2).levelUp();
+//            pokemonInParty.get(2).levelUp();
         } catch (IOException ex) {
             Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
         }
