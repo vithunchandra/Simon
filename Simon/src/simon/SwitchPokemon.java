@@ -160,7 +160,7 @@ public class SwitchPokemon {
         DrawText partyText = new DrawText("Party", new Font(Font.SANS_SERIF, Font.BOLD, 20));
         container.add(partyText);
         
-        for(int i=0; i<3; i++){
+        for(int i=0; i<Player.pokemonInParty.size(); i++){
             Pokemon pokemonData = Player.pokemonInParty.get(i);
             
             ActionComponent pokemon = new ActionComponent(new Dimension(210, 90), new GridBagLayout(), null);
