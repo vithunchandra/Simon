@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Random;
 
 /**
  *
@@ -39,6 +40,16 @@ public class Player {
             pokemonInParty.get(2).levelUp();
             pokemonInParty.get(2).levelUp();
             pokemonInParty.get(2).levelUp();
+            
+            Random rand = new Random();
+            for(int i=0; i<18; i++){
+                pokemonInBox.add(new PlantSimon(rand.nextInt(100, 401), rand.nextInt(2, 40)));
+                int level = rand.nextInt(5);
+                for(int j=0; j<level; j++){
+                    pokemonInBox.get(pokemonInBox.size() - 1).levelUp();
+                }
+            }
+            
         } catch (IOException ex) {
             Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -97,11 +97,11 @@ public class SwitchPokemon {
         
         SetBorder border = new SetBorder(Color.GREEN);
         
-        for(int i = 0; i<18; i++){
+        for(int i = 0; i<Player.pokemonInBox.size(); i++){
             ActionComponent imageContainer = new ActionComponent(new Dimension(80, 80), null, null);
             imageContainer.setBackground(new Color(255, 255, 255, 90));
             
-            Pokemon pokemonData = Player.pokemonInParty.get((i % Player.pokemonInParty.size()));
+            Pokemon pokemonData = Player.pokemonInBox.get(i);
             DrawImage pokemonImage = new DrawImage(pokemonData.getDefaultFrontImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH), new Dimension(80, 80), 0, 0);
 
             imageContainer.add(pokemonImage);
@@ -208,6 +208,9 @@ public class SwitchPokemon {
                     if(e.getSource() == backButton){
                         for(int i=0; i<Player.pokemonInParty.size(); i++){
                             Player.pokemonInParty.set(i, party.getComponent().get(i).getData());
+                        }
+                        for(int i=0; i<Player.pokemonInBox.size(); i++){
+                            Player.pokemonInBox.set(i, pokeList.getComponent().get(i).getData());
                         }
                         frame.changePanel(oldPanel);
                     }
