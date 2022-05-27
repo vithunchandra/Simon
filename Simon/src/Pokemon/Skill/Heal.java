@@ -19,7 +19,7 @@ public class Heal extends Skill{
     @Override
     public String use(Pokemon player, Pokemon enemy, boolean usedByPlayer) {
         int heal = player.getDamage() * 10;
-        player.healed(player.getHp() + heal);
+        player.healed(heal);
         
         if(usedByPlayer){
             return "Player +" + heal + "HP";

@@ -8,20 +8,20 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class DrawText extends JComponent{
+public class DrawVerticalText extends JComponent{
     private String text;
     private Font font;
     private Dimension size, maxSize;
     
-    public DrawText(String text, Font font){
+    public DrawVerticalText(String text, Font font){
         this.text = text;
         this.font = font;
         Canvas c = new Canvas();
         FontMetrics metrics = c.getFontMetrics(font);
         int height, width;
         
-        height = metrics.getHeight();
-        width = metrics.stringWidth(text);
+        width = metrics.getHeight();
+        height = metrics.stringWidth(text) / text.length();
         
         size = new Dimension(width, height);
     
@@ -32,17 +32,50 @@ public class DrawText extends JComponent{
         this.maxSize = null;
     }
     
-    public DrawText(String text, Font font, Dimension maxSize){
+    public DrawVerticalText(String text, Font font, Dimension maxSize){
         this.text = text;
         this.font = font;
         Canvas c = new Canvas();
         FontMetrics metrics = c.getFontMetrics(font);
         int height, width;
         
-        height = metrics.getHeight();
-        width = metrics.stringWidth(text);
+        width = metrics.getHeight();
+        height = metrics.stringWidth(text) / text.length();
         
         this.maxSize = maxSize;
+        if(width > maxSize.width){
+            width = maxSize.width;
+        }
+        if(height > maxSize.height){
+            height = maxSize.height;
+        }
+        
+        size = new Dimension(width, height);
+        
+        this.setPreferredSize(size);
+        this.setSize(size);
+        this.setBounds(0, 0, width, height);
+        this.setOpaque(false);
+    }
+    
+    public void paint(Graphics g) {
+        super.paint(g);
+        g = (Graphics2D) g;
+        g.setFont(font);
+        g.drawString(text, size.height - 10, 0);
+    }
+    
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+        Canvas c = new Canvas();
+        FontMetrics metrics = c.getFontMetrics(font);
+        int width = metrics.getHeight();
+        int height = metrics.stringWidth(text);
+        
         if(width > maxSize.width){
             width = maxSize.width;
         }
@@ -55,34 +88,8 @@ public class DrawText extends JComponent{
         this.setPreferredSize(size);
         this.setSize(size);
         this.setBounds(0, 0, width, height);
-        this.setOpaque(false);
     }
-
-    @Override
-    public void paint(Graphics g) {
-        super.paint(g);
-        g = (Graphics2D) g;
-        g.setFont(font);
-        g.drawString(text, 0, size.height - 10);
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-        Canvas c = new Canvas();
-        FontMetrics metrics = c.getFontMetrics(font);
-        int height = metrics.getHeight();
-        int width = metrics.stringWidth(text);
-        size = new Dimension(width, height);
     
-        this.setPreferredSize(size);
-        this.setSize(size);
-        this.setBounds(0, 0, width, height);
-    }
-
     public Font getFont() {
         return font;
     }
