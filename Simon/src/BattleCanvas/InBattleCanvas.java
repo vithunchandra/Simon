@@ -7,6 +7,7 @@ package BattleCanvas;
 import Pokemon.ImagePath;
 import Pokemon.PlantSimon;
 import Pokemon.Pokemon;
+import Pokemon.Venusaur;
 import Util.DoubleLinkList;
 import Util.ImageLoader;
 import Util.MyFrame;
@@ -44,7 +45,7 @@ public class InBattleCanvas implements Drawable{
     private int pokeAnimX,pokeAnimY;
     private Double pokeAnimT;
     private boolean drawEnemy;
-    
+    private Image pokeball;
     
     
     public InBattleCanvas(BattleAltLoop battleAltLoop,CanvasMouseListener mouse) throws IOException {
@@ -61,7 +62,8 @@ public class InBattleCanvas implements Drawable{
         this.enemyPokemonIdx = 0;
         
         this.enemyPokemon = new ArrayList<>();
-        this.enemyPokemon.add(new PlantSimon(100, 10)) ;
+//        this.enemyPokemon.add(new PlantSimon(100, 10)) ;
+        this.enemyPokemon.add(new Venusaur() );
         this.enemyPokemon.get(0).setBound(MyFrame.DEFAULT_WIDTH/2 + 120, 0, 150, 300);
         this.playerPokemon = Player.pokemonInParty;
  
@@ -91,6 +93,7 @@ public class InBattleCanvas implements Drawable{
         this.pokeAnimY = 500;
         this.pokeAnimT = -15.;
         this.drawEnemy = true;
+        this.pokeball = ImageLoader.loadImage(ImagePath.POKEBALL_IMG);
     }
     
     
@@ -104,7 +107,7 @@ public class InBattleCanvas implements Drawable{
 
         if(battleAltLoop.getItemCanvas().isUsingPokeBall()) {
 
-            g.fillRect(pokeAnimX, pokeAnimY, 50, 50);
+            g.drawImage(pokeball,pokeAnimX, pokeAnimY, 50, 50,null);
             pokeAnimY = pokeAnimY - 15 + (int)((pokeAnimT*pokeAnimT)/6);
             pokeAnimX = pokeAnimX + 5;
             pokeAnimT = pokeAnimT + 0.25;
@@ -123,7 +126,11 @@ public class InBattleCanvas implements Drawable{
                     this.dialogueNow.add("Congrats!\nYou catch the pokemon!");
                     this.dialogueNow.add("end");
                     this.canvasTextArea.nextText();
-                    Player.pokemonInBox.add(this.enemyPokemon.get(enemyPokemonIdx));
+                    if(Player.pokemonInParty.size() < 3) {
+                        Player.pokemonInParty.add(this.enemyPokemon.get(enemyPokemonIdx));
+                    } else {
+                        Player.pokemonInBox.add(this.enemyPokemon.get(enemyPokemonIdx));
+                    }
                     this.drawEnemy = false;
                 }
                 else {
@@ -139,7 +146,7 @@ public class InBattleCanvas implements Drawable{
             this.enemyPokemon.get(enemyPokemonIdx).draw(g);
         }
         else {
-            g.fillRect(650, 200, 50, 50);
+            g.drawImage(pokeball,650, 200, 50, 50,null);
         }
         this.playerPokemon.get(playerPokemonIdx).draw(g);
         

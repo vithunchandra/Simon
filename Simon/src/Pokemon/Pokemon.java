@@ -31,15 +31,16 @@ public abstract class Pokemon implements Drawable{
     protected ArrayList<Image> frontSpriteImage, backSpriteImage;
     
     //patrick variable for rendering
-    protected int x,y,width,height,animTime,standCt;
-    protected long timeAcc1,changeEveryMilis;
+    protected int x,y,width,height,animTime,standCt,backCt;
+    protected long timeAcc1,changeEveryMilis,changeEveryMilisBack;
     protected boolean renderFront = true;
     
-    private void renderInit(int numSprite) {
+    private void renderInit(int numSpriteFront,int numSpriteBack) {
         x = -1;y = -1;width = -1;height = -1; 
         animTime = 5000;
         timeAcc1 = 0; 
-        changeEveryMilis = animTime/numSprite;
+        changeEveryMilis = animTime/numSpriteFront;
+        changeEveryMilisBack = animTime/numSpriteBack;
         standCt = 0;
         renderFront = true;
     }
@@ -61,20 +62,20 @@ public abstract class Pokemon implements Drawable{
         }
     }
     
-    public Pokemon(String nama, int maxHp, int damage,String path,int numSprite) throws IOException {
+    public Pokemon(String nama, int maxHp, int damage,String path,int numSpriteFront,int numSpriteBack) throws IOException {
         this.nama = nama;
         this.hp = maxHp;
         this.maxHp = maxHp;
         this.damage = damage;
         
-        this.frontSpriteImage = ImageLoader.loadImageArrayCropHorizontal(numSprite, path);
-        this.backSpriteImage = ImageLoader.loadImageArrayCropHorizontal(numSprite, path.split("[.]")[0] + "_back." + path.split("[.]")[1]);
+        this.frontSpriteImage = ImageLoader.loadImageArrayCropHorizontal(numSpriteFront, path);
+        this.backSpriteImage = ImageLoader.loadImageArrayCropHorizontal(numSpriteBack, path.split("[.]")[0] + "_back." + path.split("[.]")[1]);
         this.defaultFrontImage = this.frontSpriteImage.get(0);
         this.defaultBackImage = this.backSpriteImage.get(0);
         
         this.skillList = new ArrayList<>(Arrays.asList(null,null,null,null));
         
-        renderInit(numSprite);
+        renderInit(numSpriteFront,numSpriteBack);
        
     }
     
@@ -96,7 +97,9 @@ public abstract class Pokemon implements Drawable{
         }
     }
 
-    public abstract void logicLoop(long timediff);
+    public void logicLoop(long timediff) {
+        defaultGraphicLoop(timediff);
+    };
     
     protected void defaultGraphicLoop(long timediff) {
         if(this.renderFront) {
@@ -109,6 +112,16 @@ public abstract class Pokemon implements Drawable{
                 }
             }
         }
+        else {
+            this.timeAcc1 += timediff; 
+            if(timeAcc1 >= changeEveryMilisBack) {
+                timeAcc1 = 0;
+                backCt = backCt + 1;
+                if(backCt == backSpriteImage.size()) {
+                    backCt = 0;
+                }
+            }
+        }
     }
 
     @Override
@@ -117,7 +130,7 @@ public abstract class Pokemon implements Drawable{
             g.drawImage(frontSpriteImage.get(standCt), x, y,width,height, null);
         }
         else {
-            g.drawImage(backSpriteImage.get(standCt), x, y,width,height, null);
+            g.drawImage(backSpriteImage.get(backCt), x, y,width,height, null);
         }
     }
 
