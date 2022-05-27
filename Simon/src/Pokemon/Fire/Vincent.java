@@ -14,7 +14,7 @@ import java.io.IOException;
 public class Vincent extends Pokemon{
 
     public Vincent(String nama, int maxHp, int damage, String path, int numSprite) throws IOException {
-        super(nama, maxHp, damage, path, numSprite);
+        super(nama, maxHp, damage, path, numSprite,numSprite);
     }
 
     public Vincent(Pokemon object) {
@@ -22,7 +22,7 @@ public class Vincent extends Pokemon{
     }
     
     public Vincent(int level) throws IOException{
-        super("Vincent", 100 + (level * 10), 5 + (level * 2), "", 4);
+        super("Vincent", 100 + (level * 10), 5 + (level * 2), "", 4,4);
     }
     
     @Override
