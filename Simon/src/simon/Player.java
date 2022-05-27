@@ -7,6 +7,7 @@ package simon;
 import Pokemon.PlantSimon;
 import Pokemon.Pokemon;
 import Pokemon.Skill.BodySlam;
+import Pokemon.Venusaur;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -23,7 +24,8 @@ public class Player {
         pokemonInParty = new ArrayList<>();
         pokemonInBox =  new ArrayList<>();
         try {
-            pokemonInParty.add(new PlantSimon(100, 1) );
+            pokemonInParty.add(new Venusaur() );
+            
             pokemonInParty.add(new PlantSimon(200, 5));
             pokemonInParty.add(new PlantSimon(300, 30));
             

@@ -5,19 +5,19 @@
 package Pokemon;
 
 import Pokemon.Skill.Tackle;
-import java.awt.Graphics;
 import java.io.IOException;
-import Util.MyFrame;
 
 /**
  *
  * @author LVOILA
  */
-public class PlantSimon extends Pokemon{
+public class Venusaur extends Pokemon{
 
-    public PlantSimon(int maxHp, int damage) throws IOException {
-        super("Plant Simon", maxHp, damage, ImagePath.SIMON_FRONT_PATH, 4,4);
-        this.skillList.set(0, new Tackle());
+    public Venusaur() throws IOException {
+        super("Venusaur", 432, 41, ImagePath.VENUSAUR_FRONT_PATH, 59, 63);
+        addSkill(new Tackle());
     }
+    
 
+    
 }
