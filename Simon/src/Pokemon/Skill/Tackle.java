@@ -32,7 +32,7 @@ public class Tackle extends Skill{
 
     @Override
     public String getDescription() {
-        return "This is tackle";
+        return "Give 110% damage to the enemy. This is a basic skill that every pokemon have.";
     }
     
 }

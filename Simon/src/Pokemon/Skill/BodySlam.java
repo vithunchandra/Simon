@@ -31,7 +31,7 @@ public class BodySlam extends Skill {
 
     @Override
     public String getDescription() {
-        return "This is body slam";
+        return "Give a huge amount of damage to enemy but the caster will damaged by (maxHp/15) as the cost for this skill.";
     }
     
     
