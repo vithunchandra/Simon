@@ -33,20 +33,25 @@ public class InBattleCanvas implements Drawable{
     private ArrayList<Pokemon> playerPokemon,enemyPokemon;
     private int playerPokemonIdx,enemyPokemonIdx;
     private Random rand;
+    private Boolean isGym;
     
     private Image bgImg;
     private DoubleLinkList<String> dialogueNow;
     
     private Boolean usingSkill;
     private ArrayList<CanvasButton> skillButton;
-    private String defaultText;
+    private final String defaultText;
     
     //pokeball animation
     private int pokeAnimX,pokeAnimY;
     private Double pokeAnimT;
     private boolean drawEnemy;
-    private Image pokeball;
+    private final Image pokeball;
     
+    //gym pokemon change animation
+    private int changeAnimX,changeAnimY;
+    private Double changeAnimT;
+    private boolean enemyChangePokemon;
     
     public InBattleCanvas(BattleAltLoop battleAltLoop,CanvasMouseListener mouse) throws IOException {
         this.mouse = mouse;
@@ -56,15 +61,29 @@ public class InBattleCanvas implements Drawable{
         this.useItemBtn = new CanvasButton("Use Item", MyFrame.DEFAULT_WIDTH - 310, MyFrame.DEFAULT_HEIGHT - 180, 140, 50, mouse);
         this.useSkillBtn = new CanvasButton("Use Skill", MyFrame.DEFAULT_WIDTH - 160, MyFrame.DEFAULT_HEIGHT - 180, 140, 50, mouse);
         this.changePokemonBtn = new CanvasButton("Switch", MyFrame.DEFAULT_WIDTH - 310, MyFrame.DEFAULT_HEIGHT - 120, 140, 50, mouse);
-        this.runBtn = new CanvasButton("RUN", MyFrame.DEFAULT_WIDTH - 160, MyFrame.DEFAULT_HEIGHT - 120, 140, 50, mouse);
+        this.isGym = battleAltLoop.isIsGym();
         
+        if(isGym) {
+            this.runBtn = new CanvasButton("SURRENDER", MyFrame.DEFAULT_WIDTH - 160, MyFrame.DEFAULT_HEIGHT - 120, 140, 50, mouse);
+        }
+        else {
+            this.runBtn = new CanvasButton("RUN", MyFrame.DEFAULT_WIDTH - 160, MyFrame.DEFAULT_HEIGHT - 120, 140, 50, mouse);
+        }
         this.playerPokemonIdx = 0;
         this.enemyPokemonIdx = 0;
         
+        //========================= Enemy Init ==========================
         this.enemyPokemon = new ArrayList<>();
 //        this.enemyPokemon.add(new PlantSimon(100, 10)) ;
-        this.enemyPokemon.add(new Venusaur() );
+        this.enemyPokemon.add(new PlantSimon(20,50));
         this.enemyPokemon.get(0).setBound(MyFrame.DEFAULT_WIDTH/2 + 120, 0, 150, 300);
+        
+        if(isGym) {
+            this.enemyPokemon.add(new PlantSimon(20,1));
+            this.enemyPokemon.add(new PlantSimon(20,1));
+        }
+       //========================= =======================================
+        
         this.playerPokemon = Player.pokemonInParty;
  
         
@@ -94,6 +113,51 @@ public class InBattleCanvas implements Drawable{
         this.pokeAnimT = -15.;
         this.drawEnemy = true;
         this.pokeball = ImageLoader.loadImage(ImagePath.POKEBALL_IMG);
+        
+
+        this.changeAnimX = MyFrame.DEFAULT_WIDTH;
+        this.changeAnimY = 0;
+        this.changeAnimT = 0.;
+        this.enemyChangePokemon = false;
+    }
+    
+    private void pokeBallThrowAnimation(Graphics g,int chance) {
+        g.drawImage(pokeball,pokeAnimX, pokeAnimY, 50, 50,null);
+        pokeAnimY = pokeAnimY - 15 + (int)((pokeAnimT*pokeAnimT)/6);
+        pokeAnimX = pokeAnimX + 5;
+        pokeAnimT = pokeAnimT + 0.25;
+
+        if(pokeAnimT >= 15.5) {
+            battleAltLoop.getItemCanvas().setUsingItem(false);
+
+
+            this.pokeAnimX = 50;
+            this.pokeAnimY = 500;
+            this.pokeAnimT = -15.;
+
+            boolean catched = false;
+            int randInteger = rand.nextInt(10) ;
+            if(randInteger < chance) {
+                catched  = true;
+            }
+
+            if(catched) {
+                this.dialogueNow.add("Congrats!\nYou catch the pokemon!");
+                this.dialogueNow.add("end");
+                this.canvasTextArea.nextText();
+                if(Player.pokemonInParty.size() < 3) {
+                    Player.pokemonInParty.add(this.enemyPokemon.get(enemyPokemonIdx));
+                } else {
+                    Player.pokemonInBox.add(this.enemyPokemon.get(enemyPokemonIdx));
+                }
+                this.drawEnemy = false;
+            }
+            else {
+                this.dialogueNow.add("You failed to catch the pokemon!");
+                this.canvasTextArea.nextText();
+                enemyTurn();
+            }
+        }
     }
     
     
@@ -104,39 +168,52 @@ public class InBattleCanvas implements Drawable{
         this.useSkillBtn.setRenderedToFalse();
         this.changePokemonBtn.setRenderedToFalse();
         this.runBtn.setRenderedToFalse();
+        Boolean btnShowCon = true;
+        
+        if(enemyChangePokemon) {
+            g.drawImage(pokeball,changeAnimX, changeAnimY, 50, 50,null);
+            changeAnimX = changeAnimX - 5;
+            changeAnimY = changeAnimY + (int)(changeAnimT*changeAnimT);
+            changeAnimT = changeAnimT + 0.06;
+            if(changeAnimT >= 3.8) {
+                this.changeAnimX = MyFrame.DEFAULT_WIDTH;
+                this.changeAnimY = 0;
+                this.changeAnimT = 0.;
+                this.enemyChangePokemon = false;
+            }
+            
+            if(!enemyChangePokemon) {
+                this.pokeBar.setPokemon(enemyPokemon.get(enemyPokemonIdx));
+                this.enemyPokemon.get(enemyPokemonIdx).setBound(MyFrame.DEFAULT_WIDTH/2 + 120, 0, 150, 300);
+            }
+            
+        }
 
-        if(battleAltLoop.getItemCanvas().isUsingPokeBall()) {
-
-            g.drawImage(pokeball,pokeAnimX, pokeAnimY, 50, 50,null);
-            pokeAnimY = pokeAnimY - 15 + (int)((pokeAnimT*pokeAnimT)/6);
-            pokeAnimX = pokeAnimX + 5;
-            pokeAnimT = pokeAnimT + 0.25;
-
-            if(pokeAnimT >= 15.5) {
-                battleAltLoop.getItemCanvas().setUsingPokeBall(false);
-
-
-                this.pokeAnimX = 50;
-                this.pokeAnimY = 500;
-                this.pokeAnimT = -15.;
-
-                boolean catched = true;
-
-                if(catched) {
-                    this.dialogueNow.add("Congrats!\nYou catch the pokemon!");
-                    this.dialogueNow.add("end");
-                    this.canvasTextArea.nextText();
-                    if(Player.pokemonInParty.size() < 3) {
-                        Player.pokemonInParty.add(this.enemyPokemon.get(enemyPokemonIdx));
-                    } else {
-                        Player.pokemonInBox.add(this.enemyPokemon.get(enemyPokemonIdx));
-                    }
-                    this.drawEnemy = false;
-                }
-                else {
-                    this.dialogueNow.add("You failed to catch the pokemon!");
-                    this.canvasTextArea.nextText();
-                }
+        if(battleAltLoop.getItemCanvas().isUsingItem()) {
+            String itemUsed = battleAltLoop.getItemCanvas().getItemUsed();
+            if(itemUsed.equals("Poke Ball")) {
+                pokeBallThrowAnimation(g,3);
+            }
+            else if(itemUsed.equals("Great Ball")) {
+                pokeBallThrowAnimation(g,6);
+            }
+            else if(itemUsed.equals("Ultra Ball")) {
+                pokeBallThrowAnimation(g,9);
+            }
+            else if(itemUsed.equals("Potion")) {
+                battleAltLoop.getItemCanvas().setUsingItem(false);
+                playerPokemon.get(playerPokemonIdx).healed(playerPokemon.get(playerPokemonIdx).getMaxHp() / 4);
+                enemyTurn();
+            }
+            else if(itemUsed.equals("Super Potion")) {
+                battleAltLoop.getItemCanvas().setUsingItem(false);
+                playerPokemon.get(playerPokemonIdx).healed(playerPokemon.get(playerPokemonIdx).getMaxHp() / 2);
+                enemyTurn();
+            }
+            else if(itemUsed.equals("Full Restore")) {
+                battleAltLoop.getItemCanvas().setUsingItem(false);
+                playerPokemon.get(playerPokemonIdx).healed(playerPokemon.get(playerPokemonIdx).getMaxHp());
+                enemyTurn();
             }
 
 
@@ -154,8 +231,8 @@ public class InBattleCanvas implements Drawable{
         this.pokeBar.draw(g);
         this.pokeBar2.draw(g);
 
-        Boolean btnShowCon = !canvasTextArea.haveNextDialogue();
-        btnShowCon = btnShowCon && !battleAltLoop.getItemCanvas().isUsingPokeBall();
+        btnShowCon = !canvasTextArea.haveNextDialogue();
+        btnShowCon = btnShowCon && !battleAltLoop.getItemCanvas().isUsingItem();
         btnShowCon = btnShowCon && !this.usingSkill;
         if(btnShowCon) {
             this.useItemBtn.draw(g);
@@ -181,6 +258,7 @@ public class InBattleCanvas implements Drawable{
             }
         }
         if(enemyBeaten) {
+            //add gold,exp,etc
             this.dialogueNow.add("You beat the enemy!");
             this.dialogueNow.add("end");
         }
@@ -227,17 +305,27 @@ public class InBattleCanvas implements Drawable{
 
                     String desc = player.getSkill(i).use(player, enemy,true);
                     this.dialogueNow.add(desc);
-
                     
                     if(!checkEnemyBeaten()) { 
-                        enemyTurn();
+                        if(enemyPokemon.get(enemyPokemonIdx).getHp() <= 0) {
+                            enemyPokemonIdx = enemyPokemonIdx + 1;
+                            if(enemyPokemon.size() - enemyPokemonIdx > 0) {
+                                this.enemyChangePokemon = true;
+                            }
+                            
+                            this.dialogueNow.add("The enemy have " + (enemyPokemon.size() - enemyPokemonIdx) + " remaining pokemon!");
+                            
+                            
+                        }
+                        else {
+                            enemyTurn();
+                        }
                         this.dialogueNow.add(defaultText);
                     }
                     this.usingSkill = false;
-                   
-                    
                 }
             }
+            
         }
         
     }
@@ -252,7 +340,11 @@ public class InBattleCanvas implements Drawable{
         }
 
         if(this.runBtn.clicked() && this.runBtn.isRendered()) {
-            battleAltLoop.setBattling(false) ;
+            if(isGym) {
+                this.dialogueNow.add("You Lose!\nYour poke-coin willl be reduced");
+            } 
+            this.dialogueNow.add("end");
+            this.canvasTextArea.nextText();
         }
 
         if(this.changePokemonBtn.clicked() && this.changePokemonBtn.isRendered()) {
@@ -262,6 +354,7 @@ public class InBattleCanvas implements Drawable{
         }
 
         if(this.useItemBtn.clicked() && this.useItemBtn.isRendered()) {
+            battleAltLoop.getItemCanvas().reInit();
             battleAltLoop.setNowState("item"); 
         }
         

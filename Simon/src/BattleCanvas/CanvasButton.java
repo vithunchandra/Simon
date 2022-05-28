@@ -90,5 +90,10 @@ public class CanvasButton extends CanvasComponent {
         return text;
     }
     
+    public String getTextNoNum() {
+        String[] temp = this.text.split("\\(");
+        return temp[0];
+    }
+    
     
 }
