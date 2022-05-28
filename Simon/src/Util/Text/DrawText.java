@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Util;
+package Util.Text;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,12 +10,12 @@ import java.awt.event.*;
 
 public class DrawText extends JComponent{
     private String text;
-    private Font font;
     private Dimension size, maxSize;
     
     public DrawText(String text, Font font){
         this.text = text;
-        this.font = font;
+        this.setFont(font);
+        
         Canvas c = new Canvas();
         FontMetrics metrics = c.getFontMetrics(font);
         int height, width;
@@ -34,7 +34,8 @@ public class DrawText extends JComponent{
     
     public DrawText(String text, Font font, Dimension maxSize){
         this.text = text;
-        this.font = font;
+        this.setFont(font);
+        
         Canvas c = new Canvas();
         FontMetrics metrics = c.getFontMetrics(font);
         int height, width;
@@ -62,7 +63,12 @@ public class DrawText extends JComponent{
     public void paint(Graphics g) {
         super.paint(g);
         g = (Graphics2D) g;
-        g.setFont(font);
+        if(this.getForeground() != null){
+            g.setColor(this.getForeground());
+        }else{
+            g.setColor(Color.BLACK);
+        }
+        g.setFont(this.getFont());
         g.drawString(text, 0, size.height - 10);
     }
 
@@ -73,7 +79,7 @@ public class DrawText extends JComponent{
     public void setText(String text) {
         this.text = text;
         Canvas c = new Canvas();
-        FontMetrics metrics = c.getFontMetrics(font);
+        FontMetrics metrics = c.getFontMetrics(this.getFont());
         int height = metrics.getHeight();
         int width = metrics.stringWidth(text);
         size = new Dimension(width, height);
@@ -82,15 +88,7 @@ public class DrawText extends JComponent{
         this.setSize(size);
         this.setBounds(0, 0, width, height);
     }
-
-    public Font getFont() {
-        return font;
-    }
-
-    public void setFont(Font font) {
-        this.font = font;
-    }
-
+    
     public Dimension getSize() {
         return size;
     }

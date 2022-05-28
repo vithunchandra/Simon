@@ -4,6 +4,7 @@
  */
 package simon;
 
+import Util.Text.DrawText;
 import Util.Component.*;
 import Util.MyFrame;
 import Util.Container.MyPanel;
