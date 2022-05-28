@@ -16,7 +16,7 @@ public class ActionText extends DrawText{
     private Color defaultColor, clickedColor;
 
     public ActionText(String text, Font font, Font clickedFont, Color defaultColor, Color clickedColor) {
-        super(text, font);
+        super(text, clickedFont);
         this.defaultFont = font;
         this.clickedFont = clickedFont;
         this.setForeground(defaultColor);

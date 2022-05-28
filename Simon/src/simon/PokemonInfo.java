@@ -27,6 +27,7 @@ public class PokemonInfo {
     Pokemon pokemon;
     MyPanel oldPanel;
     MyFrame frame;
+    CardsPanel cardsPanel;
 
     public PokemonInfo(Pokemon pokemon, MyFrame frame, MyPanel oldPanel) {
         this.pokemon = pokemon;
@@ -50,7 +51,10 @@ public class PokemonInfo {
         MyPanel infoPanel = new MyPanel(infoBackground, new GridBagLayout());
         
         ActionComponent cards = new ActionComponent(new Dimension(400, 500), new CardLayout(), containerBackground);
-        cards.add(getStat());
+        cards.add(getStat(), getStat().getName());
+        cards.add(getSkill(), getSkill().getName());
+        
+        cardsPanel = new CardsPanel(cards);
         
         Font font = new Font(Font.SERIF, Font.BOLD, 30);
         
@@ -72,7 +76,7 @@ public class PokemonInfo {
         infoPanel.add(pokemonImage, gbc);
         
         gbc = SetGBC.setGbc(gbc, 2, 0, 0, 0, GridBagConstraints.WEST);
-        infoPanel.add(getStat(), gbc);
+        infoPanel.add(cards, gbc);
         
         return infoPanel;
     }
@@ -88,22 +92,24 @@ public class PokemonInfo {
         ArrayList<ActionText> text = new ArrayList<>();
         
         for(int i=0; i<name.length; i++){
-            text.add(new ActionText(name[i], font, newFont, Color.LIGHT_GRAY, Color.WHITE));
-            text.get(i).setForeground(Color.LIGHT_GRAY);
+            text.add(new ActionText(name[i], font, newFont, Color.GRAY, Color.WHITE));
             if(metrics.stringWidth(name[i]) > width){
                 width = metrics.stringWidth(name[i]);
             }
+            text.get(i).useDefaultColor();
+            text.get(i).useDefaultFont();
         }
         
-        ActionComponent infoContainer = new ActionComponent(new Dimension(width, height), null, null);
+        ActionComponent infoContainer = new ActionComponent(new Dimension(width + 10, height * name.length), null, null);
         infoContainer.setLayout(new BoxLayout(infoContainer, BoxLayout.Y_AXIS));
-        infoContainer.setBackground(null);
         
         ArrayList<ActionComponent> textContainer = new ArrayList<>();
         
         for(int i=0; i<text.size(); i++){
-            textContainer.add(new ActionComponent(new Dimension(width, height), new FlowLayout(FlowLayout.CENTER), null));
+            textContainer.add(new ActionComponent(new Dimension(width, height), new FlowLayout(FlowLayout.LEFT), null));
             textContainer.get(i).add(text.get(i));
+            textContainer.get(i).setBackground(Color.GRAY);
+            cardsPanel.addActionText(new ComponentData<String, ActionComponent>(name[i], textContainer.get(i)));
             infoContainer.add(textContainer.get(i));
         }
         
@@ -122,7 +128,17 @@ public class PokemonInfo {
         DrawTextArray pokemonStat = new DrawTextArray(text, new Font(Font.MONOSPACED, Font.BOLD, 25), new Dimension(400, 500));
         ActionComponent statContainer = new ActionComponent(new Dimension(pokemonStat.getWidth() + 20, pokemonStat.getHeight() + 20), new FlowLayout(), null);
         statContainer.add(pokemonStat);
+        statContainer.setName("Stat");
         
         return statContainer;
+    }
+    
+    public ActionComponent getSkill(){
+        DynamicText pokemonSkill = new DynamicText(pokemon.getSkill(0).getDescription(), new Font(Font.MONOSPACED, Font.BOLD, 25), new Dimension(400, 500));
+        ActionComponent skillContainer = new ActionComponent(new Dimension(400 + 20, 500 + 20), new FlowLayout(), null);
+        skillContainer.add(pokemonSkill);
+        skillContainer.setName("Skill");
+        
+        return skillContainer;
     }
 }

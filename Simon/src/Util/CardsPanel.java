@@ -24,7 +24,8 @@ public class CardsPanel extends ClickedText{
     @Override
     public void clicked() {
         CardLayout layout = (CardLayout) cards.getLayout();
-        layout.show(cards, this.getClickedText().getData());
+        layout.show(cards, (String) this.getClickedText().getData());
+        System.out.println("Test");
     }
     
 }

@@ -32,7 +32,7 @@ public abstract class ClickedText extends MouseAdapter{
     }
     
     public ClickedText(){
-        
+        this.actionText = new ArrayList<>();
     }
     
     public abstract void clicked();
@@ -41,37 +41,55 @@ public abstract class ClickedText extends MouseAdapter{
     public void mouseExited(MouseEvent e) {
         super.mouseExited(e);
         ActionComponent temp = search(e).getComponent();
-        temp.setBackground(null);
+        if(temp != null){
+            if(clickedText != null){
+                if(temp != clickedText.getComponent()){
+                    temp.setBackground(null);
+                }
+            }
+        }
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
         super.mouseEntered(e);
         ActionComponent temp = search(e).getComponent();
-        temp.setBackground(new Color(192, 192, 192, 90));
+        if(temp != null){
+            if(clickedText != null){
+                if(temp != clickedText.getComponent()){
+                    temp.setBackground(new Color(0, 0, 0, 150));
+                }
+            }
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         super.mouseReleased(e);
         ActionComponent temp = search(e).getComponent();
-        if(e.getX() >= 0 && e.getY() >= 0 && e.getX() <= temp.getWidth() && e.getY() <= temp.getHeight()){
-            temp.setBorder(null);
-            temp.setBackground(null);
-            ActionText text = searchText(temp);
-            if(text != null){
-                text.useClickedColor();
-                text.useClickedFont();
-            }
-            clickedText = search(e);
-            unclicked();
-            
-        }else{
-            temp.setBorder(null);
-            ActionText text = searchText(temp);
-            if(text != null){
-                text.useDefaultColor();
-                text.useDefaultFont();
+        if(temp != null){
+            if(e.getX() >= 0 && e.getY() >= 0 && e.getX() <= temp.getWidth() && e.getY() <= temp.getHeight()){
+                temp.setBorder(null);
+                temp.setBackground(null);
+                ActionText text = searchText(temp);
+                if(text != null){
+                    text.useClickedColor();
+                    text.useClickedFont();
+                }
+                clickedText = search(e);
+                clicked();
+                unclicked();
+            }else{
+                if(clickedText != null){
+                    if(temp != clickedText.getComponent()){
+                        temp.setBorder(null);
+                        ActionText text = searchText(temp);
+                        if(text != null){
+                            text.useDefaultColor();
+                            text.useDefaultFont();
+                        }
+                    }
+                }
             }
         }
     }
@@ -80,11 +98,17 @@ public abstract class ClickedText extends MouseAdapter{
     public void mousePressed(MouseEvent e) {
         super.mousePressed(e);
         ActionComponent temp = search(e).getComponent();
-        SetBorder border = new SetBorder(Color.WHITE);
-        temp.setBorder(border.getNormal());
-        ActionText text = searchText(temp);
-        if(text != null){
-            text.useClickedColor();
+        if(temp != null){
+            if(clickedText != null){
+                if(temp != clickedText.getComponent()){
+                    SetBorder border = new SetBorder(Color.WHITE);
+                    temp.setBorder(border.getNormal());
+                    ActionText text = searchText(temp);
+                    if(text != null){
+                        text.useClickedColor();
+                    }
+                }
+            }
         }
     }
     
@@ -112,7 +136,7 @@ public abstract class ClickedText extends MouseAdapter{
     
     public ComponentData<String, ActionComponent> search(MouseEvent e){
         for(int i=0; i<actionText.size(); i++){
-            if(e.getSource() == actionText.get(i)){
+            if(e.getSource() == actionText.get(i).getComponent()){
                 return actionText.get(i);
             }
         }

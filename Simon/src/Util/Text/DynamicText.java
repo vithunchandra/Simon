@@ -14,9 +14,10 @@ public class DynamicText extends JComponent{
     private ArrayList<String> dynamicText;
     private int height;
     
-    DynamicText(String text, Font font, Dimension maxSize){
+    public DynamicText(String text, Font font, Dimension maxSize){
         this.maxSize = maxSize;
         this.setFont(font);
+        this.dynamicText = new ArrayList<>();
         
         Canvas c = new Canvas();
         FontMetrics metrics = c.getFontMetrics(font);
@@ -26,11 +27,16 @@ public class DynamicText extends JComponent{
         int i = 0;
         while(i < text.length()){
             str += text.charAt(i);
-            if(metrics.stringWidth(str) >= maxSize.width){
+            if(metrics.stringWidth(str) + 10 >= maxSize.width){
                 dynamicText.add(str);
                 str = "";
             }
             i++;
+        }
+        
+        if(str != null){
+            dynamicText.add(str);
+            str = "";
         }
         
         this.setPreferredSize(maxSize);

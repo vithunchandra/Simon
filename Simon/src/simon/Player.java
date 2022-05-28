@@ -6,7 +6,7 @@ package simon;
 
 import Pokemon.PlantSimon;
 import Pokemon.Pokemon;
-import Pokemon.Skill.BodySlam;
+import Pokemon.Skill.*;
 import Pokemon.Venusaur;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -66,6 +66,7 @@ public class Player {
             Random rand = new Random();
             for(int i=0; i<18; i++){
                 pokemonInBox.add(new PlantSimon(rand.nextInt(100, 401), rand.nextInt(2, 40)));
+                pokemonInBox.get(i).addSkill(new Tackle());
                 int level = rand.nextInt(5);
                 for(int j=0; j<level; j++){
                     pokemonInBox.get(pokemonInBox.size() - 1).levelUp();
