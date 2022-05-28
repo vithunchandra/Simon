@@ -12,8 +12,8 @@ import java.util.ArrayList;
 public class CardsPanel extends ClickedText{
     private ActionComponent cards;
 
-    public CardsPanel(ActionComponent cards, ArrayList<ComponentData<String, ActionComponent>> actionText, ComponentData<String, ActionComponent> firstHightlight) {
-        super(actionText, firstHightlight);
+    public CardsPanel(ActionComponent cards, ArrayList<ComponentData<String, ActionComponent>> actionText) {
+        super(actionText);
         this.cards = cards;
     }
 

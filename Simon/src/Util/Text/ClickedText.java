@@ -15,20 +15,12 @@ public abstract class ClickedText extends MouseAdapter{
     private ArrayList<ComponentData<String, ActionComponent>> actionText;
     private ComponentData<String, ActionComponent> clickedText;
 
-    public ClickedText(ArrayList<ComponentData<String, ActionComponent>> actionText, ComponentData<String, ActionComponent> firstHighlight) {
+    public ClickedText(ArrayList<ComponentData<String, ActionComponent>> actionText) {
         this.actionText = actionText;
         for(int i=0; i<actionText.size(); i++){
             actionText.get(i).getComponent().addMouseListener(this);
         }
-        clickedText = firstHighlight;
-        ActionComponent comp = firstHighlight.getComponent();
-        comp.setBorder(null);
-        comp.setBackground(null);
-        ActionText text = searchText(comp);
-        if(text != null){
-            text.useClickedColor();
-            text.useClickedFont();
-        }
+        this.clickedText = null;
     }
     
     public ClickedText(){
@@ -44,7 +36,8 @@ public abstract class ClickedText extends MouseAdapter{
         if(temp != null){
             if(clickedText != null){
                 if(temp != clickedText.getComponent()){
-                    temp.setBackground(null);
+                    temp.setBackground(Color.DARK_GRAY);
+                    System.out.println("Test");
                 }
             }
         }
@@ -58,6 +51,7 @@ public abstract class ClickedText extends MouseAdapter{
             if(clickedText != null){
                 if(temp != clickedText.getComponent()){
                     temp.setBackground(new Color(0, 0, 0, 150));
+                    System.out.println("Test");
                 }
             }
         }
@@ -117,7 +111,7 @@ public abstract class ClickedText extends MouseAdapter{
             if(actionText.get(i) != clickedText){
                 ActionComponent comp = actionText.get(i).getComponent();
                 comp.setBorder(null);
-                comp.setBackground(null);
+                comp.setBackground(Color.DARK_GRAY);
                 ActionText tempText = searchText(comp);
                 tempText.useDefaultColor();
                 tempText.useDefaultFont();

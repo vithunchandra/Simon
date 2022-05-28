@@ -106,13 +106,14 @@ public class PokemonInfo {
         ArrayList<ActionComponent> textContainer = new ArrayList<>();
         
         for(int i=0; i<text.size(); i++){
-            textContainer.add(new ActionComponent(new Dimension(width, height), new FlowLayout(FlowLayout.LEFT), null));
+            textContainer.add(new ActionComponent(new Dimension(width + 10, height), new FlowLayout(FlowLayout.LEFT), null));
             textContainer.get(i).add(text.get(i));
-            textContainer.get(i).setBackground(Color.GRAY);
+            textContainer.get(i).setBackground(Color.YELLOW);
             cardsPanel.addActionText(new ComponentData<String, ActionComponent>(name[i], textContainer.get(i)));
             infoContainer.add(textContainer.get(i));
         }
         
+        infoContainer.revalidate();
         return infoContainer;
     }
     
