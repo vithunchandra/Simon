@@ -21,9 +21,31 @@ import java.util.Random;
 public class Player {
     public static ArrayList<Pokemon> pokemonInParty;
     public static ArrayList<Pokemon> pokemonInBox;
+    
+    public static int pokeCoin;
+    public static int pokeBall,greatBall,ultraBall;
+    public static int potion,superPotion,fullRestore;
+
+    // pokebal -> chance tangkep 30%;
+    // greatBall -> chance tangkep 60%;
+    // ultraBall -> chance tangkep 90%;
+    // potion -> restore 25%;
+    // superPotion -> restore 50%;
+    // fullRestore -> restore 100%;
+    
     public static void loadInfo() {
         pokemonInParty = new ArrayList<>();
         pokemonInBox =  new ArrayList<>();
+        
+        pokeCoin = 1000;
+        
+        pokeBall = 5;
+        greatBall = 0;
+        ultraBall = 0;
+        potion = 0;
+        superPotion = 0;
+        fullRestore = 0;
+        
         try {
             pokemonInParty.add(new Venusaur() );
             

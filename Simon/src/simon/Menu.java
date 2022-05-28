@@ -129,7 +129,7 @@ public class Menu {
                     public void actionPerformed(ActionEvent event){
                         if(event.getSource() == tempButton && tempButton.getText().equals("Dungeon")){
                             try {
-                                new BattleMenuAlt(frame,playGame());
+                                new BattleMenuAlt(frame,playGame(),false);
                             } catch (InterruptedException ex) {
                                 Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
                             }
@@ -140,7 +140,11 @@ public class Menu {
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Shop")){
                             JOptionPane.showMessageDialog(null, tempMessage);
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Gym")){
-                            JOptionPane.showMessageDialog(null, tempMessage);
+                            try {
+                                new BattleMenuAlt(frame,playGame(),true);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Top-up poke-coin")){
                             new TopUp(frame, playGame());
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Back")){

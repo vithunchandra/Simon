@@ -20,7 +20,7 @@ public class BattleAltLoop implements Drawable {
     
 
     private CanvasMouseListener mouse;    
-    private boolean battling;
+    private boolean battling,isGym;
     private String nowState;
     //battle component
     private InBattleCanvas inBattleCanvas;
@@ -29,8 +29,9 @@ public class BattleAltLoop implements Drawable {
     //Item component
     private ItemCanvas itemCanvas;
     
-    public BattleAltLoop(CanvasMouseListener mouse) throws IOException {
+    public BattleAltLoop(CanvasMouseListener mouse,boolean isGym) throws IOException {
         this.mouse = mouse;
+        this.isGym = isGym;
        
         this.battling = true;
         this.nowState = "battle";
@@ -104,5 +105,11 @@ public class BattleAltLoop implements Drawable {
     public InBattleCanvas getInBattleCanvas() {
         return inBattleCanvas;
     }
+
+    public boolean isIsGym() {
+        return isGym;
+    }
+    
+    
     
 }
