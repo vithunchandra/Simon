@@ -25,7 +25,6 @@ public class CardsPanel extends ClickedText{
     public void clicked() {
         CardLayout layout = (CardLayout) cards.getLayout();
         layout.show(cards, (String) this.getClickedText().getData());
-        System.out.println("Test");
     }
     
 }

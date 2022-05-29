@@ -37,8 +37,6 @@ public class PokemonInfo {
     
     public MyPanel infoPanel(){
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.weightx = 0.1;
-        gbc.weighty = 0.1;
                 
         Image infoBackground = null, containerBackground = null;
         try {
@@ -50,7 +48,7 @@ public class PokemonInfo {
         
         MyPanel infoPanel = new MyPanel(infoBackground, new GridBagLayout());
         
-        ActionComponent cards = new ActionComponent(new Dimension(400, 500), new CardLayout(), containerBackground);
+        ActionComponent cards = new ActionComponent(new Dimension(620, 500), new CardLayout(), containerBackground);
         cards.add(getStat(), getStat().getName());
         cards.add(getSkill(), getSkill().getName());
         
@@ -63,22 +61,38 @@ public class PokemonInfo {
         backButton.add(buttonName);
         new ChangePanelButton(frame, oldPanel, backButton);
         
-        DrawImage pokemonImage = new DrawImage(pokemon.getDefaultFrontImage().getScaledInstance(300, 500, Image.SCALE_SMOOTH), new Dimension(300, 500));
-        
+        gbc.weightx = 0.1;
         gbc = SetGBC.setGbc(gbc, 0, 0, 0, 0, GridBagConstraints.NORTHWEST);
         infoPanel.add(backButton, gbc);
         
-        gbc = SetGBC.setGbc(gbc, 0, 1, 0, 0, GridBagConstraints.NORTHWEST);
-        infoPanel.add(infoList(font), gbc);
+        gbc.weighty = 0.1;
+        gbc = SetGBC.setGbc(gbc, 0, 1, 0, 0, GridBagConstraints.CENTER);
+        infoPanel.add(pokemonProfile(), gbc);
         
-        gbc = SetGBC.setGbc(gbc, 1, 0, 0, 0, GridBagConstraints.WEST);
-        gbc.gridheight = 2;
-        infoPanel.add(pokemonImage, gbc);
-        
-        gbc = SetGBC.setGbc(gbc, 2, 0, 0, 0, GridBagConstraints.WEST);
+        gbc = SetGBC.setGbc(gbc, 1, 1, 0, 0, GridBagConstraints.WEST);
         infoPanel.add(cards, gbc);
         
+        gbc.gridwidth = 2;
+        gbc.insets = new Insets(0, 22, 60, 0);
+        gbc = SetGBC.setGbc(gbc, 0, 2, 0, 0, GridBagConstraints.NORTHWEST);
+        infoPanel.add(infoList(font), gbc);
+        
         return infoPanel;
+    }
+    
+    public ActionComponent pokemonProfile(){
+        DrawImage pokemonImage = new DrawImage(pokemon.getDefaultFrontImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH), new Dimension(300, 300));
+        DrawText pokemonName = new DrawText(pokemon.getNama(), new Font(Font.SANS_SERIF, Font.BOLD, 30));
+        DrawText pokemonLvl = new DrawText(("Lvl : " + pokemon.getLvl()), new Font(Font.SANS_SERIF, Font.BOLD, 30));
+        
+        ActionComponent imageContainer = new ActionComponent(new Dimension(300, 500), null, null);
+        imageContainer.setBackground(new Color(216,191,216, 150));
+        imageContainer.setLayout(new BoxLayout(imageContainer, BoxLayout.Y_AXIS));
+        imageContainer.add(pokemonName);
+        imageContainer.add(pokemonImage);
+        imageContainer.add(pokemonLvl);
+        
+        return imageContainer;
     }
     
     public ActionComponent infoList(Font font){
@@ -93,20 +107,18 @@ public class PokemonInfo {
         
         for(int i=0; i<name.length; i++){
             text.add(new ActionText(name[i], font, newFont, Color.GRAY, Color.WHITE));
-            if(metrics.stringWidth(name[i]) > width){
-                width = metrics.stringWidth(name[i]);
-            }
+            width += metrics.stringWidth(name[i]) + 10;
             text.get(i).useDefaultColor();
             text.get(i).useDefaultFont();
         }
         
-        ActionComponent infoContainer = new ActionComponent(new Dimension(width + 10, height * name.length), null, null);
-        infoContainer.setLayout(new BoxLayout(infoContainer, BoxLayout.Y_AXIS));
+        ActionComponent infoContainer = new ActionComponent(new Dimension(width + 10, height), null, null);
+        infoContainer.setLayout(new BoxLayout(infoContainer, BoxLayout.X_AXIS));
         
         ArrayList<ActionComponent> textContainer = new ArrayList<>();
         
         for(int i=0; i<text.size(); i++){
-            textContainer.add(new ActionComponent(new Dimension(width + 10, height), new FlowLayout(FlowLayout.LEFT), null));
+            textContainer.add(new ActionComponent(new Dimension(metrics.stringWidth(name[i]) + 10, height), new FlowLayout(FlowLayout.LEFT), null));
             textContainer.get(i).add(text.get(i));
             textContainer.get(i).setBackground(Color.YELLOW);
             cardsPanel.addActionText(new ComponentData<String, ActionComponent>(name[i], textContainer.get(i)));
@@ -126,8 +138,8 @@ public class PokemonInfo {
         text.add("Total Skill : " + pokemon.getNumberOfSkill());
         text.add("Element : Grass");
         
-        DrawTextArray pokemonStat = new DrawTextArray(text, new Font(Font.MONOSPACED, Font.BOLD, 25), new Dimension(400, 500));
-        ActionComponent statContainer = new ActionComponent(new Dimension(pokemonStat.getWidth() + 20, pokemonStat.getHeight() + 20), new FlowLayout(), null);
+        DrawTextArray pokemonStat = new DrawTextArray(text, new Font(Font.MONOSPACED, Font.BOLD, 25), new Dimension(600, 500));
+        ActionComponent statContainer = new ActionComponent(new Dimension(pokemonStat.getWidth() + 20, pokemonStat.getHeight() + 20), new FlowLayout(FlowLayout.LEFT), null);
         statContainer.add(pokemonStat);
         statContainer.setName("Stat");
         
@@ -135,9 +147,46 @@ public class PokemonInfo {
     }
     
     public ActionComponent getSkill(){
-        DynamicText pokemonSkill = new DynamicText(pokemon.getSkill(0).getDescription(), new Font(Font.MONOSPACED, Font.BOLD, 25), new Dimension(400, 500));
-        ActionComponent skillContainer = new ActionComponent(new Dimension(400 + 20, 500 + 20), new FlowLayout(), null);
-        skillContainer.add(pokemonSkill);
+        ActionComponent skillContainer = new ActionComponent(new Dimension(600 + 20, 500 + 20), null, null);
+        skillContainer.setLayout(new BoxLayout(skillContainer, BoxLayout.Y_AXIS));
+        
+        for(int i=0; i<pokemon.getNumberOfSkill(); i++){
+            SetBorder border = new SetBorder(Color.RED);
+            
+            DynamicText skillDesc = new DynamicText(pokemon.getSkill(i).getDescription(), new Font(Font.SANS_SERIF, Font.PLAIN, 20), new Dimension(510, 90));
+            DrawText skillName = new DrawText(pokemon.getSkill(i).getSkillName(), new Font(Font.SANS_SERIF, Font.BOLD, 20));
+            DrawImage skillIcon = new DrawImage("src\\Material\\Image\\fireball.png", new Dimension(80, 80));
+            
+            ActionComponent skillInfo = new ActionComponent(new Dimension(600, 125), new GridBagLayout(), null);
+            
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.weightx = 0.1;
+            gbc.weighty = 0.1;
+            
+            SetGBC.setGbc(gbc, 0, 0, 0, 0, GridBagConstraints.CENTER);
+            gbc.gridheight = 2;
+            skillInfo.add(skillIcon, gbc);
+            
+            SetGBC.setGbc(gbc, 1, 0, 0, 0, GridBagConstraints.CENTER);
+            gbc.gridheight = 1;
+            gbc.gridwidth = 2;
+            skillInfo.add(skillName, gbc);
+            
+            SetGBC.setGbc(gbc, 1, 1, 0, 0, GridBagConstraints.CENTER);
+            skillInfo.add(skillDesc, gbc);
+            
+            border.setColor(Color.yellow);
+            skillInfo.setBorder(border.niceFrame());
+            
+            skillContainer.add(skillInfo);
+        }
+        
+        for(int i=0; i<(4-pokemon.getNumberOfSkill()); i++){
+            ActionComponent fillerBox = new ActionComponent(new Dimension(600, 125), null, null);
+            fillerBox.setOpaque(false);
+            
+            skillContainer.add(fillerBox);
+        }
         skillContainer.setName("Skill");
         
         return skillContainer;

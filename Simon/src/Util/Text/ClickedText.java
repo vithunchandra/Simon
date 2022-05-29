@@ -37,7 +37,6 @@ public abstract class ClickedText extends MouseAdapter{
             if(clickedText != null){
                 if(temp != clickedText.getComponent()){
                     temp.setBackground(Color.DARK_GRAY);
-                    System.out.println("Test");
                 }
             }
         }
@@ -51,7 +50,6 @@ public abstract class ClickedText extends MouseAdapter{
             if(clickedText != null){
                 if(temp != clickedText.getComponent()){
                     temp.setBackground(new Color(0, 0, 0, 150));
-                    System.out.println("Test");
                 }
             }
         }
