@@ -47,7 +47,7 @@ public class Menu {
         gbc.weightx = 0.1;
         
         try {
-            new BackgroundSong("src\\Material\\Sound\\102-palette-town-theme.wav");
+            new BackgroundSong("src\\Material\\Sound\\Kanna-Ame-Ame.wav");
         } catch (UnsupportedAudioFileException ex) {
             Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
