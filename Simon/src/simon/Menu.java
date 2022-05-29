@@ -20,6 +20,9 @@ import javax.imageio.ImageIO;
 import javax.swing.border.*;
 import Util.Container.TransparantPanel;
 import Pokemon.grass.PlantSimon;
+import Util.BackgroundSong;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Menu {
     GridBagConstraints gbc;
@@ -42,11 +45,20 @@ public class Menu {
         title.setBorder(new EmptyBorder(0, 20, 0, 0));
         gbc.weighty = 0.1;
         gbc.weightx = 0.1;
+        
+        try {
+            new BackgroundSong("src\\Material\\Sound\\102-palette-town-theme.wav");
+        } catch (UnsupportedAudioFileException ex) {
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (LineUnavailableException ex) {
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         frame.changePanel(openMenu());
         
         frame.setVisible(true);
-        
-        
         
     }
     
