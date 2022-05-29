@@ -47,6 +47,7 @@ public class DynamicText extends JComponent{
     public void paint(Graphics g) {
         super.paint(g);
         g = (Graphics2D) g;
+        g.setColor(this.getForeground());
         for(int i=0; i<dynamicText.size(); i++){
             g.drawString(dynamicText.get(i), 0, (height * (i+1)) - 10);
         }

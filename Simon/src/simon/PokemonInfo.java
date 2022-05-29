@@ -157,6 +157,9 @@ public class PokemonInfo {
             DrawText skillName = new DrawText(pokemon.getSkill(i).getSkillName(), new Font(Font.SANS_SERIF, Font.BOLD, 20));
             DrawImage skillIcon = new DrawImage("src\\Material\\Image\\fireball.png", new Dimension(80, 80));
             
+            skillDesc.setForeground(Color.WHITE);
+            skillName.setForeground(Color.WHITE);
+            
             ActionComponent skillInfo = new ActionComponent(new Dimension(600, 125), new GridBagLayout(), null);
             
             GridBagConstraints gbc = new GridBagConstraints();
@@ -167,16 +170,19 @@ public class PokemonInfo {
             gbc.gridheight = 2;
             skillInfo.add(skillIcon, gbc);
             
-            SetGBC.setGbc(gbc, 1, 0, 0, 0, GridBagConstraints.CENTER);
+            SetGBC.setGbc(gbc, 0, 0, 0, 0, GridBagConstraints.CENTER);
             gbc.gridheight = 1;
             gbc.gridwidth = 2;
             skillInfo.add(skillName, gbc);
             
+            gbc.gridwidth = 1;
             SetGBC.setGbc(gbc, 1, 1, 0, 0, GridBagConstraints.CENTER);
             skillInfo.add(skillDesc, gbc);
             
             border.setColor(Color.yellow);
             skillInfo.setBorder(border.niceFrame());
+            
+            skillInfo.setBackground(new Color(0, 0, 0, 150));
             
             skillContainer.add(skillInfo);
         }
