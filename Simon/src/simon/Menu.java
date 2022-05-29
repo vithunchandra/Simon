@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.border.*;
 import Util.Container.TransparantPanel;
-import Pokemon.PlantSimon;
+import Pokemon.grass.PlantSimon;
 
 public class Menu {
     GridBagConstraints gbc;

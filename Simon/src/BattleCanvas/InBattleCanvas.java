@@ -5,9 +5,9 @@
 package BattleCanvas;
 
 import Pokemon.ImagePath;
-import Pokemon.PlantSimon;
+import Pokemon.grass.PlantSimon;
 import Pokemon.Pokemon;
-import Pokemon.Venusaur;
+import Pokemon.grass.Venusaur;
 import Util.DoubleLinkList;
 import Util.ImageLoader;
 import Util.MyFrame;
@@ -72,6 +72,7 @@ public class InBattleCanvas implements Drawable{
         this.playerPokemonIdx = 0;
         this.enemyPokemonIdx = 0;
         
+        
         //========================= Enemy Init ==========================
         this.enemyPokemon = new ArrayList<>();
 //        this.enemyPokemon.add(new PlantSimon(100, 10)) ;
@@ -85,6 +86,11 @@ public class InBattleCanvas implements Drawable{
        //========================= =======================================
         
         this.playerPokemon = Player.pokemonInParty;
+        for(int i = 0;i < playerPokemon.size();i++) {
+            if(playerPokemon.get(i).getHp() <= 0) {
+                this.playerPokemonIdx = this.playerPokemonIdx + 1;
+            }
+        }
  
         
         this.pokeBar = new PokemonBarAlt(this.enemyPokemon.get(enemyPokemonIdx),0, 100, 350, 120, mouse);
@@ -314,13 +320,13 @@ public class InBattleCanvas implements Drawable{
                             }
                             
                             this.dialogueNow.add("The enemy have " + (enemyPokemon.size() - enemyPokemonIdx) + " remaining pokemon!");
-                            
-                            
                         }
                         else {
                             enemyTurn();
                         }
-                        this.dialogueNow.add(defaultText);
+                        if(playerPokemon.get(playerPokemonIdx).getHp() > 0) {
+                            this.dialogueNow.add(defaultText);
+                        }
                     }
                     this.usingSkill = false;
                 }

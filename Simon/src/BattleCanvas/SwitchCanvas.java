@@ -23,7 +23,7 @@ import simon.BattleAltLoop;
  */
 public class SwitchCanvas implements Drawable {
     
-    private int idxChange1,idxChange2;
+    private int idxChange1,idxChange2,idxBegin;
     private CanvasButton switchBtn1,switchBtn2;
     private PokemonBarAlt switchBar1,switchBar2;
     private CanvasButton backButton;
@@ -39,6 +39,7 @@ public class SwitchCanvas implements Drawable {
             this.mouse = mouse;
             this.idxChange1 = -1;
             this.idxChange2 = -1;
+            this.idxBegin = -1;
             
             this.bgImg= ImageLoader.loadImage(ImagePath.BATTLE_BG1);
             this.playerPokemon = Player.pokemonInParty;
@@ -56,8 +57,9 @@ public class SwitchCanvas implements Drawable {
         int whichBox = 0;
         this.idxChange1 = -1;
         this.idxChange2 = -1;
+        this.idxBegin = battleAltLoop.getInBattleCanvas().getPlayerPokemonIdx();
         for(int i = 0;i < playerPokemon.size();i++) {
-            if(i != battleAltLoop.getInBattleCanvas().getPlayerPokemonIdx()) {
+            if(i != idxBegin) {
                 if(whichBox == 0) {
                     this.idxChange1 = i;
                 }
@@ -117,6 +119,28 @@ public class SwitchCanvas implements Drawable {
     }
     
     
+    private void inBattleChange() {
+        resetSkillBtn();
+        Pokemon now = this.playerPokemon.get(battleAltLoop.getInBattleCanvas().getPlayerPokemonIdx());
+        for(int i = 0;i < now.getNumberOfSkill();i++) {
+            this.battleAltLoop.getInBattleCanvas().getSkillButton().get(i).setText(now.getSkill(i).getSkillName() );
+        }
+        
+        if(playerPokemon.get(idxBegin).getHp() > 0) {
+            battleAltLoop.getInBattleCanvas().getDialogueNow().add("You switched pokemon!");
+            battleAltLoop.getInBattleCanvas().getCanvasTextArea().nextText();
+            battleAltLoop.getInBattleCanvas().enemyTurn();
+            battleAltLoop.getInBattleCanvas().getDialogueNow().add(defaultText);
+        }
+        else {
+            battleAltLoop.getInBattleCanvas().getCanvasTextArea().nextText();
+            battleAltLoop.getInBattleCanvas().getDialogueNow().add("You switched pokemon because your simon is beaten!");
+            battleAltLoop.getInBattleCanvas().getDialogueNow().add(defaultText);
+        }
+
+        battleAltLoop.setNowState("battle");
+    }
+    
     public void logicLoop(long diff) {
         if(idxChange1 != -1) {
             this.playerPokemon.get(this.idxChange1).setBound(125, 60, 225, 300);
@@ -132,35 +156,13 @@ public class SwitchCanvas implements Drawable {
             battleAltLoop.getInBattleCanvas().setPlayerPokemonIdx(this.idxChange1);  
             battleAltLoop.getInBattleCanvas().getPokeBar2().setPokemon(this.playerPokemon.get(battleAltLoop.getInBattleCanvas().getPlayerPokemonIdx()));
             
-            resetSkillBtn();
-            Pokemon now = this.playerPokemon.get(battleAltLoop.getInBattleCanvas().getPlayerPokemonIdx());
-            for(int i = 0;i < now.getNumberOfSkill();i++) {
-                this.battleAltLoop.getInBattleCanvas().getSkillButton().get(i).setText(now.getSkill(i).getSkillName() );
-            }
-            
-            battleAltLoop.getInBattleCanvas().getDialogueNow().add("You switched pokemon!");
-            battleAltLoop.getInBattleCanvas().getCanvasTextArea().nextText();
-            battleAltLoop.getInBattleCanvas().enemyTurn();
-            battleAltLoop.getInBattleCanvas().getDialogueNow().add(defaultText);
-            
-            battleAltLoop.setNowState("battle");
+            inBattleChange();
         }
         if(this.switchBtn2.clicked() && this.switchBtn2.isRendered()) {
             battleAltLoop.getInBattleCanvas().setPlayerPokemonIdx(this.idxChange2);  
             battleAltLoop.getInBattleCanvas().getPokeBar2().setPokemon(this.playerPokemon.get(battleAltLoop.getInBattleCanvas().getPlayerPokemonIdx()));
             
-            resetSkillBtn();
-            Pokemon now = this.playerPokemon.get(battleAltLoop.getInBattleCanvas().getPlayerPokemonIdx());
-            for(int i = 0;i < now.getNumberOfSkill();i++) {
-                this.battleAltLoop.getInBattleCanvas().getSkillButton().get(i).setText(now.getSkill(i).getSkillName() );
-            }
-            
-            battleAltLoop.getInBattleCanvas().getDialogueNow().add("You switched pokemon!");
-            battleAltLoop.getInBattleCanvas().getCanvasTextArea().nextText();
-            battleAltLoop.getInBattleCanvas().enemyTurn();
-            battleAltLoop.getInBattleCanvas().getDialogueNow().add(defaultText);
-            
-            battleAltLoop.setNowState("battle");
+            inBattleChange();
         }
         if(this.backButton.clicked() && this.backButton.isRendered()) {
             battleAltLoop.setNowState("battle");

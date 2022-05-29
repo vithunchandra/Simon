@@ -4,10 +4,10 @@
  */
 package simon;
 
-import Pokemon.PlantSimon;
+import Pokemon.grass.PlantSimon;
 import Pokemon.Pokemon;
 import Pokemon.Skill.*;
-import Pokemon.Venusaur;
+import Pokemon.grass.Venusaur;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -49,19 +49,19 @@ public class Player {
         try {
             pokemonInParty.add(new Venusaur() );
             
-            pokemonInParty.add(new PlantSimon(200, 5));
-            pokemonInParty.add(new PlantSimon(300, 30));
+            pokemonInParty.add(new PlantSimon(1, 1));
+            pokemonInParty.add(new PlantSimon(80, 1));
             
             pokemonInParty.get(1).levelUp();
             pokemonInParty.get(1).levelUp();
             pokemonInParty.get(1).levelUp();
             
-            pokemonInParty.get(2).addSkill(new BodySlam());
-            pokemonInParty.get(2).levelUp();
-            pokemonInParty.get(2).levelUp();
-            pokemonInParty.get(2).levelUp();
-            pokemonInParty.get(2).levelUp();
-            pokemonInParty.get(2).levelUp();
+            pokemonInParty.get(0).addSkill(new Overheat());
+//            pokemonInParty.get(2).levelUp();
+//            pokemonInParty.get(2).levelUp();
+//            pokemonInParty.get(2).levelUp();
+//            pokemonInParty.get(2).levelUp();
+//            pokemonInParty.get(2).levelUp();
             
             Random rand = new Random();
             for(int i=0; i<18; i++){

@@ -132,11 +132,14 @@ public abstract class Pokemon implements Drawable{
         return hp;
     }
 
-    public void damaged(int hp) {
+    public int damaged(int hp) {
+        int tempHp = hp;
         this.hp -= hp;
         if(this.hp < 0) {
+            tempHp = tempHp + this.hp;
             this.hp = 0;
         }
+        return tempHp;
     }
     public void healed(int hp) {
         this.hp += hp;
