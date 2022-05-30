@@ -76,14 +76,22 @@ public abstract class ClickedText extends MouseAdapter{
                 clicked();
                 unclicked();
             }else{
+                boolean status = false;
                 if(clickedText != null){
                     if(temp != clickedText.getComponent()){
-                        temp.setBorder(null);
-                        ActionText text = searchText(temp);
-                        if(text != null){
-                            text.useDefaultColor();
-                            text.useDefaultFont();
-                        }
+                        status = true;
+                    }
+                }else{
+                    status = true;
+                }
+                
+                if(status){
+                    temp.setBorder(null);
+                    temp.setBackground(Color.DARK_GRAY);
+                    ActionText text = searchText(temp);
+                    if(text != null){
+                        text.useDefaultColor();
+                        text.useDefaultFont();
                     }
                 }
             }

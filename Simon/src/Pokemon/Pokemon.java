@@ -170,6 +170,17 @@ public abstract class Pokemon implements Drawable{
         }
     }
 
+    public void setExpNeededToLevelUp(int expNeededToLevelUp) {
+        this.expNeededToLevelUp = expNeededToLevelUp;
+    }
+
+    public int getExp() {
+        return exp;
+    }
+
+    public int getExpNeededToLevelUp() {
+        return expNeededToLevelUp;
+    }
 
     public int getLvl() {
         return lvl;
