@@ -22,4 +22,24 @@ public class PlantSimon extends Pokemon{
         this.skillList.set(0, new Tackle());
     }
 
+    @Override
+    public String getType() {
+        return "grass";
+    }
+
+    @Override
+    protected void levelUpBehaviour() {
+        
+    }
+
+    @Override
+    public int getExpDrop() {
+        return 0;
+    }
+
+    @Override
+    public int getGoldDrop() {
+        return 0;
+    }
+
 }

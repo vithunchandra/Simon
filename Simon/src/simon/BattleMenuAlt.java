@@ -44,7 +44,7 @@ public class BattleMenuAlt {
         
         
         private BattleAltLoop battleAltLoop;
-        public BattleCanvas(int fps,MyFrame frame,JPanel panel,boolean inGym) throws IOException {
+        public BattleCanvas(int fps,MyFrame frame,JPanel panel,int floor,boolean inGym) throws IOException {
            this.fps = fps;
            this.running = false;
            this.setBounds(0, 0, MyFrame.DEFAULT_WIDTH, MyFrame.DEFAULT_HEIGHT);
@@ -56,7 +56,7 @@ public class BattleMenuAlt {
            this.addMouseListener(this.mouse);
            this.addMouseMotionListener(this.mouse);
            
-           this.battleAltLoop = new BattleAltLoop(mouse,inGym);
+           this.battleAltLoop = new BattleAltLoop(mouse,floor,inGym);
            
            
            this.frame = frame;
@@ -147,12 +147,12 @@ public class BattleMenuAlt {
     private JFrame frame;
     private Canvas canvas;
     
-    public BattleMenuAlt(MyFrame frame,JPanel panel,boolean inGym) throws InterruptedException {
+    public BattleMenuAlt(MyFrame frame,JPanel panel,int floor,boolean inGym) throws InterruptedException {
         this.frame = frame;
         
         BattleCanvas battleCanvas = null;
         try {
-            battleCanvas = new BattleCanvas(60,frame,panel,inGym);
+            battleCanvas = new BattleCanvas(60,frame,panel,floor,inGym);
         } catch (IOException ex) {
             Logger.getLogger(BattleMenuAlt.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -29,5 +29,25 @@ public class Vincent extends Pokemon{
     public void logicLoop(long timediff) {
         super.defaultGraphicLoop(timediff);
     }
+
+    @Override
+    public String getType() {
+        return "fire";
+    }
+
+    @Override
+    protected void levelUpBehaviour() {
+        
+    }
+
+    @Override
+    public int getExpDrop() {
+        return 0;
+    }
+
+    @Override
+    public int getGoldDrop() {
+        return 0;
+    }
     
 }

@@ -7,6 +7,7 @@ package BattleCanvas;
 import Pokemon.ImagePath;
 import Pokemon.grass.PlantSimon;
 import Pokemon.Pokemon;
+import Pokemon.RandPokemon;
 import Pokemon.grass.Venusaur;
 import Util.DoubleLinkList;
 import Util.ImageLoader;
@@ -74,14 +75,16 @@ public class InBattleCanvas implements Drawable{
         
         
         //========================= Enemy Init ==========================
+        int floor = this.battleAltLoop.getFloor();
         this.enemyPokemon = new ArrayList<>();
 //        this.enemyPokemon.add(new PlantSimon(100, 10)) ;
-        this.enemyPokemon.add(new PlantSimon(20,50));
+
+        this.enemyPokemon.add(RandPokemon.getPokemon());
         this.enemyPokemon.get(0).setBound(MyFrame.DEFAULT_WIDTH/2 + 120, 0, 150, 300);
         
         if(isGym) {
-            this.enemyPokemon.add(new PlantSimon(20,1));
-            this.enemyPokemon.add(new PlantSimon(20,1));
+            this.enemyPokemon.add(RandPokemon.getPokemon());
+            this.enemyPokemon.add(RandPokemon.getPokemon());
         }
        //========================= =======================================
         
@@ -265,7 +268,21 @@ public class InBattleCanvas implements Drawable{
         }
         if(enemyBeaten) {
             //add gold,exp,etc
+            int totalGold = 0;
+            int totalExp = 0;
+            
+            for(Pokemon defeatedEnemyPokemon : enemyPokemon) {
+                totalGold = totalGold + defeatedEnemyPokemon.getGoldDrop();
+                totalExp = totalGold + defeatedEnemyPokemon.getExpDrop();
+            }
+            
             this.dialogueNow.add("You beat the enemy!");
+            if(isGym) {
+                Player.pokeCoin += totalGold;
+                this.dialogueNow.add("You get " + totalGold + " gold");
+            } 
+            Player.pokemonInParty.get(playerPokemonIdx).addExp(totalExp);
+            this.dialogueNow.add("You get " + totalExp + " exp");
             this.dialogueNow.add("end");
         }
         return enemyBeaten;

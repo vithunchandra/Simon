@@ -47,14 +47,10 @@ public class Menu {
         gbc.weightx = 0.1;
         
         try {
-            new BackgroundSong("src\\Material\\Sound\\Kanna-Ame-Ame.wav");
-        } catch (UnsupportedAudioFileException ex) {
+            new BackgroundSong("src\\Material\\Sound\\102-palette-town-theme.wav");
+        } catch (Exception ex) {
             Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (LineUnavailableException ex) {
-            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
         
         frame.changePanel(openMenu());
         
@@ -140,11 +136,7 @@ public class Menu {
                     @Override
                     public void actionPerformed(ActionEvent event){
                         if(event.getSource() == tempButton && tempButton.getText().equals("Dungeon")){
-                            try {
-                                new BattleMenuAlt(frame,playGame(),false);
-                            } catch (InterruptedException ex) {
-                                Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
-                            }
+                            new Dungeon(frame, playGame());
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Switch Pokemon")){
                             new SwitchPokemon(frame, playGame());
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Pokemon Center")){
@@ -152,11 +144,7 @@ public class Menu {
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Shop")){
                             JOptionPane.showMessageDialog(null, tempMessage);
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Gym")){
-                            try {
-                                new BattleMenuAlt(frame,playGame(),true);
-                            } catch (InterruptedException ex) {
-                                Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
-                            }
+                            new Gym(frame, playGame());
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Top-up poke-coin")){
                             new TopUp(frame, playGame());
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Back")){
