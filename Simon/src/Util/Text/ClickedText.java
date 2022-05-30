@@ -38,6 +38,8 @@ public abstract class ClickedText extends MouseAdapter{
                 if(temp != clickedText.getComponent()){
                     temp.setBackground(Color.DARK_GRAY);
                 }
+            }else{
+                temp.setBackground(Color.DARK_GRAY);
             }
         }
     }
@@ -51,6 +53,8 @@ public abstract class ClickedText extends MouseAdapter{
                 if(temp != clickedText.getComponent()){
                     temp.setBackground(new Color(0, 0, 0, 150));
                 }
+            }else{
+                temp.setBackground(new Color(0, 0, 0, 150));
             }
         }
     }
@@ -89,17 +93,23 @@ public abstract class ClickedText extends MouseAdapter{
     @Override
     public void mousePressed(MouseEvent e) {
         super.mousePressed(e);
+        boolean status = false;
         ActionComponent temp = search(e).getComponent();
         if(temp != null){
             if(clickedText != null){
                 if(temp != clickedText.getComponent()){
-                    SetBorder border = new SetBorder(Color.WHITE);
-                    temp.setBorder(border.getNormal());
-                    ActionText text = searchText(temp);
-                    if(text != null){
-                        text.useClickedColor();
-                    }
+                    status = true;
                 }
+            }else{
+                status = true;
+            }
+        }
+        if(status){
+            SetBorder border = new SetBorder(Color.WHITE);
+            temp.setBorder(border.getNormal());
+            ActionText text = searchText(temp);
+            if(text != null){
+                text.useClickedColor();
             }
         }
     }

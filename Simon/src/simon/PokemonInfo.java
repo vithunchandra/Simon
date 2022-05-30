@@ -120,11 +120,11 @@ public class PokemonInfo {
         for(int i=0; i<text.size(); i++){
             textContainer.add(new ActionComponent(new Dimension(metrics.stringWidth(name[i]) + 10, height), new FlowLayout(FlowLayout.LEFT), null));
             textContainer.get(i).add(text.get(i));
-            textContainer.get(i).setBackground(Color.YELLOW);
+            textContainer.get(i).setBackground(Color.DARK_GRAY);
             cardsPanel.addActionText(new ComponentData<String, ActionComponent>(name[i], textContainer.get(i)));
             infoContainer.add(textContainer.get(i));
         }
-        
+
         infoContainer.revalidate();
         return infoContainer;
     }
@@ -193,6 +193,7 @@ public class PokemonInfo {
             
             skillContainer.add(fillerBox);
         }
+        skillContainer.setOpaque(false);
         skillContainer.setName("Skill");
         
         return skillContainer;
