@@ -35,6 +35,11 @@ public abstract class Pokemon implements Drawable{
     protected long timeAcc1,changeEveryMilis,changeEveryMilisBack;
     protected boolean renderFront = true;
     
+    protected abstract void levelUpBehaviour();
+    public abstract int getExpDrop();
+    public abstract int getGoldDrop();
+    public abstract String getType();
+    
     private void renderInit(int numSpriteFront,int numSpriteBack) {
         x = -1;y = -1;width = -1;height = -1; 
         animTime = 5000;
@@ -122,6 +127,23 @@ public abstract class Pokemon implements Drawable{
         this.renderFront = renderFront;
     }
     
+    public Double getTypeMultiplier(Pokemon enemy) {
+        if(this.getType().equals("grass") && enemy.getType().equals("fire")) {
+            return 0.75;
+        } else if(this.getType().equals("grass") && enemy.getType().equals("water")) {
+            return 1.25;
+        } else if(this.getType().equals("fire") && enemy.getType().equals("water")) {
+            return 0.75;
+        } else if(this.getType().equals("fire") && enemy.getType().equals("grass")) {
+            return 1.25;
+        } else if(this.getType().equals("water") && enemy.getType().equals("grass")) {
+            return 0.75;
+        } else if(this.getType().equals("water") && enemy.getType().equals("fire")) {
+            return 1.25;
+        } else {
+            return 1.;
+        }
+    }
     
    
     public String getNama() {
@@ -158,7 +180,7 @@ public abstract class Pokemon implements Drawable{
             lvl = MAX_LEVEL;
         }
         else {
-            
+            levelUpBehaviour();
         }
     }
     public void setLvl(int lvl) {
@@ -171,6 +193,41 @@ public abstract class Pokemon implements Drawable{
         this.width = width;
         this.height = height;
     }
+    
+    public Skill getSkill(int idxSkill) {
+        return skillList.get(idxSkill);
+    }
+    public void addSkill(Skill skill) {
+        int numSkillNow = this.getNumberOfSkill();
+        if(numSkillNow < 4) {
+            this.skillList.set(numSkillNow, skill);
+        }
+        
+    }
+    public void replaceSkill(int idx,Skill skill) {
+        this.skillList.set(idx, skill);
+    }
+    public int getNumberOfSkill() {
+        int countNotNull = 0;
+        for(int i = 0;i < skillList.size();i++) {
+            if(skillList.get(i) != null) {
+                countNotNull = countNotNull + 1;
+            }
+        }
+        return countNotNull;
+    }
+    
+    public boolean isDead() {
+        return this.hp <= 0;
+    }
+
+    public void setExp(int exp) {
+        this.exp = exp;
+    }
+    public void addExp(int exp) {
+        this.exp += exp;
+    }
+    
     
     public int getMaxHp() {
         return maxHp;
@@ -202,30 +259,4 @@ public abstract class Pokemon implements Drawable{
         return backSpriteImage;
     }
     
-    public Skill getSkill(int idxSkill) {
-        return skillList.get(idxSkill);
-    }
-    public void addSkill(Skill skill) {
-        int numSkillNow = this.getNumberOfSkill();
-        if(numSkillNow < 4) {
-            this.skillList.set(numSkillNow, skill);
-        }
-        
-    }
-    public void replaceSkill(int idx,Skill skill) {
-        this.skillList.set(idx, skill);
-    }
-    public int getNumberOfSkill() {
-        int countNotNull = 0;
-        for(int i = 0;i < skillList.size();i++) {
-            if(skillList.get(i) != null) {
-                countNotNull = countNotNull + 1;
-            }
-        }
-        return countNotNull;
-    }
-    
-    public boolean isDead() {
-        return this.hp <= 0;
-    }
 }
