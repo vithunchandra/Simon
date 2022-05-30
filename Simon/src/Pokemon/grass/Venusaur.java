@@ -19,6 +19,26 @@ public class Venusaur extends Pokemon{
         super("Venusaur", 432, 41, ImagePath.VENUSAUR_FRONT_PATH, 59, 63);
         addSkill(new Tackle());
     }
+
+    @Override
+    public String getType() {
+        return "grass";
+    }
+
+    @Override
+    protected void levelUpBehaviour() {
+       
+    }
+
+    @Override
+    public int getExpDrop() {
+        return 0;
+    }
+
+    @Override
+    public int getGoldDrop() {
+        return 0;
+    }
     
 
     

@@ -71,6 +71,8 @@ public class Player {
                 for(int j=0; j<level; j++){
                     pokemonInBox.get(pokemonInBox.size() - 1).levelUp();
                 }
+                pokemonInBox.get(i).setExpNeededToLevelUp(234);
+                pokemonInBox.get(i).setExp(rand.nextInt(0, 234));
             }
             
         } catch (IOException ex) {

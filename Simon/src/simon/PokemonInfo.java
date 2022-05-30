@@ -84,13 +84,39 @@ public class PokemonInfo {
         DrawImage pokemonImage = new DrawImage(pokemon.getDefaultFrontImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH), new Dimension(300, 300));
         DrawText pokemonName = new DrawText(pokemon.getNama(), new Font(Font.SANS_SERIF, Font.BOLD, 30));
         DrawText pokemonLvl = new DrawText(("Lvl : " + pokemon.getLvl()), new Font(Font.SANS_SERIF, Font.BOLD, 30));
+        JProgressBar bar = new JProgressBar();
+        
+        ActionComponent nameContainer = new ActionComponent(new Dimension(300, pokemonName.getHeight()), new FlowLayout(FlowLayout.CENTER), null);
+        nameContainer.add(pokemonName);
+        nameContainer.setBackground(Color.LIGHT_GRAY);
+        
+        ActionComponent lvlContainer = new ActionComponent(new Dimension(300, pokemonLvl.getHeight()), new FlowLayout(FlowLayout.LEFT), null);
+        lvlContainer.setBackground(new Color(255, 255 ,255, 0));
+        lvlContainer.add(pokemonLvl);
+        
+        DrawText expText = new DrawText("Exp : ", new Font(Font.SANS_SERIF, Font.BOLD, 30));
+        ActionComponent barExp = new ActionComponent(new Dimension(300, expText.getHeight()), new FlowLayout(FlowLayout.LEFT), null);
+        bar.setMinimum(0);
+        bar.setMaximum(pokemon.getExpNeededToLevelUp());
+        bar.setValue(pokemon.getExp());
+        bar.setString(pokemon.getExp() + "/" + pokemon.getExpNeededToLevelUp());
+        bar.setStringPainted(true);
+        bar.setPreferredSize(new Dimension(200, expText.getHeight()));
+        bar.setForeground(Color.GREEN);
+        
+        barExp.add(expText);
+        barExp.add(bar);
+        barExp.setBackground(Color.LIGHT_GRAY);
         
         ActionComponent imageContainer = new ActionComponent(new Dimension(300, 500), null, null);
         imageContainer.setBackground(new Color(216,191,216, 150));
         imageContainer.setLayout(new BoxLayout(imageContainer, BoxLayout.Y_AXIS));
-        imageContainer.add(pokemonName);
+        imageContainer.add(nameContainer);
+        imageContainer.add(Box.createVerticalGlue());
         imageContainer.add(pokemonImage);
-        imageContainer.add(pokemonLvl);
+        imageContainer.add(Box.createVerticalGlue());
+        imageContainer.add(lvlContainer, BorderLayout.EAST);
+        imageContainer.add(barExp);
         
         return imageContainer;
     }
@@ -120,12 +146,11 @@ public class PokemonInfo {
         for(int i=0; i<text.size(); i++){
             textContainer.add(new ActionComponent(new Dimension(metrics.stringWidth(name[i]) + 10, height), new FlowLayout(FlowLayout.LEFT), null));
             textContainer.get(i).add(text.get(i));
-            textContainer.get(i).setBackground(Color.YELLOW);
+            textContainer.get(i).setBackground(Color.DARK_GRAY);
             cardsPanel.addActionText(new ComponentData<String, ActionComponent>(name[i], textContainer.get(i)));
             infoContainer.add(textContainer.get(i));
         }
-        
-        infoContainer.revalidate();
+
         return infoContainer;
     }
     
@@ -193,6 +218,7 @@ public class PokemonInfo {
             
             skillContainer.add(fillerBox);
         }
+        skillContainer.setOpaque(false);
         skillContainer.setName("Skill");
         
         return skillContainer;
