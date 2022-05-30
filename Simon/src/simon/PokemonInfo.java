@@ -89,7 +89,10 @@ public class PokemonInfo {
         ActionComponent nameContainer = new ActionComponent(new Dimension(300, pokemonName.getHeight()), new FlowLayout(FlowLayout.CENTER), null);
         nameContainer.add(pokemonName);
         nameContainer.setBackground(Color.LIGHT_GRAY);
-        nameContainer.setOpaque(false);
+        
+        ActionComponent lvlContainer = new ActionComponent(new Dimension(300, pokemonLvl.getHeight()), new FlowLayout(FlowLayout.LEFT), null);
+        lvlContainer.setBackground(new Color(255, 255 ,255, 0));
+        lvlContainer.add(pokemonLvl);
         
         DrawText expText = new DrawText("Exp : ", new Font(Font.SANS_SERIF, Font.BOLD, 30));
         ActionComponent barExp = new ActionComponent(new Dimension(300, expText.getHeight()), new FlowLayout(FlowLayout.LEFT), null);
@@ -112,7 +115,7 @@ public class PokemonInfo {
         imageContainer.add(Box.createVerticalGlue());
         imageContainer.add(pokemonImage);
         imageContainer.add(Box.createVerticalGlue());
-        imageContainer.add(pokemonLvl, BorderLayout.EAST);
+        imageContainer.add(lvlContainer, BorderLayout.EAST);
         imageContainer.add(barExp);
         
         return imageContainer;

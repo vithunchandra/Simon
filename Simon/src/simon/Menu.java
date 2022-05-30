@@ -7,7 +7,6 @@ package simon;
 import Pokemon.Pokemon;
 import Util.MyFrame;
 import Util.Container.MyPanel;
-import Util.Container.TransparantPanel;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -19,10 +18,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.border.*;
 import Util.Container.TransparantPanel;
-import Pokemon.grass.PlantSimon;
 import Util.BackgroundSong;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Menu {
     GridBagConstraints gbc;
