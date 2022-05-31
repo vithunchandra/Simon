@@ -28,8 +28,8 @@ public class Lapras extends Pokemon{
         addSkill(new Tackle());
         
         this.expNeededToLevelUp = getMaxExp(lvl);
-        this.maxHp += 10*lvl;
-        this.damage += 3*lvl;
+        this.maxHp += 10*(lvl - 1);
+        this.damage += 3*(lvl - 1);
         this.hp = this.maxHp;
         this.lvl = lvl;
         if(this.getLvl() >= 10) {
