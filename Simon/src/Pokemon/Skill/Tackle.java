@@ -21,13 +21,24 @@ public class Tackle extends Skill{
     @Override
     public String use(Pokemon player, Pokemon enemy,boolean usedByPlayer) {
         int damage = (int) (player.getDamage()*atkPercentage);
+        Double multType = player.getTypeMultiplier(enemy);
+        damage = (int)(damage*multType);
         enemy.damaged(damage);
         
-        if(usedByPlayer) {
-            return "enemy damaged by " + damage;
-        } else {
-            return "player damaged by " + damage;
+        String returnString = "";
+        if(multType >= 1.2) {
+            returnString = returnString + "it is super effective\n";
         }
+        else if(multType <= 0.8) {
+            returnString = returnString + "it is not effective\n";
+        }
+        
+        if(usedByPlayer) {
+            returnString += "enemy damaged by " + damage;
+        } else {
+            returnString += "player damaged by " + damage;
+        }
+        return returnString;
     }
 
     @Override

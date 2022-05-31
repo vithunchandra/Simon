@@ -10,6 +10,7 @@ public class ImagePath {
     //madsudku path buat static gini sih....
     public static final String SIMON_FRONT_PATH = "src\\Material\\Image\\simon1.png";
     public static final String VENUSAUR_FRONT_PATH = "src\\Material\\Image\\venusaur.png";
+    public static final String LAPRAS_FRONT_PATH = "src\\Material\\Image\\lapras.png";
     public static final String BATTLE_BG1 = "src\\Material\\Image\\battleBG1.png";
     public static final String BATTLE_DIALOGUE = "src\\Material\\Image\\dialogue.png";
     public static final String BTN1 = "src\\Material\\Image\\btn1.png";

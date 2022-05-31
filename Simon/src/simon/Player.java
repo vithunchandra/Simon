@@ -7,6 +7,7 @@ package simon;
 import Pokemon.grass.PlantSimon;
 import Pokemon.Pokemon;
 import Pokemon.Skill.*;
+import Pokemon.Water.Lapras;
 import Pokemon.grass.Venusaur;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class Player {
         fullRestore = 0;
         
         try {
-            pokemonInParty.add(new Venusaur() );
+            pokemonInParty.add(new Lapras());
             
             pokemonInParty.add(new PlantSimon(1, 1));
             pokemonInParty.add(new PlantSimon(80, 1));

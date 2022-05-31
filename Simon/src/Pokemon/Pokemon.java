@@ -51,6 +51,10 @@ public abstract class Pokemon implements Drawable{
     }
     
     public Pokemon(String nama, int maxHp, int damage,String path,int numSpriteFront,int numSpriteBack) throws IOException {
+        this.lvl = 1;
+        this.expNeededToLevelUp = 100;
+        this.exp = 0;
+        
         this.nama = nama;
         this.hp = maxHp;
         this.maxHp = maxHp;
@@ -186,16 +190,25 @@ public abstract class Pokemon implements Drawable{
         return lvl;
     }
     public void levelUp() {
-        this.lvl += 1;
-        if(lvl > MAX_LEVEL) {
-            lvl = MAX_LEVEL;
-        }
-        else {
-            levelUpBehaviour();
+        while(this.getExp() >= this.expNeededToLevelUp) {
+            if(lvl >= MAX_LEVEL) {
+                lvl = MAX_LEVEL;
+//                expNeededToLevelUp = 0;
+            }
+            else {
+                this.lvl += 1;
+                expNeededToLevelUp = expNeededToLevelUp + (this.getLvl() - 1)*100;
+                levelUpBehaviour();
+                
+            }
         }
     }
     public void setLvl(int lvl) {
         this.lvl = lvl;
+    }
+    
+    public int getMaxExp(int lvl) {
+        return lvl*lvl*50 - 50*lvl + 100;
     }
     
     public void setBound(int x,int y,int width,int height) {

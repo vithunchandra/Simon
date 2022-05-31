@@ -279,10 +279,16 @@ public class InBattleCanvas implements Drawable{
             this.dialogueNow.add("You beat the enemy!");
             if(isGym) {
                 Player.pokeCoin += totalGold;
-                this.dialogueNow.add("You get " + totalGold + " gold");
+                this.dialogueNow.add("You get " + totalGold + " poke-coin");
             } 
             Player.pokemonInParty.get(playerPokemonIdx).addExp(totalExp);
             this.dialogueNow.add("You get " + totalExp + " exp");
+            
+            if(Player.pokemonInParty.get(playerPokemonIdx).getExp() >= Player.pokemonInParty.get(playerPokemonIdx).getExpNeededToLevelUp()) {
+                Player.pokemonInParty.get(playerPokemonIdx).levelUp();
+                this.dialogueNow.add("Your Pokemon level increased!");
+            }
+            
             this.dialogueNow.add("end");
         }
         return enemyBeaten;

@@ -34,12 +34,12 @@ public class PlantSimon extends Pokemon{
 
     @Override
     public int getExpDrop() {
-        return 0;
+        return 100*this.getLvl();
     }
 
     @Override
     public int getGoldDrop() {
-        return 0;
+        return 80*this.getLvl();
     }
 
 }
