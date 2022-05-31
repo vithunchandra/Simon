@@ -19,7 +19,7 @@ public class ChangePanelButton extends ButtonAction{
     MyPanel newPanel;
     MyPanel oldPanel;
 
-    public ChangePanelButton(MyFrame frame, MyPanel newPanel, ActionButton button) {
+    public ChangePanelButton(MyFrame frame, ActionButton button) {
         super(button);
         this.frame = frame;
         for(int i=0; i<frame.getContentPane().getComponentCount(); i++){
@@ -28,18 +28,12 @@ public class ChangePanelButton extends ButtonAction{
                 break;
             }
         }
-        this.newPanel = newPanel;
     }
     
-    public ChangePanelButton(MyFrame frame, ActionButton button){
+    public ChangePanelButton(MyFrame frame, MyPanel oldPanel, ActionButton button){
         super(button);
         this.frame = frame;
-        for(int i=0; i<frame.getContentPane().getComponentCount(); i++){
-            if(frame.getContentPane().getComponent(i) instanceof MyPanel){
-                oldPanel = (MyPanel) frame.getContentPane().getComponent(i);
-                break;
-            }
-        }
+        this.oldPanel = oldPanel;
     }
 
     @Override

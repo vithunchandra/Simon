@@ -39,6 +39,7 @@ public class Menu {
         );
         title.setIcon((Icon) imageTitle);
         title.setBorder(new EmptyBorder(0, 20, 0, 0));
+        title.setPreferredSize(new Dimension(320, 150));
         gbc.weighty = 0.1;
         gbc.weightx = 0.1;
         
@@ -138,7 +139,7 @@ public class Menu {
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Pokemon Center")){
                             JOptionPane.showMessageDialog(null, tempMessage);
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Shop")){
-                            JOptionPane.showMessageDialog(null, tempMessage);
+                            new Shop(frame, playGame());
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Gym")){
                             new Gym(frame, playGame());
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Top-up poke-coin")){

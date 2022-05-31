@@ -59,7 +59,7 @@ public class PokemonInfo {
         DrawText buttonName = new DrawText("Back", font);
         ActionButton backButton = new ActionButton(new Dimension(buttonName.getWidth() + 30, buttonName.getHeight() + 15), new FlowLayout(), null);
         backButton.add(buttonName);
-        new ChangePanelButton(frame, oldPanel, backButton);
+        new ChangePanelButton(frame, backButton);
         
         gbc.weightx = 0.1;
         gbc = SetGBC.setGbc(gbc, 0, 0, 0, 0, GridBagConstraints.NORTHWEST);
@@ -161,7 +161,7 @@ public class PokemonInfo {
         text.add("Max Hp : " + pokemon.getMaxHp());
         text.add("Attack : " + pokemon.getDamage());
         text.add("Total Skill : " + pokemon.getNumberOfSkill());
-        text.add("Element : Grass");
+        text.add("Element : " + pokemon.getType());
         
         DrawTextArray pokemonStat = new DrawTextArray(text, new Font(Font.MONOSPACED, Font.BOLD, 25), new Dimension(600, 500));
         ActionComponent statContainer = new ActionComponent(new Dimension(pokemonStat.getWidth() + 20, pokemonStat.getHeight() + 20), new FlowLayout(FlowLayout.LEFT), null);
