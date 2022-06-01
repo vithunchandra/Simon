@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Random;
 import Item.*;
+import Pokemon.grass.*;
 
 /**
  *
@@ -54,7 +55,7 @@ public class Player {
             pokemonInParty.add(new PlantSimon(200, 60));
             pokemonInParty.add(new Lapras());
             
-            pokemonInParty.add(new PlantSimon(1, 1));
+            pokemonInParty.add(new PlantSimonEvo(1));
             
             
             pokemonInParty.get(0).levelUp();
