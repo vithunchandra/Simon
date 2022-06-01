@@ -51,16 +51,17 @@ public class Player {
         fullRestore = 0;
         
         try {
+            pokemonInParty.add(new PlantSimon(200, 60));
             pokemonInParty.add(new Lapras());
             
             pokemonInParty.add(new PlantSimon(1, 1));
-            pokemonInParty.add(new PlantSimon(80, 1));
             
-            pokemonInParty.get(1).levelUp();
-            pokemonInParty.get(1).levelUp();
-            pokemonInParty.get(1).levelUp();
             
-            pokemonInParty.get(0).addSkill(new Overheat());
+            pokemonInParty.get(0).levelUp();
+            pokemonInParty.get(0).levelUp();
+            pokemonInParty.get(0).levelUp();
+            
+            //pokemonInParty.get(0).addSkill(new Overheat());
 //            pokemonInParty.get(2).levelUp();
 //            pokemonInParty.get(2).levelUp();
 //            pokemonInParty.get(2).levelUp();

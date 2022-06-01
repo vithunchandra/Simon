@@ -4,6 +4,7 @@
  */
 package BattleCanvas;
 
+import Pokemon.Evolvable;
 import Pokemon.ImagePath;
 import Pokemon.grass.PlantSimon;
 import Pokemon.Pokemon;
@@ -78,15 +79,16 @@ public class InBattleCanvas implements Drawable{
         int floor = this.battleAltLoop.getFloor();
         this.enemyPokemon = new ArrayList<>();
 //        this.enemyPokemon.add(new PlantSimon(100, 10)) ;
-
-        this.enemyPokemon.add(RandPokemon.getPokemon());
+        
+        //rand.nextInt((floor - 1)*5 + 1, floor*5 + 1) )
+        this.enemyPokemon.add(RandPokemon.getPokemon(rand.nextInt((floor - 1)*5 + 1, floor*5 + 1)));
         this.enemyPokemon.get(0).setBound(MyFrame.DEFAULT_WIDTH/2 + 120, 0, 150, 300);
         
         if(isGym) {
-            this.enemyPokemon.add(RandPokemon.getPokemon());
-            this.enemyPokemon.add(RandPokemon.getPokemon());
+            this.enemyPokemon.add(RandPokemon.getPokemon(rand.nextInt((floor - 1)*5 + 1, floor*5 + 1)));
+            this.enemyPokemon.add(RandPokemon.getPokemon(rand.nextInt((floor - 1)*5 + 1, floor*5 + 1)));
         }
-       //========================= =======================================
+       //=================================================================
         
         this.playerPokemon = Player.pokemonInParty;
         for(int i = 0;i < playerPokemon.size();i++) {
@@ -287,6 +289,13 @@ public class InBattleCanvas implements Drawable{
             if(Player.pokemonInParty.get(playerPokemonIdx).getExp() >= Player.pokemonInParty.get(playerPokemonIdx).getExpNeededToLevelUp()) {
                 Player.pokemonInParty.get(playerPokemonIdx).levelUp();
                 this.dialogueNow.add("Your Pokemon level increased!");
+                
+                if(Player.pokemonInParty.get(playerPokemonIdx) instanceof Evolvable) {
+                    Evolvable pokemonEvolve = (Evolvable)Player.pokemonInParty.get(playerPokemonIdx);
+                    if(pokemonEvolve.canEvolve()) {
+                        Player.pokemonInParty.set(playerPokemonIdx, pokemonEvolve.evolve());
+                    }
+                }
             }
             
             this.dialogueNow.add("end");

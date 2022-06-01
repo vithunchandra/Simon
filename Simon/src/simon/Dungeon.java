@@ -61,15 +61,17 @@ public class Dungeon {
     }
     
     public void nextFloor() {
-        switchPanel.remove(label);
-        floor = floor + 1;
-        label = new JLabel("FLOOR : " + floor);
-        label.setBounds(MyFrame.DEFAULT_WIDTH/2 - 100, 0, 200, 50);
-        label.setFont(new Font("Courier New", 0,30));
-        switchPanel.add(label);
-        
-        switchPanel.revalidate();
-        switchPanel.repaint();
+        if(floor < 6) {
+            switchPanel.remove(label);
+            floor = floor + 1;
+            label = new JLabel("FLOOR : " + floor);
+            label.setBounds(MyFrame.DEFAULT_WIDTH/2 - 100, 0, 200, 50);
+            label.setFont(new Font("Courier New", 0,30));
+            switchPanel.add(label);
+
+            switchPanel.revalidate();
+            switchPanel.repaint();
+        }
     }
     
     
