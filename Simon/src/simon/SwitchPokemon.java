@@ -170,7 +170,7 @@ public class SwitchPokemon {
             DrawImage pokemonImage = new DrawImage(
                     pokemonData.getDefaultFrontImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH), new Dimension(80, 80)
             );
-            DrawText pokemonName = new DrawText(pokemonData.getNama(), new Font(Font.SANS_SERIF, Font.BOLD, 20));
+            DrawText pokemonName = new DrawText(pokemonData.getNama(), new Font(Font.SANS_SERIF, Font.BOLD, 20), new Dimension(120, 40));
             pokemonName.setName("pokemonName");
             
             DrawText pokemonLevel = new DrawText("Lvl : " + pokemonData.getLvl(), new Font(Font.SANS_SERIF, Font.BOLD, 25));

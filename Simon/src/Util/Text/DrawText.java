@@ -82,6 +82,16 @@ public class DrawText extends JComponent{
         FontMetrics metrics = c.getFontMetrics(this.getFont());
         int height = metrics.getHeight();
         int width = metrics.stringWidth(text);
+        
+        if(maxSize != null){
+            if(width > maxSize.width){
+                width = maxSize.width;
+            }
+            if(height > maxSize.height){
+                height = maxSize.height;
+            }
+        }
+        
         size = new Dimension(width, height);
     
         this.setPreferredSize(size);

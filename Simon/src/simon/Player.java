@@ -15,10 +15,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Random;
 import Item.*;
+import Pokemon.grass.PlantSimonEvo;
 import Save.Memo;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.ObjectInputStream;
+import Save.Memo;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.ObjectInputStream;
+import Pokemon.grass.*;
 
 /**
  *
@@ -49,7 +55,7 @@ public class Player {
             fileIn.close();
             memo.load();
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+            loadInfo();
         } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -73,7 +79,7 @@ public class Player {
             pokemonInParty.add(new PlantSimon(200, 60));
             pokemonInParty.add(new Lapras());
             
-            pokemonInParty.add(new PlantSimon(1, 1));
+            pokemonInParty.add(new PlantSimonEvo(1));
             
             
             pokemonInParty.get(0).levelUp();

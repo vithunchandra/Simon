@@ -7,7 +7,7 @@ package simon;
 public class Main {
     public static void main(String[] args) 
     {
-        Player.loadInfo();
+        Player.loadFileInfo();
         Menu menu = new Menu();
     }
     

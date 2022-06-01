@@ -40,6 +40,7 @@ public class PlantSimonEvo extends Pokemon {
     
     public PlantSimonEvo(PlantSimon pokemon) throws IOException {
         super("Evolved Plant Simon", 90, 21, ImagePath.SIMON_EVO_FRONT_PATH , 4, 4);
+        
         Random rand = new Random();
         this.lvl = pokemon.getLvl();
         this.expNeededToLevelUp = getMaxExp(this.lvl);
