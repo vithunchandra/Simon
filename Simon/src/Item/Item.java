@@ -4,6 +4,8 @@ package Item;
 import Util.ImageLoader;
 import java.awt.Image;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -15,11 +17,15 @@ public class Item {
     private int price;
     private Image itemImage;
 
-    public Item(String name, String description, int price, String imagePath) throws IOException {
+    public Item(String name, String description, int price, String imagePath) {
         this.name = name;
         this.description = description;
         this.price = price;
-        this.itemImage = ImageLoader.loadImage(imagePath);
+        try {
+            this.itemImage = ImageLoader.loadImage(imagePath);
+        } catch (IOException ex) {
+            Logger.getLogger(Item.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public String getName() {

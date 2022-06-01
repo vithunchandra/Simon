@@ -32,7 +32,7 @@ public class DrawImage extends JComponent{
     public DrawImage(Image image, Dimension size){
         this.setSize(size);
         this.setPreferredSize(size);
-        this.image = image;
+        this.image = image.getScaledInstance(size.width, size.height, Image.SCALE_SMOOTH);
     }
     
     public DrawImage(Image image, Dimension size, int x, int y){

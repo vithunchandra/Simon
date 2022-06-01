@@ -20,10 +20,14 @@ public class Shop {
     MyFrame frame;
     MyPanel oldPanel, shopPanel;
     Integer jumlah = 1;
+    ShopAction shopAction;
+    BuyAction buyAction;
     
     public Shop(MyFrame frame, MyPanel oldPanel){
         this.frame = frame;
         this.oldPanel = oldPanel;
+        shopAction = new ShopAction();
+        buyAction = new BuyAction();
         
         Image panelBackground = null;
         try {
@@ -69,11 +73,17 @@ public class Shop {
         SetGBC.setGbc(gbc, 1, 1, 0, 0, GridBagConstraints.SOUTHEAST);
         shopPanel.add(buyButton(), gbc);
         
+        shopAction.setBuyAction(buyAction);
+        
         frame.changePanel(shopPanel);
     }
     
     public ActionComponent buyButton(){
-        ActionComponent buttonContainer = new ActionComponent(new Dimension(400, 60), new FlowLayout(FlowLayout.RIGHT), null);
+        ActionComponent buyContainer = new ActionComponent(new Dimension(400, 100), null, null);
+        buyContainer.setLayout(new BoxLayout(buyContainer, BoxLayout.Y_AXIS));
+        buyContainer.setBackground(new Color(0, 0, 0, 0));
+        
+        ActionComponent buttonContainer = new ActionComponent(new Dimension(400, 50), new FlowLayout(FlowLayout.RIGHT, 10, 0), null);
         buttonContainer.setBackground(new Color(0, 0, 0, 0));
         
         DrawText addIcon = new DrawText("+", GetSizedFont.getSizedFont("+", Font.SERIF, Font.BOLD, new Dimension(40, 40)));
@@ -91,31 +101,59 @@ public class Shop {
         substractButton.add(substractIcon);
         buyButton.add(buyText);
         
-        String total = Integer.toString(jumlah);
-        DrawText totalText = new DrawText(total, GetSizedFont.getSizedFont(total, Font.SERIF, Font.PLAIN, new Dimension(40, 40)));
+        addButton.setName("add");
+        substractButton.setName("substract");
+        buyButton.setName("buy");
         
-        buttonContainer.add(addButton);
-        buttonContainer.add(totalText);
+        buyAction.AddButton(addButton);
+        buyAction.AddButton(substractButton);
+        buyAction.AddButton(buyButton);
+        
+        String amount = Integer.toString(jumlah);
+        DrawText amountText = new DrawText(amount, GetSizedFont.getSizedFont(amount, Font.SERIF, Font.PLAIN, new Dimension(90, 40)));
+        
         buttonContainer.add(substractButton);
+        buttonContainer.add(amountText);
+        buttonContainer.add(addButton);
         buttonContainer.add(buyButton);
         
-        return buttonContainer;
+        ActionComponent totalContainer = new ActionComponent(new Dimension(400, 40), new FlowLayout(FlowLayout.RIGHT, 10, 0), null);
+        totalContainer.setBackground(new Color(0, 0, 0, 0));
+        String total = "Total : 10000";
+        DrawText totalText = new DrawText(total, GetSizedFont.getSizedFont(total, Font.SANS_SERIF, Font.BOLD, new Dimension(200, 40)));
+        totalText.setAlignmentX(Component.CENTER_ALIGNMENT);
+        totalContainer.add(totalText);
+        
+        buyContainer.add(totalContainer);
+        buyContainer.add(buttonContainer);
+        
+        shopAction.addBuyContainer(buyContainer);
+        buyAction.setBuyContainer(buyContainer);
+        buyAction.setAmountText(amountText);
+        buyAction.setTotalText(totalText);
+
+        buyContainer.setVisible(false);
+        
+        return buyContainer;
     }
     
     public ActionComponent description(){
         ActionComponent container = new ActionComponent(new Dimension(400, 300), null, null);
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+        shopAction.addDetailPanel(container);
+//        
+//        DrawText itemName = new DrawText("HP potion", new Font(Font.SANS_SERIF, Font.BOLD, 25));
+//        int height = itemName.getHeight();
+//        DrawImage itemImage = new DrawImage("src\\Material\\Image\\item.png", new Dimension(height, height));
+//        ActionComponent itemNameContainer = new ActionComponent(new Dimension((itemName.getWidth() + height + 10), height), new FlowLayout(FlowLayout.CENTER, 10, 0), null);
+//        
+//        itemNameContainer.add(itemImage);
+//        itemNameContainer.add(itemName);
+//        itemNameContainer.setAlignmentX(Component.CENTER_ALIGNMENT);
+//        
+//        container.add(itemNameContainer);
         
-        DrawText itemName = new DrawText("HP potion", new Font(Font.SANS_SERIF, Font.BOLD, 25));
-        int height = itemName.getHeight();
-        DrawImage itemImage = new DrawImage("src\\Material\\Image\\item.png", new Dimension(height, height));
-        ActionComponent itemNameContainer = new ActionComponent(new Dimension((itemName.getWidth() + height + 10), height), new FlowLayout(FlowLayout.CENTER, 10, 0), null);
-        
-        itemNameContainer.add(itemImage);
-        itemNameContainer.add(itemName);
-        itemNameContainer.setAlignmentX(Component.CENTER_ALIGNMENT);
-        
-        container.add(itemNameContainer);
+        container.setVisible(false);
         
         return container;
     }
@@ -139,15 +177,14 @@ public class Shop {
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.weightx = 0.1; gbc.weighty = 0.1;
             
-            String name = Player.itemList.get(i).getName();
-            String price = Integer.toString(Player.itemList.get(i).getPrice());
+            Item itemData = Player.itemList.get(i);
             
-            ActionComponent item = new ActionComponent(new Dimension(400, 70), new GridBagLayout(), null);
+            ActionComponent item = new ActionComponent(new Dimension(400, 75), new GridBagLayout(), null);
             item.setBackground(new Color(0, 0, 0, 100));
             item.setMaximumSize(new Dimension(400, 70));
-            DrawText itemName = new DrawText(name, GetSizedFont.getSizedFont(name, Font.SANS_SERIF, Font.PLAIN, new Dimension(200, 30)));
-            DrawImage itemImage = new DrawImage("src\\Material\\Image\\item.png", new Dimension(60, 60));
-            DrawText itemPrice = new DrawText(price, GetSizedFont.getSizedFont(price, Font.SANS_SERIF, Font.BOLD, new Dimension(200, 30)));
+            DrawText itemName = new DrawText(itemData.getName(), GetSizedFont.getSizedFont(itemData.getName(), Font.SANS_SERIF, Font.PLAIN, new Dimension(200, 30)));
+            DrawImage itemImage = new DrawImage(itemData.getItemImage(), new Dimension(60, 60));
+            DrawText itemPrice = new DrawText(Integer.toString(itemData.getPrice()), GetSizedFont.getSizedFont(Integer.toString(itemData.getPrice()), Font.SANS_SERIF, Font.BOLD, new Dimension(200, 30)));
             DrawImage pokeCoin = new DrawImage("src\\Material\\Image\\pokeCoin.png", new Dimension(30, 30));
             ActionComponent itemPriceContainer = new ActionComponent(new Dimension(200, 30), new FlowLayout(FlowLayout.LEFT, 10, 0), null);
             itemPriceContainer.setBackground(new Color(0, 0, 0, 0));
@@ -169,6 +206,8 @@ public class Shop {
             gbc.weightx = 1;
             SetGBC.setGbc(gbc, 1, 1, 0, 0, GridBagConstraints.WEST);
             item.add(itemPriceContainer, gbc);
+            
+            shopAction.addComponent(new ComponentData<Item, ActionComponent>(Player.itemList.get(i), item));
             
             container.add(item);
             container.add(Box.createVerticalGlue());

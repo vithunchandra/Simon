@@ -24,29 +24,45 @@ public abstract class Buttons extends MouseAdapter{
         buttons = new ArrayList<>();
     }
     
+    public abstract void clicked(ActionButton button);
+    
     @Override
     public void mousePressed(MouseEvent e) {
         super.mousePressed(e);
-        for(int i=0; i<buttons.size(); i++){
-            buttons.get(i).setPressed(true);
-            if(!buttons.get(i).isClicked()){
-                buttons.get(i).setPressed(true);
-                buttons.get(i).setImageBackground(buttons.get(i).getPressedState());
+        ActionButton button = search(e);
+        if(button != null){
+            button.setPressed(true);
+            if(!button.isClicked()){
+                button.setPressed(true);
+                button.setImageBackground(button.getPressedState());
             }
+            button.repaint();
         }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         super.mouseReleased(e);
+        ActionButton button = search(e);
+        if(button != null){
+            button.checkClicked(e.getX(), e.getY());
+            if(button.isClicked()){
+                clicked(button);
+            }
+            button.setImageBackground(button.getDefaultState());
+            button.repaint();
+        }
+    }
+    
+    public ActionButton search(MouseEvent e){
+        ActionButton temp = null;
         for(int i=0; i<buttons.size(); i++){
-            buttons.get(i).checkClicked(e.getX(), e.getY());
-            if(buttons.get(i).isClicked()){
-                mouseClicked(e);
-            }else{
-                buttons.get(i).setImageBackground(buttons.get(i).getDefaultState());
+            if(buttons.get(i) == e.getSource()){
+                temp = buttons.get(i);
+                break;
             }
         }
+        return temp;
     }
     
     public void AddButton(ActionButton button){

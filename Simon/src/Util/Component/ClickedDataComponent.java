@@ -18,6 +18,10 @@ public class ClickedDataComponent <Data> extends MouseAdapter{
         component = new ArrayList<>();
         clickedComponent = null;
     }
+    
+    public void click(){
+        
+    }
 
     @Override
     public void mouseReleased(MouseEvent e) {
@@ -27,6 +31,7 @@ public class ClickedDataComponent <Data> extends MouseAdapter{
             if(e.getX() >= 0 && e.getX() <= container.getWidth() && e.getY() > 0 && e.getY() <= container.getHeight()){
                 clickedComponent = search(container);
                 unclicked();
+                click();
             }else{
                 if(clickedComponent != null){
                     if(container != clickedComponent.getComponent()){
