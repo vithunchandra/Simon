@@ -15,6 +15,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Random;
 import Item.*;
+import Save.Memo;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.ObjectInputStream;
 
 /**
  *
@@ -35,6 +39,21 @@ public class Player {
     // potion -> restore 25%;
     // superPotion -> restore 50%;
     // fullRestore -> restore 100%;
+    
+    public static void loadFileInfo() {
+        try {
+            FileInputStream fileIn = new FileInputStream("src\\Save\\memo.ser");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            Memo memo = (Memo)in.readObject();
+            in.close();
+            fileIn.close();
+            memo.load();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException | ClassNotFoundException ex) {
+            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     public static void loadInfo() {
         pokemonInParty = new ArrayList<>();

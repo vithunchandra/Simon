@@ -6,6 +6,7 @@ package Pokemon;
 
 import BattleCanvas.Drawable;
 import Pokemon.Skill.Skill;
+import Save.PokemonMemo;
 import Util.ImageLoader;
 import javax.swing.*;
 import java.util.*;
@@ -281,6 +282,19 @@ public abstract class Pokemon implements Drawable{
 
     public ArrayList<Image> getBackSpriteImage() {
         return backSpriteImage;
+    }
+    
+    public void loadMemo(PokemonMemo memo) {
+        this.lvl = memo.getLvl();
+        this.exp = memo.getExp();
+        this.expNeededToLevelUp = memo.getExpNeededToLevelUp();
+        this.hp = memo.getHp();
+        this.maxHp = memo.getMaxHp();
+        this.damage = memo.getDamage();
+        
+        for(int i = 0;i < memo.getSkillList().size();i++) {
+            this.skillList.set(i, memo.getSkillList().get(i));
+        }
     }
     
 }

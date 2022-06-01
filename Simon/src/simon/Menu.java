@@ -5,6 +5,7 @@
 package simon;
 
 import Pokemon.Pokemon;
+import Save.Memo;
 import Util.MyFrame;
 import Util.Container.MyPanel;
 import java.awt.*;
@@ -19,6 +20,9 @@ import javax.imageio.ImageIO;
 import javax.swing.border.*;
 import Util.Container.TransparantPanel;
 import Util.BackgroundSong;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 
 public class Menu {
     GridBagConstraints gbc;
@@ -81,6 +85,21 @@ public class Menu {
                             frame.changePanel(playGame());
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Exit and save")){
                             JOptionPane.showMessageDialog(null, tempMessage);
+                            //Save Player
+                            Memo memo = new Memo();
+                            
+                            try {
+                                FileOutputStream fileOut = new FileOutputStream("src\\Save\\memo.ser");
+                                ObjectOutputStream out = new ObjectOutputStream(fileOut);
+                                out.writeObject(memo);
+                                out.close();
+                                fileOut.close();
+                            } catch (FileNotFoundException ex) {
+                                Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (IOException ex) {
+                                Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            
                             System.exit(0);
                         }
                     }

@@ -24,6 +24,11 @@ public class PlantSimon extends Pokemon implements Evolvable{
         super("Plant Simon", maxHp, damage, ImagePath.SIMON_FRONT_PATH, 4,4);
         this.skillList.set(0, new Tackle());
     }
+    
+    public PlantSimon() throws IOException {
+        super("Plant Simon", 100, 10, ImagePath.SIMON_FRONT_PATH, 4,4);
+        this.skillList.set(0, new Tackle());
+    }
 
     @Override
     public String getType() {
