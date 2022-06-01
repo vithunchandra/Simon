@@ -48,7 +48,7 @@ public class Menu {
         gbc.weightx = 0.1;
         
         try {
-            //new BackgroundSong("src\\Material\\Sound\\Calm_Theme.wav");
+            new BackgroundSong("src\\Material\\Sound\\XL-TT.wav");
         } catch (Exception ex) {
             Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
         } 
