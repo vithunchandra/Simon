@@ -11,7 +11,7 @@ import Pokemon.Pokemon;
  * @author asus
  */
 public class Overheat extends Skill{
-    Double multiplier = 5.0;
+    Double multiplier = 1.25;
     
     public Overheat() {
         super("Overheat");
@@ -20,22 +20,23 @@ public class Overheat extends Skill{
     @Override
     public String use(Pokemon player, Pokemon enemy, boolean usedByPlayer) {
         int totalDamage = (int) (player.getDamage() * multiplier);
-        int hpCost = (int) (player.getHp() * 0.2);
+        totalDamage = (int)(totalDamage + (player.getHp() * 0.3)*1.1);
+        int hpCost = (int) (player.getHp() * 0.3);
         enemy.damaged(totalDamage);
         player.damaged(hpCost);
-        multiplier += 0.5;
+
         if(usedByPlayer){
-            return "Enemey damaged by " + totalDamage
-                   + "\nPlayer -" + hpCost + "HP";
+            return "Enemy damaged by " + totalDamage
+                   + "\nPlayer -" + hpCost + " HP";
         }else{
             return "Player damaged by " + totalDamage
-                    + "\nEnemy -" + hpCost + "HP";
+                    + "\nEnemy -" + hpCost + " HP";
         }
     }
 
     @Override
     public String getDescription() {
-        return "Give 100% damage to the enemy, everytime this skill is used the multiplier will increase by 50%. this skill will cost 20% of caster current HP";
+        return "Use Player hp to make powerful damage.Deal 125% damage plus sacrificed health * 1.1 to the enemy(sacrifice 30% of current health)";
     }
     
 }

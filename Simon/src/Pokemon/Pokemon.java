@@ -194,6 +194,8 @@ public abstract class Pokemon implements Drawable{
         while(this.getExp() >= this.expNeededToLevelUp) {
             if(lvl >= MAX_LEVEL) {
                 lvl = MAX_LEVEL;
+                this.expNeededToLevelUp = 0;
+                this.expNeededToLevelUp = 1000000;
 //                expNeededToLevelUp = 0;
             }
             else {
