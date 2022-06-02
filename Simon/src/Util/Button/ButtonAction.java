@@ -14,6 +14,10 @@ public abstract class ButtonAction extends MouseAdapter{
         this.button.addMouseListener(this);
     }
     
+    public ButtonAction(){
+        
+    }
+    
     public abstract void clicked();
     
     @Override
@@ -47,6 +51,7 @@ public abstract class ButtonAction extends MouseAdapter{
     }
 
     public void setButton(ActionButton button) {
+        button.addMouseListener(this);
         this.button = button;
     }
 }

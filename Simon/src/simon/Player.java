@@ -81,10 +81,14 @@ public class Player {
             
             pokemonInParty.add(new Magmar());
             
+            pokemonInParty.get(0).levelUp();
+            pokemonInParty.get(0).levelUp();
+            pokemonInParty.get(0).levelUp();
             
-            pokemonInParty.get(0).levelUp();
-            pokemonInParty.get(0).levelUp();
-            pokemonInParty.get(0).levelUp();
+            pokemonInParty.get(0).damaged(80);
+            pokemonInParty.get(2).damaged(70);
+            System.out.println(pokemonInParty.get(0).getHp());
+            System.out.println(pokemonInParty.get(2).getHp());
             
             //pokemonInParty.get(0).addSkill(new Overheat());
 //            pokemonInParty.get(2).levelUp();

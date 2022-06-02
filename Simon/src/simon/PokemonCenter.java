@@ -21,10 +21,12 @@ import javax.swing.*;
 public class PokemonCenter {
     MyFrame frame;
     MyPanel oldPanel, pokemonCenterPanel;
+    PokemonCenterAction pokemonCenterAction;
 
     public PokemonCenter(MyFrame frame, MyPanel oldPanel) {
         this.frame = frame;
         this.oldPanel = oldPanel;
+        pokemonCenterAction = new PokemonCenterAction();
         
         Image panelBackground = null;
         try {
@@ -47,9 +49,12 @@ public class PokemonCenter {
         SetGBC.setGbc(gbc, 0, 0, 0, 0, GridBagConstraints.NORTHWEST);
         pokemonCenterPanel.add(backButton, gbc);
         
-        gbc.weighty = 0.2;
+        gbc.weighty = 0.1;
         SetGBC.setGbc(gbc, 0, 1, 0, 0, GridBagConstraints.NORTH);
         pokemonCenterPanel.add(pokemonParty(), gbc);
+        
+        SetGBC.setGbc(gbc, 0, 2, 0, 0, GridBagConstraints.NORTH);
+        pokemonCenterPanel.add(healButton(), gbc);
         
         frame.changePanel(pokemonCenterPanel);
     }
@@ -79,12 +84,15 @@ public class PokemonCenter {
             hpBar.setMaximum(pokemonData.getMaxHp());
             hpBar.setValue(pokemonData.getHp());
             double temp = (pokemonData.getHp() / pokemonData.getMaxHp());
+//            System.out.println("Temp : " + temp);
             int percent = (int) temp * 100;
             hpBar.setString(percent + "%");
             hpBar.setStringPainted(true);
             hpBar.setForeground(Color.GREEN);
             hpBar.setPreferredSize(new Dimension(230, 40));
             hpBar.setMaximumSize(new Dimension(230, 40));
+            
+            pokemonCenterAction.addHpBar(hpBar);
             
             barHpContainer.add(hpText);
             barHpContainer.add(hpBar);
@@ -99,5 +107,15 @@ public class PokemonCenter {
         }
         
         return partyContainer;
+    }
+    
+    public ActionButton healButton(){
+        DrawText healButtonText = new DrawText("+Heal Pokemon+", GetSizedFont.getSizedFont("+Heal Pokemon+", Font.SANS_SERIF, Font.BOLD, new Dimension(400, 50)));
+        ActionButton healButton = new ActionButton(new Dimension(healButtonText.getWidth() + 30, healButtonText.getHeight() + 15),  new FlowLayout(), null);
+        healButton.add(healButtonText);
+        
+        pokemonCenterAction.setButton(healButton);
+        
+        return healButton;
     }
 }
