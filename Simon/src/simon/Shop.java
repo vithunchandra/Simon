@@ -222,6 +222,8 @@ public class Shop {
         DrawImage pokeCoinImage = new DrawImage("src\\Material\\Image\\pokeCoin.png", new Dimension(height, height));
         ActionComponent moneyDetailContainer = new ActionComponent(new Dimension((moneyDetail.getWidth() + height + 20), moneyDetail.getHeight()), new FlowLayout(FlowLayout.CENTER, 10, 0), null);
         
+        buyAction.setCurrentMoney(moneyDetail);
+        
         moneyDetailContainer.add(pokeCoinImage);
         moneyDetailContainer.add(moneyDetail);
 //        moneyDetailContainer.setBackground(new Color(255, 255, 255, 0));

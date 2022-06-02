@@ -17,14 +17,14 @@ import simon.Player;
 public class BuyAction extends Buttons{
     Integer amount, total;
     Item itemData;
-    DrawText totalText, amountText;
+    DrawText totalText, amountText, currentMoney;
     ActionComponent buyContainer;
 
     public BuyAction() {
         super();
         amount = null; total = null;
         itemData = null;
-        totalText = null; amountText = null;
+        totalText = null; amountText = null; currentMoney = null;
         buyContainer = null;
     }
 
@@ -54,6 +54,7 @@ public class BuyAction extends Buttons{
                 }else if(itemData.getName().equals("Ultra Ball")){
                     Player.ultraBall += amount;
                 }
+                Player.pokeCoin = Player.pokeCoin - totalCost;
                 amount = 1;
             }else{
                 JOptionPane.showMessageDialog(null, "Poke Coin is sufficient");
@@ -63,6 +64,7 @@ public class BuyAction extends Buttons{
         total = amount * itemData.getPrice();
         totalText.setText("Total : " + total);
         amountText.setText(amount.toString());
+        currentMoney.setText(Integer.toString(Player.pokeCoin));
         
         System.out.println("Potion : " + Player.potion);
         System.out.println("Super Potion : " + Player.superPotion);
@@ -74,6 +76,10 @@ public class BuyAction extends Buttons{
         
         buyContainer.revalidate();
         buyContainer.repaint();
+    }
+
+    public void setCurrentMoney(DrawText currentMoney) {
+        this.currentMoney = currentMoney;
     }
     
     public Integer getAmount() {
