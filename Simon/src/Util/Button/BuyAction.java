@@ -64,6 +64,14 @@ public class BuyAction extends Buttons{
         totalText.setText("Total : " + total);
         amountText.setText(amount.toString());
         
+        System.out.println("Potion : " + Player.potion);
+        System.out.println("Super Potion : " + Player.superPotion);
+        System.out.println("Full Restore : " + Player.fullRestore);
+        System.out.println("Poke Ball : " + Player.pokeBall);
+        System.out.println("Great Ball : " + Player.greatBall);
+        System.out.println("Ultra Ball : " + Player.ultraBall);
+        System.out.println("------------------");
+        
         buyContainer.revalidate();
         buyContainer.repaint();
     }

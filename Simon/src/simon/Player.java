@@ -110,7 +110,7 @@ public class Player {
                 itemList.add(
                         new Item(name[i],
                         "Filler text is text that shares some characteristics of a real written text, but is random or otherwise generated. It may be used to display a sample of fonts, generate text for testing, or to spoof an e-mail spam filter.",
-                        rand.nextInt(1000, 10000),
+                        rand.nextInt(10, 100),
                         "src\\Material\\Image\\item.png"
                 ));
             }
