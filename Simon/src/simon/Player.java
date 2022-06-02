@@ -35,7 +35,6 @@ import Pokemon.grass.*;
 public class Player {
     public static ArrayList<Pokemon> pokemonInParty;
     public static ArrayList<Pokemon> pokemonInBox;
-    public static ArrayList<Item> itemList;
     
     public static int pokeCoin;
     public static int pokeBall,greatBall,ultraBall;
@@ -66,7 +65,6 @@ public class Player {
     public static void loadInfo() {
         pokemonInParty = new ArrayList<>();
         pokemonInBox =  new ArrayList<>();
-        itemList = new ArrayList<>();
         
         pokeCoin = 1000;
         
@@ -105,16 +103,6 @@ public class Player {
                 }
                 pokemonInBox.get(i).setExpNeededToLevelUp(234);
                 pokemonInBox.get(i).setExp(rand.nextInt(0, 234));
-            }
-            
-            String[] name = {"Potion", "Super Potion", "Full Restore", "Poke Ball", "Great Ball", "Ultra Ball"};
-            for(int i=0; i<6; i++){
-                itemList.add(
-                        new Item(name[i],
-                        "Filler text is text that shares some characteristics of a real written text, but is random or otherwise generated. It may be used to display a sample of fonts, generate text for testing, or to spoof an e-mail spam filter.",
-                        rand.nextInt(10, 100),
-                        "src\\Material\\Image\\item.png"
-                ));
             }
             
         } catch (IOException ex) {

@@ -12,8 +12,9 @@ import Util.Text.*;
 import Item.*;
 import java.awt.*;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
+import java.util.*;
 import javax.swing.*;
 
 public class Shop {
@@ -22,18 +23,31 @@ public class Shop {
     Integer jumlah = 1;
     ShopAction shopAction;
     BuyAction buyAction;
+    ArrayList<Item> itemObject;
     
     public Shop(MyFrame frame, MyPanel oldPanel){
         this.frame = frame;
         this.oldPanel = oldPanel;
+        itemObject = new ArrayList<>();
         shopAction = new ShopAction();
         buyAction = new BuyAction();
+        
+        Random rand = new Random();
+        String[] name = {"Potion", "Super Potion", "Full Restore", "Poke Ball", "Great Ball", "Ultra Ball"};
+        for(int i=0; i<6; i++){
+            itemObject.add(
+                    new Item(name[i],
+                    "Filler text is text that shares some characteristics of a real written text, but is random or otherwise generated. It may be used to display a sample of fonts, generate text for testing, or to spoof an e-mail spam filter.",
+                    rand.nextInt(10, 100),
+                    "src\\Material\\Image\\item.png"
+            ));
+        }
         
         Image panelBackground = null;
         try {
             panelBackground = ImageLoader.loadImage("src\\Material\\Image\\Shop.jpg");
         } catch (IOException ex) {
-            Logger.getLogger(Shop.class.getName()).log(Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Shop.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         
         GridBagConstraints gbc = new GridBagConstraints();
@@ -173,11 +187,11 @@ public class Shop {
         
         container.add(titleContainer);
 
-        for(int i=0; i<Player.itemList.size(); i++){
+        for(int i=0; i<itemObject.size(); i++){
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.weightx = 0.1; gbc.weighty = 0.1;
             
-            Item itemData = Player.itemList.get(i);
+            Item itemData = itemObject.get(i);
             
             ActionComponent item = new ActionComponent(new Dimension(400, 75), new GridBagLayout(), null);
             item.setBackground(new Color(0, 0, 0, 100));
@@ -207,7 +221,7 @@ public class Shop {
             SetGBC.setGbc(gbc, 1, 1, 0, 0, GridBagConstraints.WEST);
             item.add(itemPriceContainer, gbc);
             
-            shopAction.addComponent(new ComponentData<Item, ActionComponent>(Player.itemList.get(i), item));
+            shopAction.addComponent(new ComponentData<Item, ActionComponent>(itemObject.get(i), item));
             
             container.add(item);
             container.add(Box.createVerticalGlue());

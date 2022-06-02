@@ -156,10 +156,10 @@ public class Menu {
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Switch Pokemon")){
                             new SwitchPokemon(frame, playGame());
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Pokemon Center")){
-                            for(Pokemon playerPokemon : Player.pokemonInParty) {
-                                playerPokemon.healed(playerPokemon.getMaxHp());
-                            }
-                            JOptionPane.showMessageDialog(null, tempMessage);
+//                            for(Pokemon playerPokemon : Player.pokemonInParty) {
+//                                playerPokemon.healed(playerPokemon.getMaxHp());
+//                            }
+                            new PokemonCenter(frame, playGame());
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Shop")){
                             new Shop(frame, playGame());
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Gym")){
