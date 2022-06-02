@@ -30,11 +30,11 @@ public class PokemonCenterAction extends ButtonAction{
         for(int i=0; i<party.size(); i++){
             Pokemon pokemonData = party.get(i);
             pokemonData.healed(pokemonData.getMaxHp());
-            double floatValue = (pokemonData.getHp() / pokemonData.getMaxHp());
-            int percent = (int) floatValue * 100;
+            double percent = ((double) pokemonData.getHp() / (double) pokemonData.getMaxHp());
+            percent *= 100;
             JProgressBar temp = hpBar.get(i);
             temp.setValue(party.get(i).getHp());
-            temp.setString(percent + "%");
+            temp.setString((int)percent + "%");
         }
     }
 

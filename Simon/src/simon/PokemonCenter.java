@@ -83,10 +83,9 @@ public class PokemonCenter {
             hpBar.setMinimum(0);
             hpBar.setMaximum(pokemonData.getMaxHp());
             hpBar.setValue(pokemonData.getHp());
-            double temp = (pokemonData.getHp() / pokemonData.getMaxHp());
-//            System.out.println("Temp : " + temp);
-            int percent = (int) temp * 100;
-            hpBar.setString(percent + "%");
+            double percent = ((double) pokemonData.getHp() / (double) pokemonData.getMaxHp());
+            percent *= 100;
+            hpBar.setString((int)percent + "%");
             hpBar.setStringPainted(true);
             hpBar.setForeground(Color.GREEN);
             hpBar.setPreferredSize(new Dimension(230, 40));
