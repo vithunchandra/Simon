@@ -4,6 +4,7 @@
  */
 package Pokemon;
 
+import Pokemon.Fire.Magmar;
 import Pokemon.Water.Lapras;
 import Pokemon.grass.PlantSimon;
 import Pokemon.grass.Venusaur;
@@ -15,7 +16,7 @@ import java.util.Random;
  * @author LVOILA
  */
 public class RandPokemon {
-    private static final int size = 1;
+    private static final int size = 2;
     public static Pokemon getPokemon() throws IOException {
         Random rand = new Random();
         int randNow = rand.nextInt(size);
@@ -40,7 +41,7 @@ public class RandPokemon {
         if(randNow == 0) {
             return new Lapras(lvl);
         } else if(randNow == 1) {
-            return new Venusaur();
+            return new Magmar(lvl);
         } else if(randNow == 2) {
             return new Lapras();
         }

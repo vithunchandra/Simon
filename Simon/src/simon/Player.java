@@ -15,6 +15,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Random;
 import Item.*;
+import Pokemon.Fire.Magmar;
+import Pokemon.Water.WaterSimon;
 import Pokemon.grass.PlantSimonEvo;
 import Save.Memo;
 import java.io.FileInputStream;
@@ -76,10 +78,10 @@ public class Player {
         fullRestore = 0;
         
         try {
-            pokemonInParty.add(new PlantSimon(200, 60));
+            pokemonInParty.add(new WaterSimon());
             pokemonInParty.add(new Lapras());
             
-            pokemonInParty.add(new PlantSimonEvo(1));
+            pokemonInParty.add(new Magmar());
             
             
             pokemonInParty.get(0).levelUp();

@@ -324,7 +324,7 @@ public class InBattleCanvas implements Drawable{
         int enemyRandAct = rand.nextInt(enemyPokemon.get(enemyPokemonIdx).getNumberOfSkill());
         String skillDesc = enemy.getSkill(enemyRandAct).use(enemy, player,false);
         this.dialogueNow.add(skillDesc);
-        
+        this.dialogueNow.add(defaultText);
         if(player.isDead()) {
             if(!checkPlayerBeaten()) {
                 battleAltLoop.getSwitchCanvas().reInit();
@@ -356,9 +356,9 @@ public class InBattleCanvas implements Drawable{
                         else {
                             enemyTurn();
                         }
-                        if(playerPokemon.get(playerPokemonIdx).getHp() > 0) {
-                            this.dialogueNow.add(defaultText);
-                        }
+//                        if(playerPokemon.get(playerPokemonIdx).getHp() > 0) {
+//                            this.dialogueNow.add(defaultText);
+//                        }
                     }
                     this.usingSkill = false;
                 }

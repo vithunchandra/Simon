@@ -49,11 +49,20 @@ public class PokemonMemo implements Serializable{
         } else if(name.equals("Plant Simon")) {
             now = new PlantSimon();
             now.loadMemo(this);
-        } else if(name.equals("Evolved Plant Simon")) {
+        } else if(name.equals("Plant Simon v2")) {
             now = new PlantSimonEvo();
             now.loadMemo(this);
         } else if(name.equals("Venusaur")) {
             now = new Venusaur();
+            now.loadMemo(this);
+        } else if(name.equals("WaterMon")) {
+            now = new WaterSimon();
+            now.loadMemo(this);
+        } else if(name.equals("WaterMon evo")) {
+            now = new WaterSimonEvo();
+            now.loadMemo(this);
+        } else if(name.equals("Magmar")) {
+            now = new Magmar();
             now.loadMemo(this);
         }
         return now;

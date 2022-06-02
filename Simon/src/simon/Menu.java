@@ -48,7 +48,7 @@ public class Menu {
         gbc.weightx = 0.1;
         
         try {
-            new BackgroundSong("src\\Material\\Sound\\XL-TT.wav");
+            //new BackgroundSong("src\\Material\\Sound\\XL-TT.wav");
         } catch (Exception ex) {
             Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
         } 
@@ -140,7 +140,7 @@ public class Menu {
         description.setPreferredSize(new Dimension(400, 400));
         ArrayList<MyButton> button = new ArrayList<>();
         String[] buttonName = {"Dungeon", "Switch Pokemon", "Pokemon Center", "Shop", "Gym", "Top-up poke-coin", "Back"};
-        String[] message = {"Entering dungeon...", "Switching...", "Entering pokemon center...", "Entering shop...", "Entering gym...", "Top-uping", "Back..."};
+        String[] message = {"Entering dungeon...", "Switching...", "Entering pokemon center,All Your Pokemon health has been healed", "Entering shop...", "Entering gym...", "Top-uping", "Back..."};
         for(int i=0; i<buttonName.length; i++){
             button.add(new MyButton(buttonName[i], new Dimension(400, 50)));
             button.get(i).setBounds(0, (i * 60), 400, 50);
@@ -156,6 +156,9 @@ public class Menu {
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Switch Pokemon")){
                             new SwitchPokemon(frame, playGame());
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Pokemon Center")){
+                            for(Pokemon playerPokemon : Player.pokemonInParty) {
+                                playerPokemon.healed(playerPokemon.getMaxHp());
+                            }
                             JOptionPane.showMessageDialog(null, tempMessage);
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Shop")){
                             new Shop(frame, playGame());
