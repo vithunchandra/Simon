@@ -6,7 +6,10 @@ package Pokemon;
 
 import Pokemon.Fire.Magmar;
 import Pokemon.Water.Lapras;
+import Pokemon.Water.WaterSimon;
+import Pokemon.Water.WaterSimonEvo;
 import Pokemon.grass.PlantSimon;
+import Pokemon.grass.PlantSimonEvo;
 import Pokemon.grass.Venusaur;
 import java.io.IOException;
 import java.util.Random;
@@ -16,23 +19,7 @@ import java.util.Random;
  * @author LVOILA
  */
 public class RandPokemon {
-    private static final int size = 2;
-    public static Pokemon getPokemon() throws IOException {
-        Random rand = new Random();
-        int randNow = rand.nextInt(size);
-        
-        if(randNow == 0) {
-            return new PlantSimon(1, 1);
-        } else if(randNow == 1) {
-            return new Venusaur();
-        } else if(randNow == 2) {
-            return new Lapras();
-        }
-        else {
-            return null;
-        }
-        
-    }
+    private static final int size = 5;
     
     public static Pokemon getPokemon(int lvl) throws IOException {
         Random rand = new Random();
@@ -43,7 +30,21 @@ public class RandPokemon {
         } else if(randNow == 1) {
             return new Magmar(lvl);
         } else if(randNow == 2) {
-            return new Lapras();
+            return new Venusaur(lvl);
+        } else if(randNow == 3) {
+            PlantSimon temp = new PlantSimon(lvl);
+            if(temp.canEvolve()) {
+                return new PlantSimonEvo(lvl);
+            } else {
+                return new PlantSimon(lvl);
+            }
+        } else if(randNow == 4) {
+            WaterSimon temp = new WaterSimon(lvl);
+            if(temp.canEvolve()) {
+                return new WaterSimonEvo(lvl);
+            } else {
+                return new WaterSimon(lvl);
+            }
         }
         else {
             return null;

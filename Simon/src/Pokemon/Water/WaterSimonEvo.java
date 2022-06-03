@@ -7,6 +7,7 @@ package Pokemon.Water;
 import Pokemon.ImagePath;
 import Pokemon.Pokemon;
 import Pokemon.Skill.BodySlam;
+import Pokemon.Skill.Copycat;
 import Pokemon.Skill.Heal;
 import Pokemon.Skill.HitMe;
 import Pokemon.Skill.Steal;
@@ -38,7 +39,7 @@ public class WaterSimonEvo extends Pokemon{
             addSkill(new BodySlam());
         } 
         if(this.getLvl() >= 20) {
-            addSkill(new Steal());
+            addSkill(new Copycat());
         }
     }
     
@@ -71,7 +72,7 @@ public class WaterSimonEvo extends Pokemon{
         if(this.getLvl() == 6) {
             addSkill(new BodySlam());
         } else if(this.getLvl() == 15) {
-            addSkill(new Steal());
+            addSkill(new Copycat());
         }
     }
 

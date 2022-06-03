@@ -30,7 +30,7 @@ public class PlantSimonEvo extends Pokemon {
         this.damage += 3*(lvl - 1);
         this.hp = this.maxHp;
         this.lvl = lvl;
-        if(this.getLvl() >= 10) {
+        if(this.getLvl() >= 6) {
             addSkill(new BodySlam());
         } 
         if(this.getLvl() >= 20) {

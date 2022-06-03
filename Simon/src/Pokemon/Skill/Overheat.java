@@ -22,16 +22,30 @@ public class Overheat extends Skill{
         int totalDamage = (int) (player.getDamage() * multiplier);
         totalDamage = (int)(totalDamage + (player.getHp() * 0.3)*1.1);
         int hpCost = (int) (player.getHp() * 0.3);
+        
+        Double multType = player.getTypeMultiplier(enemy);
+        totalDamage = (int)(totalDamage*multType);
+        
         enemy.damaged(totalDamage);
         player.damaged(hpCost);
+        
+        
+        String returnString = "";
+        if(multType >= 1.2) {
+            returnString = returnString + "it is super effective\n";
+        }
+        else if(multType <= 0.8) {
+            returnString = returnString + "it is not effective\n";
+        }
 
         if(usedByPlayer){
-            return "Enemy damaged by " + totalDamage
+            returnString += "Enemy damaged by " + totalDamage
                    + "\nPlayer -" + hpCost + " HP";
         }else{
-            return "Player damaged by " + totalDamage
+            returnString += "Player damaged by " + totalDamage
                     + "\nEnemy -" + hpCost + " HP";
         }
+        return returnString;
     }
 
     @Override
