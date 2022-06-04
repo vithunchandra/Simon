@@ -4,7 +4,12 @@
  */
 package BattleCanvas;
 
+import Pokemon.ImagePath;
+import Util.ImageLoader;
+import Util.MyFrame;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.io.IOException;
 import java.util.ArrayList;
 import simon.BattleAltLoop;
 import simon.Player;
@@ -23,8 +28,9 @@ public class ItemCanvas implements Drawable{
     private CanvasButton backButton;
     private String itemUsed;
     
+    private Image bgImg;
     
-    public ItemCanvas(CanvasMouseListener mouse,BattleAltLoop battleAltLoop) {
+    public ItemCanvas(CanvasMouseListener mouse,BattleAltLoop battleAltLoop) throws IOException {
         this.battleAltLoop = battleAltLoop;
         this.mouse = mouse;
         this.itemUsed = null;
@@ -32,6 +38,7 @@ public class ItemCanvas implements Drawable{
         itemNumList.add(Player.pokeBall);itemNumList.add(Player.greatBall);itemNumList.add(Player.ultraBall);
         itemNumList.add(Player.potion);itemNumList.add(Player.superPotion);itemNumList.add(Player.fullRestore);
         
+        this.bgImg = ImageLoader.loadImage(ImagePath.BG_SWITCH_BATTLE);
         
         this.buttonList = new ArrayList<>();
         if(battleAltLoop.isIsGym()) {
@@ -77,6 +84,7 @@ public class ItemCanvas implements Drawable{
     
     @Override
     public void draw(Graphics g) {
+        g.drawImage(bgImg,0,0,MyFrame.DEFAULT_WIDTH, MyFrame.DEFAULT_HEIGHT,null);
         for(int i = 0;i < buttonList.size();i++) {
             buttonList.get(i).draw(g);
         }

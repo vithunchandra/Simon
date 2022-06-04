@@ -17,7 +17,12 @@ public class ImagePath {
     public static final String LAPRAS_FRONT_PATH = "src\\Material\\Image\\lapras.png";
     public static final String MAGMAR_FRONT_PATH = "src\\Material\\Image\\magmar.png";
     
-    public static final String BATTLE_BG1 = "src\\Material\\Image\\battleBG1.png";
+    public static final String BATTLE_BG1 = "src\\Material\\Image\\bgDungeon3.png";
+    public static final String BATTLE_BG2 = "src\\Material\\Image\\bgGym2.jpg";
+    public static final String BATTLE_BG3 = "src\\Material\\Image\\bgDungeon.jpg";
+    public static final String POKE_BORDER1 = "src\\Material\\Image\\pokemonBorder.png";
+    public static final String BG_SWITCH_BATTLE = "src\\Material\\Image\\bgSwitchBattle.jpg";
+    // bgSwitchBattle.jpg
     public static final String BATTLE_DIALOGUE = "src\\Material\\Image\\dialogue.png";
     public static final String BTN1 = "src\\Material\\Image\\btn1.png";
     public static final String BTN1_PRESS = "src\\Material\\Image\\btn1_press.png";

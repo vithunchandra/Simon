@@ -106,7 +106,11 @@ public class InBattleCanvas implements Drawable{
         this.dialogueNow.add("You encounter " + this.enemyPokemon.get(enemyPokemonIdx).getNama() + "!");
         this.dialogueNow.add(defaultText);
         this.canvasTextArea = new CanvasTextArea(200, mouse,dialogueNow);
-        this.bgImg= ImageLoader.loadImage(ImagePath.BATTLE_BG1);
+        if(isGym) {
+            this.bgImg= ImageLoader.loadImage(ImagePath.BATTLE_BG2);
+        } else {
+            this.bgImg= ImageLoader.loadImage(ImagePath.BATTLE_BG1);
+        }
         
         this.usingSkill = false;
         this.skillButton = new ArrayList<>();
@@ -379,7 +383,11 @@ public class InBattleCanvas implements Drawable{
 
         if(this.runBtn.clicked() && this.runBtn.isRendered()) {
             if(isGym) {
-                this.dialogueNow.add("You Lose!\nYour poke-coin willl be reduced");
+                Player.pokeCoin -= 250;
+                if(Player.pokeCoin < 0) {
+                    Player.pokeCoin = 0;
+                }
+                this.dialogueNow.add("You Lose!\nYour poke-coin willl be reduced by 250");
             } 
             this.dialogueNow.add("end");
             this.canvasTextArea.nextText();

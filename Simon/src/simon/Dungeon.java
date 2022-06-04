@@ -4,10 +4,12 @@
  */
 package simon;
 
+import Pokemon.ImagePath;
 import Util.Container.MyPanel;
 import Util.Container.TransparantPanel;
 import Util.ImageLoader;
 import Util.MyFrame;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
@@ -25,7 +27,6 @@ import javax.swing.SwingConstants;
  * @author LVOILA
  */
 public class Dungeon {
-    private String imageSource = "src\\Material\\Image\\1652700300094.png";
     private Image background;
     private MyPanel switchPanel;
     private MyFrame frame;
@@ -37,7 +38,7 @@ public class Dungeon {
         this.frame = frame;
         this.oldPanel = oldPanel;
         try {
-            background = ImageLoader.loadImage(imageSource);
+            background = ImageLoader.loadImage(ImagePath.BATTLE_BG1);
         } catch (IOException ex) {
             Logger.getLogger(SwitchPokemon.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
@@ -49,6 +50,7 @@ public class Dungeon {
         label = new JLabel("FLOOR : " + floor);
         label.setBounds(MyFrame.DEFAULT_WIDTH/2 - 100, 0, 200, 50);
         label.setFont(new Font("Courier New", 0,30));
+        label.setForeground(Color.white);
         switchPanel.add(label);
         
         //switchPanel.add(setNextFloorButton());

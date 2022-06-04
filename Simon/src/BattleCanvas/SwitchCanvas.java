@@ -41,7 +41,7 @@ public class SwitchCanvas implements Drawable {
             this.idxChange2 = -1;
             this.idxBegin = -1;
             
-            this.bgImg= ImageLoader.loadImage(ImagePath.BATTLE_BG1);
+            this.bgImg= ImageLoader.loadImage(ImagePath.BG_SWITCH_BATTLE);
             this.playerPokemon = Player.pokemonInParty;
             
             backButton = new CanvasButton("Back", 0, 0, 100, 50, mouse);

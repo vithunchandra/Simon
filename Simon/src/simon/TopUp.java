@@ -4,6 +4,7 @@
  */
 package simon;
 
+import Pokemon.ImagePath;
 import Util.MyFrame;
 import Util.Container.MyPanel;
 import Util.Container.TransparantPanel;
@@ -35,7 +36,7 @@ import javax.swing.JTextField;
 // Token : BG52Z
 // Token : HHB11
 public class TopUp {
-    private String imageSource = "src\\Material\\Image\\1652700300094.png";
+    private String imageSource = ImagePath.BG_SWITCH_BATTLE;
     private Image background;
     private MyPanel switchPanel;
     private MyFrame frame;
@@ -95,6 +96,7 @@ public class TopUp {
                             else {
                                 try {
                                     int topUpAmmount = Integer.parseInt(inputLine);
+                                    Player.pokeCoin += topUpAmmount;
                                     JOptionPane.showMessageDialog(null, "You Get " + topUpAmmount);
                                 } catch(Exception exce) {
                                     JOptionPane.showMessageDialog(null, "The Token Is Wrong");

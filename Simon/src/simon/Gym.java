@@ -25,7 +25,7 @@ import javax.swing.SwingConstants;
  * @author LVOILA
  */
 public class Gym {
-    private String imageSource = "src\\Material\\Image\\1652700300094.png";
+    private String imageSource = "src\\Material\\Image\\bgGym.jpg";
     private Image background;
     private MyPanel switchPanel;
     private MyFrame frame;
