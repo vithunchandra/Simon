@@ -37,7 +37,7 @@ public class Shop {
         for(int i=0; i<6; i++){
             itemObject.add(
                     new Item(name[i],
-                    "Filler text is text that shares some characteristics of a real written text, but is random or otherwise generated. It may be used to display a sample of fonts, generate text for testing, or to spoof an e-mail spam filter.",
+                    "Filler text is text that shares some characteristics of a real writtsCSDVsDVsdvzdvxfbzfvdzvjlzdjkviohilzsdnvkjhzorfhvzen text, but is random or otherwise generated. It may be used to display a sample of fonts, generate text for testing, or to spoof an e-mail spam filter.",
                     rand.nextInt(10, 100),
                     "src\\Material\\Image\\item.png"
             ));
@@ -45,7 +45,7 @@ public class Shop {
         
         Image panelBackground = null;
         try {
-            panelBackground = ImageLoader.loadImage("src\\Material\\Image\\Shop.jpg");
+            panelBackground = ImageLoader.loadImage("src\\Material\\Image\\ShopBackground.jpg");
         } catch (IOException ex) {
             java.util.logging.Logger.getLogger(Shop.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
@@ -125,6 +125,7 @@ public class Shop {
         
         String amount = Integer.toString(jumlah);
         DrawText amountText = new DrawText(amount, GetSizedFont.getSizedFont(amount, Font.SERIF, Font.PLAIN, new Dimension(90, 40)));
+        amountText.setForeground(Color.WHITE);
         
         buttonContainer.add(substractButton);
         buttonContainer.add(amountText);
@@ -135,7 +136,7 @@ public class Shop {
         totalContainer.setBackground(new Color(0, 0, 0, 0));
         String total = "Total : 10000";
         DrawText totalText = new DrawText(total, GetSizedFont.getSizedFont(total, Font.SANS_SERIF, Font.BOLD, new Dimension(200, 40)));
-        totalText.setAlignmentX(Component.CENTER_ALIGNMENT);
+        totalText.setForeground(Color.LIGHT_GRAY);
         totalContainer.add(totalText);
         
         buyContainer.add(totalContainer);
@@ -152,7 +153,14 @@ public class Shop {
     }
     
     public ActionComponent description(){
-        ActionComponent container = new ActionComponent(new Dimension(400, 300), null, null);
+        Image descriptionBackground = null;
+        try {
+            descriptionBackground = ImageLoader.loadImage("src\\Material\\Image\\pokemon info.png");
+        } catch (IOException ex) {
+            java.util.logging.Logger.getLogger(Shop.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        ActionComponent container = new ActionComponent(new Dimension(400, 300), null, descriptionBackground);
+        container.setBackground(new Color(0, 0, 0, 0));
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
         shopAction.addDetailPanel(container);
 //        
@@ -173,14 +181,23 @@ public class Shop {
     }
     
     public ActionComponent itemList(){
+//        Image itemContainerBackground = null;
+//        try {
+//            itemContainerBackground = ImageLoader.loadImage("src\\Material\\Image\\shop background.png");
+//        } catch (IOException ex) {
+//            java.util.logging.Logger.getLogger(Shop.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
         ActionComponent container = new ActionComponent(new Dimension(400, 550), null, null);
+        container.setBackground(new Color(0, 0, 0, 90));
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
         
         DrawText itemTitle = new DrawText("Item", new Font(Font.SANS_SERIF, Font.BOLD, 40));
+        itemTitle.setForeground(Color.WHITE);
         int height = itemTitle.getHeight();
         DrawImage leftIcon = new DrawImage("src\\Material\\Image\\item.png", new Dimension(height, height));
         DrawImage rightIcon = new DrawImage("src\\Material\\Image\\item.png", new Dimension(height, height));
         ActionComponent titleContainer = new ActionComponent(new Dimension((itemTitle.getWidth() + (2*height) + 30), height), new FlowLayout(FlowLayout.CENTER, 10, 0), null);
+        titleContainer.setBackground(new Color(0, 0, 0, 0));
         titleContainer.add(leftIcon);
         titleContainer.add(itemTitle);
         titleContainer.add(rightIcon);
@@ -193,8 +210,14 @@ public class Shop {
             
             Item itemData = itemObject.get(i);
             
-            ActionComponent item = new ActionComponent(new Dimension(400, 75), new GridBagLayout(), null);
-            item.setBackground(new Color(0, 0, 0, 100));
+            Image itemBackground = null;
+            try {
+                itemBackground = ImageLoader.loadImage("src\\Material\\Image\\item background.png");
+            } catch (IOException ex) {
+                java.util.logging.Logger.getLogger(Shop.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
+            
+            ActionComponent item = new ActionComponent(new Dimension(400, 75), new GridBagLayout(), itemBackground);
             item.setMaximumSize(new Dimension(400, 70));
             DrawText itemName = new DrawText(itemData.getName(), GetSizedFont.getSizedFont(itemData.getName(), Font.SANS_SERIF, Font.PLAIN, new Dimension(200, 30)));
             DrawImage itemImage = new DrawImage(itemData.getItemImage(), new Dimension(60, 60));
@@ -232,6 +255,7 @@ public class Shop {
     
     public ActionComponent money(){
         DrawText moneyDetail = new DrawText(Integer.toString(Player.pokeCoin), new Font(Font.SANS_SERIF, Font.BOLD, 50));
+        moneyDetail.setForeground(new Color(255, 255, 255, 150));
         int height = moneyDetail.getHeight();
         DrawImage pokeCoinImage = new DrawImage("src\\Material\\Image\\pokeCoin.png", new Dimension(height, height));
         ActionComponent moneyDetailContainer = new ActionComponent(new Dimension((moneyDetail.getWidth() + height + 20), moneyDetail.getHeight()), new FlowLayout(FlowLayout.CENTER, 10, 0), null);
@@ -240,6 +264,7 @@ public class Shop {
         
         moneyDetailContainer.add(pokeCoinImage);
         moneyDetailContainer.add(moneyDetail);
+        moneyDetailContainer.setBackground(new Color(0, 0, 0, 0));
 //        moneyDetailContainer.setBackground(new Color(255, 255, 255, 0));
         
         return moneyDetailContainer;
@@ -247,8 +272,12 @@ public class Shop {
     
     public ActionComponent shopTitle(){
         DrawText title = new DrawText("Shop", new Font(Font.SERIF, Font.BOLD, 50));
-        ActionComponent titleContainer = new ActionComponent(new Dimension(300, title.getHeight()), new FlowLayout(FlowLayout.CENTER, 0, 0), null);
+        title.setForeground(Color.WHITE);
+        DrawImage shopIcon = new DrawImage("src\\Material\\Image\\shopIcon.png", new Dimension(title.getSize()));
+        ActionComponent titleContainer = new ActionComponent(new Dimension(260, title.getHeight()), new FlowLayout(FlowLayout.RIGHT, 10, 0), null);
         titleContainer.add(title);
+        titleContainer.add(shopIcon);
+        titleContainer.setBackground(new Color(0, 0, 0, 0));
         
         return titleContainer;
     }

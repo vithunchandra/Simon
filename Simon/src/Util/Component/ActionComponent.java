@@ -15,7 +15,6 @@ public class ActionComponent extends JComponent{
         this.setPreferredSize(size);
         this.setSize(size);
         this.setLayout(layout);
-        this.setBackground(Color.LIGHT_GRAY);
         this.setOpaque(false);
         if(imageBackground != null){
             this.imageBackground = imageBackground.getScaledInstance(size.width, size.height, Image.SCALE_SMOOTH);
@@ -26,7 +25,6 @@ public class ActionComponent extends JComponent{
         this.setBounds(x, y, size.width, size.height);
         this.setSize(size);
         this.setLayout(layout);
-        this.setBackground(Color.LIGHT_GRAY);
         this.setOpaque(false);
         if(imageBackground != null){
             this.imageBackground = imageBackground.getScaledInstance(size.width, size.height, Image.SCALE_SMOOTH);
@@ -41,6 +39,9 @@ public class ActionComponent extends JComponent{
             g.drawImage(imageBackground, 0, 0, this.getWidth(), this.getHeight(), this);
         }else if(this.getBackground() != null){
             g.setColor(this.getBackground());
+            g.fillRect(0, 0, this.getWidth(), this.getHeight());
+        }else{
+            g.setColor(new Color(0, 0, 0, 0));
             g.fillRect(0, 0, this.getWidth(), this.getHeight());
         }
     }

@@ -83,30 +83,39 @@ public class PokemonInfo {
     public ActionComponent pokemonProfile(){
         DrawImage pokemonImage = new DrawImage(pokemon.getDefaultFrontImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH), new Dimension(300, 300));
         DrawText pokemonName = new DrawText(pokemon.getNama(), new Font(Font.SANS_SERIF, Font.BOLD, 30));
+        pokemonName.setForeground(Color.WHITE);
         DrawText pokemonLvl = new DrawText(("Lvl : " + pokemon.getLvl()), new Font(Font.SANS_SERIF, Font.BOLD, 30));
         JProgressBar bar = new JProgressBar();
         
-        ActionComponent nameContainer = new ActionComponent(new Dimension(300, pokemonName.getHeight()), new FlowLayout(FlowLayout.CENTER), null);
-        nameContainer.add(pokemonName);
-        nameContainer.setBackground(Color.LIGHT_GRAY);
+        Image nameBackground = null, barBackground = null;
+        try {
+            nameBackground = ImageLoader.loadImage("src\\Material\\Image\\NameBorder.png");
+            barBackground = ImageLoader.loadImage("src\\Material\\Image\\BarBackground2.png");
+        } catch (IOException ex) {
+            Logger.getLogger(PokemonInfo.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-        ActionComponent lvlContainer = new ActionComponent(new Dimension(300, pokemonLvl.getHeight()), new FlowLayout(FlowLayout.LEFT), null);
+        ActionComponent nameContainer = new ActionComponent(new Dimension(300, pokemonName.getHeight()), new FlowLayout(FlowLayout.CENTER), nameBackground);
+        nameContainer.add(pokemonName);
+        nameContainer.setBackground(new Color(0, 0, 0, 0));
+        
+        ActionComponent lvlContainer = new ActionComponent(new Dimension(300, pokemonLvl.getHeight()), new FlowLayout(FlowLayout.CENTER), null);
         lvlContainer.setBackground(new Color(255, 255 ,255, 0));
         lvlContainer.add(pokemonLvl);
         
         DrawText expText = new DrawText("Exp : ", new Font(Font.SANS_SERIF, Font.BOLD, 30));
-        ActionComponent barExp = new ActionComponent(new Dimension(300, expText.getHeight()), new FlowLayout(FlowLayout.LEFT), null);
+        ActionComponent barExp = new ActionComponent(new Dimension(300, expText.getHeight()), new FlowLayout(FlowLayout.LEFT), barBackground);
         bar.setMinimum(0);
         bar.setMaximum(pokemon.getExpNeededToLevelUp());
         bar.setValue(pokemon.getExp());
         bar.setString(pokemon.getExp() + "/" + pokemon.getExpNeededToLevelUp());
         bar.setStringPainted(true);
         bar.setPreferredSize(new Dimension(200, expText.getHeight()));
+        bar.setBackground(new Color(0, 0, 0, 150));
         bar.setForeground(Color.GREEN);
         
         barExp.add(expText);
         barExp.add(bar);
-        barExp.setBackground(Color.LIGHT_GRAY);
         
         ActionComponent imageContainer = new ActionComponent(new Dimension(300, 500), null, null);
         imageContainer.setBackground(new Color(216,191,216, 150));

@@ -72,12 +72,22 @@ public class PokemonCenter {
             
             DrawImage pokemonImage = new DrawImage(pokemonData.getDefaultFrontImage(), new Dimension(300, 300));
             DrawText pokemonName = new DrawText(pokemonData.getNama(), GetSizedFont.getSizedFont(pokemonData.getNama(), Font.SANS_SERIF, Font.BOLD, new Dimension(270, 40)));
+            pokemonName.setForeground(Color.LIGHT_GRAY);
+            
+            Image nameBackground = null, barBackground = null;
+            try {
+                nameBackground = ImageLoader.loadImage("src\\Material\\Image\\NameBorder.png");
+                barBackground = ImageLoader.loadImage("src\\Material\\Image\\BarBackground2.png");
+            } catch (IOException ex) {
+                java.util.logging.Logger.getLogger(PokemonCenter.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
             
             ActionComponent barHpContainer, nameContainer;
-            nameContainer = new ActionComponent(new Dimension(300, 40), new FlowLayout(FlowLayout.CENTER, 10, 0), null);
+            nameContainer = new ActionComponent(new Dimension(300, 40), new FlowLayout(FlowLayout.CENTER, 10, 5), nameBackground);
             nameContainer.add(pokemonName);
+            nameContainer.setBackground(Color.LIGHT_GRAY);
             
-            barHpContainer = new ActionComponent(new Dimension(300, 40), new FlowLayout(FlowLayout.LEFT), null);
+            barHpContainer = new ActionComponent(new Dimension(300, 40), new FlowLayout(FlowLayout.LEFT), barBackground);
             DrawText hpText = new DrawText("HP ", GetSizedFont.getSizedFont("HP ", Font.SANS_SERIF, Font.BOLD, new Dimension(40, 40)));
             JProgressBar hpBar = new JProgressBar();
             hpBar.setMinimum(0);
@@ -95,6 +105,7 @@ public class PokemonCenter {
             
             barHpContainer.add(hpText);
             barHpContainer.add(hpBar);
+            barHpContainer.setBackground(Color.LIGHT_GRAY);
             
             pokemonContainer.add(nameContainer);
             pokemonContainer.add(Box.createVerticalGlue());

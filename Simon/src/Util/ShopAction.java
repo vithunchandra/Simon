@@ -35,19 +35,22 @@ public class ShopAction extends MouseAdapter{
         detailPanel.setLayout(new BoxLayout(detailPanel, BoxLayout.Y_AXIS));
         
         Item itemData = clickedComponent.getData();
-        DrawText itemName = new DrawText(itemData.getName(), new Font(Font.SANS_SERIF, Font.BOLD, 25));
+        DrawText itemName = new DrawText(itemData.getName(), new Font(Font.SANS_SERIF, Font.BOLD, 32));
         int height = itemName.getHeight();
         DrawImage itemImage = new DrawImage(itemData.getItemImage(), new Dimension(height, height));
         ActionComponent itemNameContainer = new ActionComponent(new Dimension((itemName.getWidth() + height + 10), height), new FlowLayout(FlowLayout.CENTER, 10, 0), null);
-        DynamicText description = new DynamicText(itemData.getDescription(), new Font(Font.SANS_SERIF, Font.PLAIN, 20), new Dimension(detailPanel.getWidth() - 15, detailPanel.getHeight() - itemNameContainer.getHeight() - 20));
+        DynamicText description = new DynamicText(itemData.getDescription(), new Font(Font.SANS_SERIF, Font.PLAIN, 20), new Dimension(detailPanel.getWidth() - 30, detailPanel.getHeight() - itemNameContainer.getHeight() - 20));
+        ActionComponent descriptionContainer = new ActionComponent(new Dimension(detailPanel.getWidth(), detailPanel.getHeight() - itemNameContainer.getHeight()), new FlowLayout(FlowLayout.CENTER, 10, 10), null);
+        descriptionContainer.setBackground(new Color(0, 0, 0, 0));
+        descriptionContainer.add(description);
         
         itemNameContainer.add(itemImage);
         itemNameContainer.add(itemName);
         itemNameContainer.setAlignmentX(Component.CENTER_ALIGNMENT);
         
         detailPanel.add(itemNameContainer);
-        detailPanel.add(Box.createRigidArea(new Dimension(10, 30)));
-        detailPanel.add(description);
+        detailPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+        detailPanel.add(descriptionContainer);
         
         SetBorder border = new SetBorder(new Color(30, 30, 30, 100));
         detailPanel.setBorder(border.niceFrame());

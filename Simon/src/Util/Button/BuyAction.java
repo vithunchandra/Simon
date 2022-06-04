@@ -74,6 +74,7 @@ public class BuyAction extends Buttons{
         System.out.println("Ultra Ball : " + Player.ultraBall);
         System.out.println("------------------");
         
+        button.setClicked(false);
         buyContainer.revalidate();
         buyContainer.repaint();
     }
