@@ -165,7 +165,7 @@ public class PokemonInfo {
     
     public ActionComponent getStat(){
         ArrayList<String> text = new ArrayList<>();
-        text.add("Pokemon Name : " + pokemon.getNama());
+        text.add("Simon Name : " + pokemon.getNama());
         text.add("Level : " + pokemon.getLvl());
         text.add("Max Hp : " + pokemon.getMaxHp());
         text.add("Attack : " + pokemon.getDamage());

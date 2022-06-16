@@ -33,12 +33,14 @@ public class Shop {
         buyAction = new BuyAction();
         
         Random rand = new Random();
-        String[] name = {"Potion", "Super Potion", "Full Restore", "Poke Ball", "Great Ball", "Ultra Ball"};
+        String[] name = {"Potion", "Super Potion", "Full Restore", "Simon's Ball", "Great Simon's Ball", "Ultra Simon's Ball"};
+        int[] price = {50, 75 , 100 , 120 , 150 , 175 };
+        String[] desc = {"restore slight ammout of helth" , " restore mdernate ammout of helth" , " fully restore your helth" , " auto win " , "a ball to catch simons with higher catch rate " , " a ball to catch simons with highest catch rate"};
         for(int i=0; i<6; i++){
             itemObject.add(
                     new Item(name[i],
-                    "Filler text is text that shares some characteristics of a real writtsCSDVsDVsdvzdvxfbzfvdzvjlzdjkviohilzsdnvkjhzorfhvzen text, but is random or otherwise generated. It may be used to display a sample of fonts, generate text for testing, or to spoof an e-mail spam filter.",
-                    rand.nextInt(10, 100),
+                    desc[i],
+                    price[i],
                     "src\\Material\\Image\\item.png"
             ));
         }

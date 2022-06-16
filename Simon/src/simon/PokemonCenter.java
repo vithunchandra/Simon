@@ -120,7 +120,7 @@ public class PokemonCenter {
     }
     
     public ActionButton healButton(){
-        DrawText healButtonText = new DrawText("+Heal Pokemon+", GetSizedFont.getSizedFont("+Heal Pokemon+", Font.SANS_SERIF, Font.BOLD, new Dimension(400, 50)));
+        DrawText healButtonText = new DrawText("+Heal Simon+", GetSizedFont.getSizedFont("+Heal Simon+", Font.SANS_SERIF, Font.BOLD, new Dimension(400, 50)));
         ActionButton healButton = new ActionButton(new Dimension(healButtonText.getWidth() + 30, healButtonText.getHeight() + 15),  new FlowLayout(), null);
         healButton.add(healButtonText);
         

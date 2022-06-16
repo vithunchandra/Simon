@@ -18,7 +18,7 @@ public class Steal extends Skill{
     
     @Override
     public String use(Pokemon player, Pokemon enemy, boolean usedByPlayer) {
-        int heal = player.getDamage() * 10;
+        int heal = player.getDamage()  / 2;
         player.healed(heal);
         int damage = (int) (player.getDamage()*1);
         enemy.damaged(damage);

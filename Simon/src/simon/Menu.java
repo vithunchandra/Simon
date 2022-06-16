@@ -139,7 +139,7 @@ public class Menu {
         buttonContainer.setPreferredSize(new Dimension(400, 450));
         description.setPreferredSize(new Dimension(400, 400));
         ArrayList<MyButton> button = new ArrayList<>();
-        String[] buttonName = {"Dungeon", "Switch Pokemon", "Pokemon Center", "Shop", "Gym", "Top-up poke-coin", "Back"};
+        String[] buttonName = {"Dungeon", "Switch Simon", "Simon Center", "Shop", "Gym", "Top-up Mon-E", "Back"};
         String[] message = {"Entering dungeon...", "Switching...", "Entering pokemon center,All Your Pokemon health has been healed", "Entering shop...", "Entering gym...", "Top-uping", "Back..."};
         for(int i=0; i<buttonName.length; i++){
             button.add(new MyButton(buttonName[i], new Dimension(400, 50)));
@@ -153,9 +153,9 @@ public class Menu {
                     public void actionPerformed(ActionEvent event){
                         if(event.getSource() == tempButton && tempButton.getText().equals("Dungeon")){
                             new Dungeon(frame, playGame());
-                        }else if(event.getSource() == tempButton && tempButton.getText().equals("Switch Pokemon")){
+                        }else if(event.getSource() == tempButton && tempButton.getText().equals("Switch Simon")){
                             new SwitchPokemon(frame, playGame());
-                        }else if(event.getSource() == tempButton && tempButton.getText().equals("Pokemon Center")){
+                        }else if(event.getSource() == tempButton && tempButton.getText().equals("Simon Center")){
 //                            for(Pokemon playerPokemon : Player.pokemonInParty) {
 //                                playerPokemon.healed(playerPokemon.getMaxHp());
 //                            }
@@ -164,10 +164,10 @@ public class Menu {
                             new Shop(frame, playGame());
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Gym")){
                             new Gym(frame, playGame());
-                        }else if(event.getSource() == tempButton && tempButton.getText().equals("Top-up poke-coin")){
+                        }else if(event.getSource() == tempButton && tempButton.getText().equals("Top-up Mon-E")){
                             new TopUp(frame, playGame());
                         }else if(event.getSource() == tempButton && tempButton.getText().equals("Back")){
-                            JOptionPane.showMessageDialog(null, tempMessage);
+                            JOptionPane.showMessageDialog(null, "there's no turning back");
                             frame.changePanel(openMenu());
                         }
                     }

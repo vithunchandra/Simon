@@ -5,6 +5,7 @@
 package Pokemon.Skill;
 
 import Pokemon.Pokemon;
+import java.awt.Image;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -15,6 +16,7 @@ import java.util.Objects;
 
 public abstract class Skill implements Serializable {
     protected String skillName;
+    
     public Skill(String skillName) {
         this.skillName = skillName;
     }
